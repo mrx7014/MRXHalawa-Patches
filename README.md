@@ -23,7 +23,7 @@ The patches are designed to customize app behavior and appearance, hide unwanted
 The generated list below contains the supported applications, patch descriptions, and target versions. It is updated automatically during the release workflow.
 
 <!-- PATCHES_START -->
-> **[v1.47.1](https://github.com/mrx7014/MRXHalawa-Patches/releases/tag/v1.47.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;151 patches total
+> **[v1.47.1](https://github.com/mrx7014/MRXHalawa-Patches/releases/tag/v1.47.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;102 patches total
 <details>
 <summary>📦 YouTube&nbsp;&nbsp;•&nbsp;&nbsp;84 patches</summary>
 <br>
@@ -119,62 +119,6 @@ The generated list below contains the supported applications, patch descriptions
 | [Video quality](#video-quality) | Adds options to set default video qualities and always use the advanced video quality menu. |  |
 | [Voice over translation](#voice-over-translation) | Adds additional voice over languages using text-to-speech synchronized to the video playback. |  |
 | [Wide search bar](#wide-search-bar) | Adds a wide search bar to the top of the home and subscription feed. |  |
-
-</details>
-
-<details>
-<summary>📦 YouTube Music&nbsp;&nbsp;•&nbsp;&nbsp;42 patches</summary>
-<br>
-
-**🎯 Supported versions:**
-
-| 🧪&nbsp;9.35.54 | 🧪&nbsp;9.34.52 | 🧪&nbsp;9.33.52 | 9.15.51 |
-| :---: | :---: | :---: | :---: |
-
-| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
-|----------|----------------|-----------|
-| [App refresh rate](#app-refresh-rate) | Adds an option to change the app refresh rate. |  |
-| [Bypass certificate checks](#bypass-certificate-checks) | Bypasses certificate checks which prevent YouTube Music from working on Android Auto. |  |
-| [Change header](#change-header) | Adds an option to change the header logo in the top left corner of the app. | • Custom header logo |
-| [Change miniplayer color](#change-miniplayer-color) | Adds an option to change the miniplayer background color to match the fullscreen player. |  |
-| [Change start page](#change-start-page) | Adds an option to set which page the app opens in instead of the homepage. |  |
-| [Check watch history domain name resolution](#check-watch-history-domain-name-resolution) | Checks if the device DNS server is preventing user watch history from being saved. |  |
-| [Crossfade](#crossfade) | Adds a true dual-player crossfade between consecutive tracks. Requires YouTube Music 9.00 or newer; on older versions the patch is a no-op. |  |
-| [Custom branding](#custom-branding) | Adds options to change the app icon and app name. Branding cannot be changed for mounted (root) installations. | • App name<br>• Custom icon |
-| [Disable DRC audio](#disable-drc-audio) | Adds an option to disable DRC (Dynamic Range Compression) audio. |  |
-| [Disable QUIC protocol](#disable-quic-protocol) | Adds an option to disable QUIC (Quick UDP Internet Connections) network protocol. |  |
-| [Disable dislike redirection](#disable-dislike-redirection) | Adds an option to prevent skipping to the next track when the dislike button is pressed. |  |
-| [Downloads](#downloads) | Adds support to download songs with an external downloader app using the in-app download button. |  |
-| [Enable debugging](#enable-debugging) | Adds options for debugging and exporting Morphe logs to the clipboard. |  |
-| [Enable exclusive audio playback](#enable-exclusive-audio-playback) | Enables the option to play audio without video. |  |
-| [Enable forced miniplayer](#enable-forced-miniplayer) | Adds an option to enable forced miniplayer when switching between music videos, podcasts, or songs. |  |
-| [Enable swipe to dismiss miniplayer](#enable-swipe-to-dismiss-miniplayer) | Adds an option to enable dismissing the miniplayer by swiping down on it. |  |
-| [Force original audio](#force-original-audio) | Adds an option to always use the original audio track. |  |
-| [GmsCore support](#gmscore-support) | Allows the app to work without root by using a different package name when patched using a GmsCore instead of Google Play Services. |  |
-| [Hide ads](#hide-ads) | Adds options to hide fullscreen ads, Premium promotions and video ads. |  |
-| [Hide buttons](#hide-buttons) | Adds options to hide the cast, history, notification, and search buttons. |  |
-| [Hide filter bar](#hide-filter-bar) | Adds an option to hide the filter bar at the top of the homepage. |  |
-| [Hide flyout menu components](#hide-flyout-menu-components) | Adds options to hide individual items from the player and queue flyout menus. |  |
-| [Hide layout components](#hide-layout-components) | Adds options to hide general layout components. |  |
-| [Hide music action buttons](#hide-music-action-buttons) | Adds options to hide action buttons under the player. |  |
-| [Miniplayer previous and next buttons](#miniplayer-previous-and-next-buttons) | Adds options to show previous and next track buttons in the miniplayer. |  |
-| [Navigation bar](#navigation-bar) | Adds options to hide navigation bar, labels and buttons. |  |
-| [Network proxy](#network-proxy) | Adds settings to route supported network requests through an HTTP or HTTPS proxy. Including this patch may cause connectivity problems on certain devices |  |
-| [Play albums songs](#play-albums-songs) | Adds an option to play the song version of album tracks instead of music videos. |  |
-| [PoToken provider](#potoken-provider) | Adds option to get PoToken using an external PoToken minter app. |  |
-| [Remember repeat state](#remember-repeat-state) | Adds an option to remember the repeat state when playing a new track or playlist. |  |
-| [Remember shuffle state](#remember-shuffle-state) | Adds an option to remember the shuffle state when playing a new track or playlist. |  |
-| [Remove background playback restrictions](#remove-background-playback-restrictions) | Removes restrictions on background playback, including playing kids videos in the background. |  |
-| [Remove viewer discretion dialog](#remove-viewer-discretion-dialog) | Adds an option to remove the dialog that appears when opening a video that has been age-restricted by accepting it automatically. This does not bypass the age restriction. |  |
-| [Return YouTube Dislike](#return-youtube-dislike) | Adds an option to show the dislike count of tracks with Return YouTube Dislike. |  |
-| [Sanitize sharing links](#sanitize-sharing-links) | Removes the tracking query parameters from shared links. |  |
-| [Scrobbling](#scrobbling) | Adds options to add played tracks to Last.fm and ListenBrainz. |  |
-| [Settings menu filter](#settings-menu-filter) | Adds an option to hide items on the standard YouTube Music settings screen by their visible name. |  |
-| [SponsorBlock](#sponsorblock) | Adds options to enable and configure SponsorBlock, which can skip non-music segments. |  |
-| [Spoof app version](#spoof-app-version) | Adds an option to trick the app into thinking you are running an older version. |  |
-| [Spoof video streams](#spoof-video-streams) | Adds options to spoof the client video streams to fix playback. |  |
-| [Theme](#theme) | Adds options for theming, and settings to change the app foreground and background colors. | • Dark theme color |
-| [Third-party lyrics](#third-party-lyrics) | Adds an option to show synced lyrics from LRCLIB or KuGou in the lyrics panel. |  |
 
 </details>
 
