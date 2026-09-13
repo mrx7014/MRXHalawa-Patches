@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-patches
+ * Copyright 2026 MRX Halawa.
+ * https://github.com/mrx7014/MRX-Halawa-Patches
  *
  * Original hard forked code:
  * https://github.com/ReVanced/revanced-patches/commit/724e6d61b2ecd868c1a9a37d465a688e83a74799
@@ -263,7 +263,7 @@ public class StreamingDataRequest {
 
             // Using the same visitorId across multiple clients increases the bot score.
             // To prevent this, each client uses a different visitorId.
-            // See: https://github.com/MorpheApp/morphe-patches/issues/2283.
+            // See: https://github.com/mrx7014/MRX-Halawa-Patches/issues/2283.
             String visitorId = VisitorIdRequester.getVisitorId(clientType);
             if (Utils.isNotEmpty(visitorId)) {
                 connection.setRequestProperty(VISITOR_ID_HEADER, visitorId);

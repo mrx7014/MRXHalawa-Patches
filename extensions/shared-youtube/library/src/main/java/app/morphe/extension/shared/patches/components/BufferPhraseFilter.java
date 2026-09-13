@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-patches
+ * Copyright 2026 MRX Halawa.
+ * https://github.com/mrx7014/MRX-Halawa-Patches
  *
  * Original first edition code:
  * https://github.com/ReVanced/revanced-integrations/pull/584
@@ -13,9 +13,9 @@
  * https://github.com/ReVanced/revanced-integrations/commit/d8d2a852d3879060bd95cc43d66c7cf195e82b43
  * https://github.com/ReVanced/revanced-integrations/commit/2f2eeea5a722b6b7053eb2825d16fa37938b4e9e
  * https://github.com/ReVanced/revanced-integrations/commit/5314dd90d16dc8565331c4cddce114956d85a173
- * https://github.com/MorpheApp/morphe-patches/commit/f5371ca998c019609c2b5558b3408ab1fec065c8
- * https://github.com/MorpheApp/morphe-patches/commit/017eac71a3f9542b8ad6221e3600797d6b97fae4
- * https://github.com/MorpheApp/morphe-patches/pull/1972
+ * https://github.com/mrx7014/MRX-Halawa-Patches/commit/f5371ca998c019609c2b5558b3408ab1fec065c8
+ * https://github.com/mrx7014/MRX-Halawa-Patches/commit/017eac71a3f9542b8ad6221e3600797d6b97fae4
+ * https://github.com/mrx7014/MRX-Halawa-Patches/pull/1972
  *
  * See the included NOTICE file for GPLv3 Section 7 terms that apply to Morphe contributions.
  */

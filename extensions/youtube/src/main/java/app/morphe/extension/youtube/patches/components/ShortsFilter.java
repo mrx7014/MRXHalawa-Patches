@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-patches
+ * Copyright 2026 MRX Halawa.
+ * https://github.com/mrx7014/MRX-Halawa-Patches
  *
  * Original hard forked code:
  * https://github.com/ReVanced/revanced-patches/commit/724e6d61b2ecd868c1a9a37d465a688e83a74799
@@ -486,7 +486,7 @@ public final class ShortsFilter extends Filter {
                         // The litho path of the feed video is 'video_lockup_with_attachment.e'.
                         // It appears [shortsCompactFeedVideoBuffer] is used after 20 seconds during autoplay in the feed in YouTube 20.44.38.
                         // If the Shorts shelf is hidden on the Home feed, the video in the feed will be hidden after 20 seconds have passed since autoplay began in the feed.
-                        // See: https://github.com/MorpheApp/morphe-patches/issues/773.
+                        // See: https://github.com/mrx7014/MRX-Halawa-Patches/issues/773.
                         && shortsCompactFeedVideoBuffer.matches(buffer);
             }
 

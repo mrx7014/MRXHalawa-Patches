@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-patches
+ * Copyright 2026 MRX Halawa.
+ * https://github.com/mrx7014/MRX-Halawa-Patches
  *
  * Original hard forked code:
  * https://github.com/ReVanced/revanced-patches/commit/724e6d61b2ecd868c1a9a37d465a688e83a74799
@@ -152,7 +152,7 @@ class SwipeControlsConfigurationProvider {
      *
      * In this case, [BaseGestureController.submitTouchEvent] cancels the MotionEvent,
      * but sometimes the canceled [MotionEvent] triggers the tap and hold playback speed.
-     * See: https://github.com/MorpheApp/morphe-patches/issues/658.
+     * See: https://github.com/mrx7014/MRX-Halawa-Patches/issues/658.
      *
      * To resolve this concurrency issue, pass the [MotionEvent] even when the player type is [PlayerType.WATCH_WHILE_SLIDING_MAXIMIZED_FULLSCREEN],
      * and finally validate the swipe gesture in [ClassicSwipeController.onSwipe] and [PressToSwipeController.onSwipe].

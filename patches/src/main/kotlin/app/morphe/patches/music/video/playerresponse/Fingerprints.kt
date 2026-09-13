@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-patches
+ * Copyright 2026 MRX Halawa.
+ * https://github.com/mrx7014/MRX-Halawa-Patches
  *
  * See the included NOTICE file for GPLv3 §7(b) and §7(c) terms that apply to Morphe contributions.
  */

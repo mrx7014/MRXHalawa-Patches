@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-patches/pull/2524
+ * Copyright 2026 MRX Halawa.
+ * https://github.com/mrx7014/MRX-Halawa-Patches/pull/2524
  *
  * Original hard forked code:
  * https://github.com/ReVanced/revanced-patches/commit/724e6d61b2ecd868c1a9a37d465a688e83a74799
@@ -54,7 +54,7 @@ private val musicColorNamesDark = {
 /**
  * The header of a playlist, album or artist page ends in a translucent black, which is only
  * invisible while the app background is pure black.
- * https://github.com/MorpheApp/morphe-patches/issues/200
+ * https://github.com/mrx7014/MRX-Halawa-Patches/issues/200
  */
 private val headerFadeResourcePatch = resourcePatch(
     description = "Fades the header of a detail page into the app background."

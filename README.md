@@ -1,5 +1,4 @@
-# Morphe Patches
-
+# MRX Halawa Patches
 This repository contains the patches used by **Morphe Patcher** to modify supported Android applications. Patches can customize app behavior and appearance, hide unwanted content, add features, and provide additional settings.
 
 ## Supported applications
@@ -7,7 +6,7 @@ This repository contains the patches used by **Morphe Patcher** to modify suppor
 The generated list below contains the supported applications, patch descriptions, and target versions. It is updated automatically during the release workflow.
 
 <!-- PATCHES_START -->
-> **[v1.47.1](https://github.com/mrx7014/morphe-patches/releases/tag/v1.47.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;151 patches total
+> **[v1.47.1](https://github.com/mrx7014/MRX-Halawa-Patches/releases/tag/v1.47.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;151 patches total
 <details>
 <summary>📦 YouTube&nbsp;&nbsp;•&nbsp;&nbsp;84 patches</summary>
 <br>
@@ -214,7 +213,7 @@ The generated list below contains the supported applications, patch descriptions
 
 ## Building
 
-This project uses Gradle and the Morphe patches plugin. To build locally, use:
+This project uses Gradle and the MRX Halawa Patches plugin. To build locally, use:
 
 ```bash
 ./gradlew build

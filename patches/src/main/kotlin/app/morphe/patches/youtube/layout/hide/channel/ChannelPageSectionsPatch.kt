@@ -1,4 +1,4 @@
-/* Copyright 2026 Morphe. */
+/* Copyright 2026 MRX Halawa. */
 package app.morphe.patches.youtube.layout.hide.channel
 
 import app.morphe.patcher.patch.bytecodePatch

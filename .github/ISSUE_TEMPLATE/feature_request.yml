@@ -11,7 +11,7 @@ body:
         Before creating a new feature request, please keep the following in mind:
 
         - We are currently only accept feature requests for YouTube, YT Music, and Reddit.
-        - **Do not submit a duplicate feature request**: Search for existing feature requests, including closed issues, [here](https://github.com/MorpheApp/morphe-patches/issues?q=is%3Aissue).
+        - **Do not submit a duplicate feature request**: Search for existing feature requests, including closed issues, [here](https://github.com/mrx7014/MRX-Halawa-Patches/issues?q=is%3Aissue).
   - type: textarea
     attributes:
       label: Feature description

@@ -1,4 +1,4 @@
-rootProject.name = "morphe-patches"
+rootProject.name = "MRX-Halawa-Patches"
 
 pluginManagement {
     repositories {

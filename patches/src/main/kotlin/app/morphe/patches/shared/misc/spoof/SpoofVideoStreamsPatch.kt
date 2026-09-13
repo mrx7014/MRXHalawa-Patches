@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 Morphe.
- * https://github.com/MorpheApp/morphe-patches
+ * Copyright 2026 MRX Halawa.
+ * https://github.com/mrx7014/MRX-Halawa-Patches
  *
  * Original hard forked code:
  * https://github.com/ReVanced/revanced-patches/commit/724e6d61b2ecd868c1a9a37d465a688e83a74799
@@ -466,7 +466,7 @@ internal fun spoofVideoStreamsPatch(
         // due to incorrect option settings in the proto file (e.g. 'option optimize_for = SPEED') when Google bulit the app.
         //
         // This issue was fixed in YT 21.13 and YTM 9.12.
-        // See: https://github.com/MorpheApp/morphe-patches/pull/2284#issuecomment-5204046377
+        // See: https://github.com/mrx7014/MRX-Halawa-Patches/pull/2284#issuecomment-5204046377
         if (restoreMissingCuepointMethod()) {
             CuepointListFingerprint.classDef.apply {
                 if (methods.none {
