@@ -363,6 +363,7 @@ Tap here to open AiSlopList.com and see downloads for other platforms"</string>
     <string name="morphe_hide_self_sponsor_ads_title">Hide self sponsored cards</string>
     <string name="morphe_hide_shopping_links_title">Hide shopping links</string>
     <string name="morphe_hide_video_ads_title">Hide video ads</string>
+    <string name="morphe_ads_channel_whitelist_title">Channel ad whitelist</string>
     <string name="morphe_hide_youtube_premium_promotions_title">Hide YouTube Premium promotions</string>
 
     <!-- interaction.doubletap.doubleTapLengthPatch -->
