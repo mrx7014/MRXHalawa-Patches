@@ -1,5 +1,22 @@
-# MRX Halawa Patches
-This repository contains the patches used by **Morphe Patcher** to modify supported Android applications. Patches can customize app behavior and appearance, hide unwanted content, add features, and provide additional settings.
+# MRXHalawa-Patches
+
+> [!IMPORTANT]
+> **THIS PROJECT IS A FORK OF [MORPHE PATCHES](https://github.com/MorpheApp/morphe-patches).**
+> **The original project, its upstream history, and the original authors are credited here.**
+> **Visit the official upstream repository:** https://github.com/MorpheApp/morphe-patches
+
+## About MRXHalawa-Patches
+
+**MRXHalawa-Patches** is a community-maintained fork of Morphe Patches, created to provide a customized and independently maintained collection of patches for supported Android applications. It extends the original patching ecosystem with a refreshed project identity while preserving the upstream foundation and attribution.
+
+The patches are designed to customize app behavior and appearance, hide unwanted content, add quality-of-life features, and expose additional settings through **Morphe Patcher**. The project is intended for developers and advanced users who want transparent, configurable, and community-driven Android app modifications.
+
+## Project links
+
+| Resource | Link |
+|---|---|
+| **This fork** | [MRXHalawa-Patches](https://github.com/mrx7014/MRXHalawa-Patches) |
+| **Original upstream project** | [Morphe Patches](https://github.com/MorpheApp/morphe-patches) |
 
 ## Supported applications
 
