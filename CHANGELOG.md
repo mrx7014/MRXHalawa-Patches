@@ -1,3 +1,29 @@
+## [1.47.2](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.1...v1.47.2) (2026-09-13)
+
+### 🐛 Bug Fixes
+
+* **youtube:** add default channel whitelist resource ([04bf0ec](https://github.com/mrx7014/MRXHalawa-Patches/commit/04bf0ec823d0f9e70c393abad21bafbfd3f1dd40))
+
+### ♻️ Refactors
+
+* remove YouTube Music patches ([2f21b91](https://github.com/mrx7014/MRXHalawa-Patches/commit/2f21b913dc0ff8540bef01e2a5b9b72f106046d7))
+
+### 📚 Documentation
+
+* add MRXHalawa project README introduction ([154f792](https://github.com/mrx7014/MRXHalawa-Patches/commit/154f7925067727d064b9271613e63865dc658d14))
+
+### ⚙️ CI
+
+* show all change types in changelog ([facdadc](https://github.com/mrx7014/MRXHalawa-Patches/commit/facdadcfbdf3193c6f016ba725ed06448618bb2b))
+
+### 🧹 Maintenance
+
+* keep release workflow only ([12c225f](https://github.com/mrx7014/MRXHalawa-Patches/commit/12c225f45bf096f0eb438174695e9d87328436c5))
+* rebrand project to MRX Halawa Patches ([92eef34](https://github.com/mrx7014/MRXHalawa-Patches/commit/92eef34587d53db6b9b235c4f4cefa19e35550de))
+* remove FCM notifications ([4079537](https://github.com/mrx7014/MRXHalawa-Patches/commit/4079537d2b1ed6ef8d80361db22957075f66ae6c))
+* set final repository name ([8b16fc3](https://github.com/mrx7014/MRXHalawa-Patches/commit/8b16fc3132177dd0d28d5cafb77166191075920a))
+* update remaining repository links ([80644b2](https://github.com/mrx7014/MRXHalawa-Patches/commit/80644b24af542b974b64331941c3207ff1edd271))
+
 ## [1.47.1](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.0...v1.47.1) (2026-09-12)
 
 ### 🐛 Bug Fixes
