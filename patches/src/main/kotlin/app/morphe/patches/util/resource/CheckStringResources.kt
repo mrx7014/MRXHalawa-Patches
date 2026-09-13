@@ -1,6 +1,6 @@
 /*
  * Copyright 2025 Morphe.
- * https://github.com/mrx7014/MRX-Halawa-Patches
+ * https://github.com/mrx7014/MRXHalawa-Patches
  *
  * File-Specific License Notice (GPLv3 Section 7 Terms)
  *

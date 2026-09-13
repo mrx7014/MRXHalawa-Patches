@@ -171,7 +171,7 @@ class SwipeControlsHostActivity : Activity() {
         currentHost = WeakReference(this)
 
         // fix edge-to-edge display
-        // see: https://github.com/mrx7014/MRX-Halawa-Patches/issues/658
+        // see: https://github.com/mrx7014/MRXHalawa-Patches/issues/658
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
             val rootView = contentRoot.parent
             if (rootView is ViewGroup) {

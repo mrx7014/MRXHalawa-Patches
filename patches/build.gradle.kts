@@ -4,10 +4,10 @@ patches {
     about {
         name = "MRX HALAWA Patches"
         description = "Patches by MRX Halawa"
-        source = "git@github.com:mrx7014/MRX-Halawa-Patches.git"
+        source = "git@github.com:mrx7014/MRXHalawa-Patches.git"
         author = "MorpheApp"
         contact = "na"
-        website = "https://github.com/mrx7014/MRX-Halawa-Patches"
+        website = "https://github.com/mrx7014/MRXHalawa-Patches"
         license = "GNU General Public License v3.0, with additional GPL section 7 requirements"
     }
 }

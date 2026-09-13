@@ -1,4 +1,4 @@
-rootProject.name = "MRX-Halawa-Patches"
+rootProject.name = "MRXHalawa-Patches"
 
 pluginManagement {
     repositories {

@@ -118,7 +118,7 @@ record LicenseContent(String title, String content) {
     static final LicenseContent MORPHE_NOTICE = new LicenseContent("NOTICE", """
             Morphe NOTICE
             
-            https://github.com/mrx7014/MRX-Halawa-Patches
+            https://github.com/mrx7014/MRXHalawa-Patches
             
             =============
             

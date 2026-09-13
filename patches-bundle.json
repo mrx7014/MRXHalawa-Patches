@@ -1,7 +1,7 @@
 {
   "created_at": "2026-09-12T09:54:23",
-  "description": "## [1.47.1](https://github.com/mrx7014/MRX-Halawa-Patches/compare/v1.47.0...v1.47.1) (2026-09-12)\n\n### 🐛 Bug Fixes\n\n* **youtube:** add missing auto pause strings ([a9ff802](https://github.com/mrx7014/MRX-Halawa-Patches/commit/a9ff80224575159dd9031143161027740615aaa5))",
-  "download_url": "https://github.com/mrx7014/MRX-Halawa-Patches/releases/download/v1.47.1/patches-1.47.1.mpp",
+  "description": "## [1.47.1](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.0...v1.47.1) (2026-09-12)\n\n### 🐛 Bug Fixes\n\n* **youtube:** add missing auto pause strings ([a9ff802](https://github.com/mrx7014/MRXHalawa-Patches/commit/a9ff80224575159dd9031143161027740615aaa5))",
+  "download_url": "https://github.com/mrx7014/MRXHalawa-Patches/releases/download/v1.47.1/patches-1.47.1.mpp",
   "signature_download_url": "",
   "version": "1.47.1"
 }

@@ -1,6 +1,6 @@
 /*
  * Copyright 2026 MRX Halawa.
- * https://github.com/mrx7014/MRX-Halawa-Patches
+ * https://github.com/mrx7014/MRXHalawa-Patches
  *
  * Original hard forked code:
  * https://github.com/ReVanced/revanced-patches/commit/724e6d61b2ecd868c1a9a37d465a688e83a74799

@@ -1,6 +1,6 @@
 /*
  * Copyright 2026 MRX Halawa.
- * https://github.com/mrx7014/MRX-Halawa-Patches/pull/2470
+ * https://github.com/mrx7014/MRXHalawa-Patches/pull/2470
  *
  * File-Specific License Notice (GPLv3 Section 7 Terms)
  *

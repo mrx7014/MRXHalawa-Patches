@@ -1,6 +1,6 @@
 /*
  * Copyright 2026 MRX Halawa.
- * https://github.com/mrx7014/MRX-Halawa-Patches
+ * https://github.com/mrx7014/MRXHalawa-Patches
  *
  * Original code hard forked from:
  * https://github.com/inotia00/revanced-patches/blob/54ce1d4808b12903602a1a0d9a721ee835093c38/patches/src/main/kotlin/app/revanced/patches/all/misc/network/OverrideCertificatePinningPatch.kt#L4

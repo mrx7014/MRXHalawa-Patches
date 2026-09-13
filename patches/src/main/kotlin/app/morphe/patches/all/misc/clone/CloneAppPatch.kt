@@ -1,6 +1,6 @@
 /*
  * Copyright 2026 MRX Halawa.
- * https://github.com/mrx7014/MRX-Halawa-Patches
+ * https://github.com/mrx7014/MRXHalawa-Patches
  *
  * Original code hard forked from:
  * https://github.com/ReVanced/revanced-patches/blob/724e6d61b2ecd868c1a9a37d465a688e83a74799/patches/src/main/kotlin/app/revanced/patches/all/misc/packagename/ChangePackageNamePatch.kt

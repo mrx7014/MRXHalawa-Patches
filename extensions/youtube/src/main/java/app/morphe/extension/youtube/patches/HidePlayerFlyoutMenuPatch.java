@@ -1,6 +1,6 @@
 /*
  * Copyright 2026 MRX Halawa.
- * https://github.com/mrx7014/MRX-Halawa-Patches
+ * https://github.com/mrx7014/MRXHalawa-Patches
  *
  * See the included NOTICE file for GPLv3 Section 7 terms that apply to Morphe contributions.
  */
@@ -150,7 +150,7 @@ public final class HidePlayerFlyoutMenuPatch {
                         }
                     } else if (HIDE_PLAYER_FLYOUT_CAPTIONS_HEADER && model.hasBottomSheetHeaderModel()) {
                         // 'CAPTIONS_HEADER_PATH(bottom_sheet_header.e)' is used not only for captions player flyout menu but also in other places:
-                        // https://github.com/mrx7014/MRX-Halawa-Patches/issues/2637.
+                        // https://github.com/mrx7014/MRXHalawa-Patches/issues/2637.
                         //
                         // Filter only if the bottom sheet title is 'Captions'.
                         String bottomSheetTitle = model.getBottomSheetHeaderModel().getHeaderContent().getTitleText();

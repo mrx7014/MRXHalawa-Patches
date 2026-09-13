@@ -67,7 +67,7 @@ jobs:
           json.loads(text)
           text, count = re.subn(
               r'("download_url"\s*:\s*")[^"]*(")',
-              rf'\g<1>https://github.com/mrx7014/MRX-Halawa-Patches/releases/download/v{version}/patches-{version}.mpp\g<2>',
+              rf'\g<1>https://github.com/mrx7014/MRXHalawa-Patches/releases/download/v{version}/patches-{version}.mpp\g<2>',
               text,
               count=1,
           )
