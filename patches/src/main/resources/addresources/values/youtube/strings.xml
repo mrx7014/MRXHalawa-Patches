@@ -365,7 +365,7 @@ Tap here to open AiSlopList.com and see downloads for other platforms"</string>
     <string name="morphe_hide_video_ads_title">Hide video ads</string>
     <string name="morphe_ads_channel_whitelist_title">Channel ad whitelist</string>
     <string name="morphe_hide_youtube_premium_promotions_title">Hide YouTube Premium promotions</string>
-
+    <string name="morphe_ads_channel_whitelist_summary">Videos from whitelisted channels play with ads, so their creators get paid. Ads remain blocked on all other channels.</string>
     <!-- interaction.doubletap.doubleTapLengthPatch -->
     <string name="morphe_double_tap_length_3s" translatable="false">3</string>
     <string name="morphe_double_tap_length_5s" translatable="false">5</string>
