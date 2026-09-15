@@ -1,3 +1,9 @@
+## [1.47.3](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.2...v1.47.3) (2026-09-15)
+
+### 🐛 Bug Fixes
+
+* **xml:** add missing channelwhitelist string in default EN values file ([89b28fa](https://github.com/mrx7014/MRXHalawa-Patches/commit/89b28faedde0083d19013377dc280711f8949de0))
+
 ## [1.47.2](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.1...v1.47.2) (2026-09-13)
 
 ### 🐛 Bug Fixes
