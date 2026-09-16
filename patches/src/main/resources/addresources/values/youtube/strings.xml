@@ -137,6 +137,7 @@ Changes include:
     <string name="morphe_hide_youtube_doodles_summary">Hides seasonal and event-based animations on the YouTube logo</string>
     <string name="morphe_hide_youtube_doodles_user_dialog_message">Showing YouTube Doodles may prevent custom headers from displaying.</string>
 
+    <string name="morphe_channel_page_sections_screen_title">Channel page sections</string>
     <string name="morphe_hide_channel_bar_title">Hide channel bar</string>
     <string name="morphe_hide_channel_watermark_title">Hide channel watermark</string>
     <string name="morphe_hide_chapters_timeline_button_title">Hide Chapters and \'In this video\' button</string>
