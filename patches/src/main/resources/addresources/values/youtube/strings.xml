@@ -293,7 +293,20 @@ Changes include:
     <string name="morphe_hide_comments_top_fans_button_title">Hide \'Top fans\' button</string>
     <string name="morphe_sanitize_comments_highlighted_search_links_title">Sanitize highlighted search links</string>
     <string name="morphe_sanitize_comments_highlighted_search_links_summary">Sanitizes highlighted search links, leaving only the original plain text</string>
-
+    <string name="morphe_video_metadata_screen_title">Video metadata controls</string>
+    <string name="morphe_video_metadata_screen_summary">Hide video timestamps, upload times, and view counts</string>
+    <string name="morphe_search_cleanup_screen_title">Search cleanup</string>
+    <string name="morphe_search_cleanup_screen_summary">Hide Shorts, live content, channels, playlists, and other search clutter</string>
+    <string name="morphe_sb_sponsor_color_title">Sponsor</string>
+    <string name="morphe_sb_selfpromo_color_title">Self-promotion</string>
+    <string name="morphe_sb_interaction_color_title">Interaction reminder</string>
+    <string name="morphe_sb_highlight_color_title">Highlight</string>
+    <string name="morphe_sb_intro_color_title">Intro</string>
+    <string name="morphe_sb_outro_color_title">Outro</string>
+    <string name="morphe_sb_preview_color_title">Preview/recap</string>
+    <string name="morphe_sb_hook_color_title">Hook</string>
+    <string name="morphe_sb_filler_color_title">Filler</string>
+    <string name="morphe_sb_music_offtopic_color_title">Non-music section</string>
     <string name="morphe_hide_keyword_content_screen_title">Keyword filter</string>
     <string name="morphe_hide_keyword_content_screen_summary">Choose specific words or phrases to hide videos in feeds and search</string>
     <string name="morphe_hide_keyword_content_comments_title">Hide comments by keywords</string>
