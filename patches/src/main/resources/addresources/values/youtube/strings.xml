@@ -103,6 +103,7 @@ Changes include:
     <string name="morphe_hide_notify_me_button_title">Hide \'Notify me\' button</string>
     <string name="morphe_hide_notify_me_button_summary">Hides the reminder button for scheduled livestreams and premieres</string>
     <string name="morphe_hide_playables_title">Hide Playables</string>
+    <string name="morphe_live_stream_dvr_title">Enable live stream DVR</string>
     <string name="morphe_hide_playables_summary">Hides the feature that allows you to play games</string>
     <string name="morphe_hide_search_term_thumbnails_title">Hide search term thumbnails</string>
     <string name="morphe_hide_search_term_thumbnails_summary">Hides the thumbnail previews in the search autocomplete list</string>
