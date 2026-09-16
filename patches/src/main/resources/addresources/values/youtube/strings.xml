@@ -84,6 +84,7 @@ Changes include:
     <string name="morphe_hide_horizontal_shelves_summary">Hides horizontal shelves such as Breaking news, Community posts you may like, Continue watching, Explore more channels, Explore more topics, For You, Latest videos, Most relevant, Posts from Creator\'s Community, Shopping, and Watch it again</string>
     <string name="morphe_hide_hyped_label_title">Hide Hyped label</string>
     <string name="morphe_hide_image_shelf_title">Hide image shelf</string>
+    <string name="morphe_channel_page_sections_screen_summary">Choose which tabs and sections to hide on channel pages</string>
     <string name="morphe_hide_image_shelf_summary">Hides image shelves in search results</string>
     <!-- 'Invite others to message' should be translated using the same localized wording YouTube displays
           for the card in the Messages section at the top of the Notifications tab. -->
