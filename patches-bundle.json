@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-09-15T04:21:33",
-  "description": "## [1.47.3](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.2...v1.47.3) (2026-09-15)\n\n### 🐛 Bug Fixes\n\n* **xml:** add missing channelwhitelist string in default EN values file ([89b28fa](https://github.com/mrx7014/MRXHalawa-Patches/commit/89b28faedde0083d19013377dc280711f8949de0))",
-  "download_url": "https://github.com/mrx7014/MRXHalawa-Patches/releases/download/v1.47.3/patches-1.47.3.mpp",
+  "created_at": "2026-09-16T05:12:37",
+  "description": "## [1.47.4](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.3...v1.47.4) (2026-09-16)\n\n### 🐛 Bug Fixes\n\n* **xml:** add missing morphe_live_stream_dvr_title to default xml file ([299a247](https://github.com/mrx7014/MRXHalawa-Patches/commit/299a2477f93ac5d54603de065794fe8a8e642d9c))",
+  "download_url": "https://github.com/mrx7014/MRXHalawa-Patches/releases/download/v1.47.4/patches-1.47.4.mpp",
   "signature_download_url": "",
-  "version": "1.47.3"
+  "version": "1.47.4"
 }

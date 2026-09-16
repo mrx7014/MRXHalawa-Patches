@@ -1,3 +1,9 @@
+## [1.47.4](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.3...v1.47.4) (2026-09-16)
+
+### 🐛 Bug Fixes
+
+* **xml:** add missing morphe_live_stream_dvr_title to default xml file ([299a247](https://github.com/mrx7014/MRXHalawa-Patches/commit/299a2477f93ac5d54603de065794fe8a8e642d9c))
+
 ## [1.47.3](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.2...v1.47.3) (2026-09-15)
 
 ### 🐛 Bug Fixes
