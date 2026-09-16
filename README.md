@@ -1,5 +1,7 @@
 # MRXHalawa-Patches
 
+<img src="banner.png" />
+
 > [!IMPORTANT]
 > **THIS PROJECT IS A FORK OF [MORPHE PATCHES](https://github.com/MorpheApp/morphe-patches).**
 > **The original project, its upstream history, and the original authors are credited here.**
