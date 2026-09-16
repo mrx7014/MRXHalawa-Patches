@@ -1,3 +1,10 @@
+## [1.47.5](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.4...v1.47.5) (2026-09-16)
+
+### 🐛 Bug Fixes
+
+* **xml:** add missing strings from default xml file ([13aad3f](https://github.com/mrx7014/MRXHalawa-Patches/commit/13aad3fe92bfbb4f3e4043d18524c52ffb71fc28))
+* **xml:** add missing strings from default xml file ([f6acf1a](https://github.com/mrx7014/MRXHalawa-Patches/commit/f6acf1a02cd3727c07c1537955a9cd8d30938f9e))
+
 ## [1.47.4](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.3...v1.47.4) (2026-09-16)
 
 ### 🐛 Bug Fixes
