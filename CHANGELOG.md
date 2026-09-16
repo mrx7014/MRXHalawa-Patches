@@ -1,3 +1,10 @@
+## [1.47.8](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.7...v1.47.8) (2026-09-16)
+
+### 🐛 Bug Fixes
+
+* **xml:** add missed metadata videos in default xml ([8e07f64](https://github.com/mrx7014/MRXHalawa-Patches/commit/8e07f64cb8504c85ed57d194e290f54fd1f641ce))
+* **xml:** add missed values from default xml file especially personal hide ai features ([a7d82a3](https://github.com/mrx7014/MRXHalawa-Patches/commit/a7d82a3c83263309dde32032eb514b029921a7ca))
+
 ## [1.47.7](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.6...v1.47.7) (2026-09-16)
 
 ### 🐛 Bug Fixes
