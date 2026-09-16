@@ -1,3 +1,9 @@
+## [1.47.6](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.5...v1.47.6) (2026-09-16)
+
+### 🐛 Bug Fixes
+
+* **xml:** add missing morphe_channel_page_sections_screen_title in default xml file ([a2f8d94](https://github.com/mrx7014/MRXHalawa-Patches/commit/a2f8d94c2805083fb3089eab09752b00b95cc8ee))
+
 ## [1.47.5](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.4...v1.47.5) (2026-09-16)
 
 ### 🐛 Bug Fixes

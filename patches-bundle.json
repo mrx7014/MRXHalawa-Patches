@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-09-16T09:19:00",
-  "description": "## [1.47.5](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.4...v1.47.5) (2026-09-16)\n\n### 🐛 Bug Fixes\n\n* **xml:** add missing strings from default xml file ([13aad3f](https://github.com/mrx7014/MRXHalawa-Patches/commit/13aad3fe92bfbb4f3e4043d18524c52ffb71fc28))\n* **xml:** add missing strings from default xml file ([f6acf1a](https://github.com/mrx7014/MRXHalawa-Patches/commit/f6acf1a02cd3727c07c1537955a9cd8d30938f9e))",
-  "download_url": "https://github.com/mrx7014/MRXHalawa-Patches/releases/download/v1.47.5/patches-1.47.5.mpp",
+  "created_at": "2026-09-16T12:17:00",
+  "description": "## [1.47.6](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.5...v1.47.6) (2026-09-16)\n\n### 🐛 Bug Fixes\n\n* **xml:** add missing morphe_channel_page_sections_screen_title in default xml file ([a2f8d94](https://github.com/mrx7014/MRXHalawa-Patches/commit/a2f8d94c2805083fb3089eab09752b00b95cc8ee))",
+  "download_url": "https://github.com/mrx7014/MRXHalawa-Patches/releases/download/v1.47.6/patches-1.47.6.mpp",
   "signature_download_url": "",
-  "version": "1.47.5"
+  "version": "1.47.6"
 }

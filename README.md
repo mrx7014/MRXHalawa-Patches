@@ -25,7 +25,7 @@ The patches are designed to customize app behavior and appearance, hide unwanted
 The generated list below contains the supported applications, patch descriptions, and target versions. It is updated automatically during the release workflow.
 
 <!-- PATCHES_START -->
-> **[v1.47.5](https://github.com/mrx7014/MRXHalawa-Patches/releases/tag/v1.47.5)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;108 patches total
+> **[v1.47.6](https://github.com/mrx7014/MRXHalawa-Patches/releases/tag/v1.47.6)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;108 patches total
 <details>
 <summary>📦 YouTube&nbsp;&nbsp;•&nbsp;&nbsp;83 patches</summary>
 <br>
