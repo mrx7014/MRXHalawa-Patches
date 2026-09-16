@@ -1,3 +1,9 @@
+## [1.47.7](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.6...v1.47.7) (2026-09-16)
+
+### 🐛 Bug Fixes
+
+* **yml:** add missed morphe_channel_page_sections_screen_summary in default xml file ([5598537](https://github.com/mrx7014/MRXHalawa-Patches/commit/5598537526b8b35ca6fa8a21b4d2d3fe997d9f9d))
+
 ## [1.47.6](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.5...v1.47.6) (2026-09-16)
 
 ### 🐛 Bug Fixes
