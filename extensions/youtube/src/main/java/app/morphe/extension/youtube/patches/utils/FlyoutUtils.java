@@ -131,9 +131,18 @@ public final class FlyoutUtils {
                             : "yt_outline_experimental_clock_vd_theme_24"
             );
     private static final String saveToWatchLaterButtonName = str("morphe_save_to_watch_later_flyout_title");
+    private static Drawable getFirstAvailableDrawable(String... names) {
+       for (String name : names) {
+           Drawable drawable = ResourceUtils.getDrawable(name);
+        if (drawable != null) {
+            return drawable;
+        }
+    }
+    return null;
+}
     private static final String blockChannelButtonName = str("morphe_block_channel_flyout_title");
     private static final Drawable blockChannelButtonDrawable =
-            ResourceUtils.getDrawable("yt_outline_flag");
+            getFirstAvailableDrawable("yt_outline_experimental_flag","yt_outline_flag");
 
     private static WeakReference<TextView> customItemTextRef = new WeakReference<>(null);
 
