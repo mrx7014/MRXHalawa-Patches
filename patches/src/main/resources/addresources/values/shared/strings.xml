@@ -102,7 +102,7 @@ To translate new languages or improve the existing translations, visit morphe.so
     <string name="morphe_debug_stacktrace_summary">Includes stack traces in debug logs to help identify errors</string>
     <string name="morphe_debug_toast_on_error_title">Show toast on Morphe error</string>
     <string name="morphe_debug_toast_on_error_user_dialog_message">"Turning off error toasts hides all Morphe error notifications.
-
+    <string name="morphe_app_refresh_rate_summary">Set a custom refresh rate for the app</string>
 You will not be notified of any unexpected events."</string>
     <string name="morphe_debug_export_logs_title">Export debug logs</string>
     <string name="morphe_debug_export_logs_summary">Export Morphe debug logs</string>

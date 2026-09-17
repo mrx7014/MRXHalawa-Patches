@@ -235,7 +235,10 @@ Changes include:
     <string name="morphe_hide_store_button_title">Hide Store button</string>
     <!-- 'Subscribe' should be translated using the same localized wording YouTube displays for the button. -->
     <string name="morphe_hide_subscribe_button_in_channel_page_title">Hide Subscribe button</string>
-
+    <string name="morphe_swipe_zone_preview_summary">Preview the swipe control zones on screen</string>
+    <string name="morphe_hide_ai_features_about_summary">Learn more about how AI features are hidden</string>
+    <string name="morphe_settings_screen_00_about_summary">Information about this settings menu</string>
+    <string name="morphe_spoof_video_streams_about_summary">Learn more about video stream spoofing</string>
     <string name="morphe_explore_menu_screen_title">Explore menu</string>
     <string name="morphe_explore_menu_screen_summary">Choose which components appear in the explore menu</string>
     <string name="morphe_hide_courses_menu_title">Hide Courses menu</string>
