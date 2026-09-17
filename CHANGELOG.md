@@ -1,3 +1,9 @@
+## [1.47.10](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.9...v1.47.10) (2026-09-17)
+
+### 🐛 Bug Fixes
+
+* prevent crash when yt_outline_flag drawable is missing in newer YouTube versions ([7bae5eb](https://github.com/mrx7014/MRXHalawa-Patches/commit/7bae5ebca59abf776309cd64736c803296404c78))
+
 ## [1.47.9](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.8...v1.47.9) (2026-09-17)
 
 ### 🐛 Bug Fixes
