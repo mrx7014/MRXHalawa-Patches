@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-09-16T21:00:31",
-  "description": "## [1.47.8](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.7...v1.47.8) (2026-09-16)\n\n### 🐛 Bug Fixes\n\n* **xml:** add missed metadata videos in default xml ([8e07f64](https://github.com/mrx7014/MRXHalawa-Patches/commit/8e07f64cb8504c85ed57d194e290f54fd1f641ce))\n* **xml:** add missed values from default xml file especially personal hide ai features ([a7d82a3](https://github.com/mrx7014/MRXHalawa-Patches/commit/a7d82a3c83263309dde32032eb514b029921a7ca))",
-  "download_url": "https://github.com/mrx7014/MRXHalawa-Patches/releases/download/v1.47.8/patches-1.47.8.mpp",
+  "created_at": "2026-09-17T08:23:10",
+  "description": "## [1.47.9](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.8...v1.47.9) (2026-09-17)\n\n### 🐛 Bug Fixes\n\n* **yml:** add missed strings of hide ai features in default xml ([6fa45c4](https://github.com/mrx7014/MRXHalawa-Patches/commit/6fa45c4acd911022d50204832d8495da9c7ef305))",
+  "download_url": "https://github.com/mrx7014/MRXHalawa-Patches/releases/download/v1.47.9/patches-1.47.9.mpp",
   "signature_download_url": "",
-  "version": "1.47.8"
+  "version": "1.47.9"
 }

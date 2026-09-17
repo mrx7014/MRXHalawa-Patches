@@ -1,3 +1,9 @@
+## [1.47.9](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.8...v1.47.9) (2026-09-17)
+
+### 🐛 Bug Fixes
+
+* **yml:** add missed strings of hide ai features in default xml ([6fa45c4](https://github.com/mrx7014/MRXHalawa-Patches/commit/6fa45c4acd911022d50204832d8495da9c7ef305))
+
 ## [1.47.8](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.7...v1.47.8) (2026-09-16)
 
 ### 🐛 Bug Fixes
