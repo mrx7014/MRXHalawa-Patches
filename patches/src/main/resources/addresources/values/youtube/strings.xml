@@ -59,9 +59,6 @@ Changes include:
 • Account switch button may not appear on the Library tab."</string>
 
     <!-- layout.hide.general.hideLayoutComponentsPatch -->
-    <string name="morphe_hide_ai_features_screen_title">Hide AI features</string>
-    <string name="morphe_hide_ai_features_screen_summary">Hide AI sections, summaries, Ask buttons, and AI entry points</string>
-    <string name="morphe_hide_ai_features_about_category_title">About</string>
     <string name="morphe_hide_feed_flyout_menu_title">Enable feed flyout menu filter</string>
     <string name="morphe_hide_feed_flyout_menu_filter_strings_title">Feed flyout menu filter</string>
     <string name="morphe_hide_feed_flyout_menu_filter_strings_summary">Enter the flyout menu names to filter by, separated by new lines</string>
@@ -87,7 +84,6 @@ Changes include:
     <string name="morphe_hide_horizontal_shelves_summary">Hides horizontal shelves such as Breaking news, Community posts you may like, Continue watching, Explore more channels, Explore more topics, For You, Latest videos, Most relevant, Posts from Creator\'s Community, Shopping, and Watch it again</string>
     <string name="morphe_hide_hyped_label_title">Hide Hyped label</string>
     <string name="morphe_hide_image_shelf_title">Hide image shelf</string>
-    <string name="morphe_channel_page_sections_screen_summary">Choose which tabs and sections to hide on channel pages</string>
     <string name="morphe_hide_image_shelf_summary">Hides image shelves in search results</string>
     <!-- 'Invite others to message' should be translated using the same localized wording YouTube displays
           for the card in the Messages section at the top of the Notifications tab. -->
@@ -141,7 +137,6 @@ Changes include:
     <string name="morphe_hide_youtube_doodles_summary">Hides seasonal and event-based animations on the YouTube logo</string>
     <string name="morphe_hide_youtube_doodles_user_dialog_message">Showing YouTube Doodles may prevent custom headers from displaying.</string>
 
-    <string name="morphe_channel_page_sections_screen_title">Channel page sections</string>
     <string name="morphe_hide_channel_bar_title">Hide channel bar</string>
     <string name="morphe_hide_channel_watermark_title">Hide channel watermark</string>
     <string name="morphe_hide_chapters_timeline_button_title">Hide Chapters and \'In this video\' button</string>
@@ -175,9 +170,6 @@ Changes include:
     <string name="morphe_hide_description_components_screen_summary">Choose which components appear in the video description</string>
     <string name="morphe_hide_ai_generated_video_summary_section_title">Hide \'AI-generated video summary\' section</string>
     <string name="morphe_hide_ask_section_title">Hide Ask section</string>
-    <string name="morphe_hide_ai_features_title">Hide AI features</string>
-    <string name="morphe_hide_ai_features_summary">Hides AI summaries, Ask buttons, and AI entry points across YouTube.</string>
-    <string name="morphe_hide_ai_features_about_title">Hide AI features</string>
     <string name="morphe_playback_speed_channel_defaults_title">Channel playback speed defaults</string>
     <string name="morphe_playback_speed_channel_defaults_summary">One entry per line: Channel ID=1.5</string>
     <string name="morphe_video_quality_channel_defaults_title">Channel video quality defaults</string>
@@ -236,7 +228,6 @@ Changes include:
     <!-- 'Subscribe' should be translated using the same localized wording YouTube displays for the button. -->
     <string name="morphe_hide_subscribe_button_in_channel_page_title">Hide Subscribe button</string>
     <string name="morphe_swipe_zone_preview_summary">Preview the swipe control zones on screen</string>
-    <string name="morphe_hide_ai_features_about_summary">Learn more about how AI features are hidden</string>
     <string name="morphe_settings_screen_00_about_summary">Information about this settings menu</string>
     <string name="morphe_spoof_video_streams_about_summary">Learn more about video stream spoofing</string>
     <string name="morphe_explore_menu_screen_title">Explore menu</string>
@@ -296,10 +287,6 @@ Changes include:
     <string name="morphe_hide_comments_top_fans_button_title">Hide \'Top fans\' button</string>
     <string name="morphe_sanitize_comments_highlighted_search_links_title">Sanitize highlighted search links</string>
     <string name="morphe_sanitize_comments_highlighted_search_links_summary">Sanitizes highlighted search links, leaving only the original plain text</string>
-    <string name="morphe_video_metadata_screen_title">Video metadata controls</string>
-    <string name="morphe_video_metadata_screen_summary">Hide video timestamps, upload times, and view counts</string>
-    <string name="morphe_search_cleanup_screen_title">Search cleanup</string>
-    <string name="morphe_search_cleanup_screen_summary">Hide Shorts, live content, channels, playlists, and other search clutter</string>
     <string name="morphe_sb_sponsor_color_title">Sponsor</string>
     <string name="morphe_sb_selfpromo_color_title">Self-promotion</string>
     <string name="morphe_sb_interaction_color_title">Interaction reminder</string>
