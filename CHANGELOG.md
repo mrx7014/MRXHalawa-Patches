@@ -1,3 +1,9 @@
+## [1.48.0](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.10...v1.48.0) (2026-09-22)
+
+### ✨ New Features
+
+* remove deprecated YouTube patches ([288c02f](https://github.com/mrx7014/MRXHalawa-Patches/commit/288c02f08976d8bbcb741319c0df6695082347cb))
+
 ## [1.47.10](https://github.com/mrx7014/MRXHalawa-Patches/compare/v1.47.9...v1.47.10) (2026-09-17)
 
 ### 🐛 Bug Fixes
