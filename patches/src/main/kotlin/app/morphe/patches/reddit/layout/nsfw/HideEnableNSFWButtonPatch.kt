@@ -6,6 +6,7 @@
  */
 package app.morphe.patches.reddit.layout.nsfw
 
+import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patches.reddit.misc.flag.featureFlagHookPatch
 import app.morphe.patches.reddit.misc.flag.hookFeatureFlag
 import app.morphe.patches.reddit.shared.Constants.COMPATIBILITY_REDDIT
