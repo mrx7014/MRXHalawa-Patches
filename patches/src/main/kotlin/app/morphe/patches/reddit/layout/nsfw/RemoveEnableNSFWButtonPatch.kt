@@ -12,18 +12,18 @@ import app.morphe.patches.reddit.misc.flag.hookFeatureFlag
 import app.morphe.patches.reddit.shared.Constants.COMPATIBILITY_REDDIT
 
 private const val EXTENSION_CLASS =
-    "Lapp/morphe/extension/reddit/patches/HideEnableNSFWButtonPatch;"
+    "Lapp/morphe/extension/reddit/patches/RemoveEnableNSFWButtonPatch;"
 
 @Suppress("unused")
-val hideEnableNSFWButtonPatch = bytecodePatch(
-    name = "Hide Enable NSFW button",
-    description = "Removes the Enable NSFW button from Reddit settings."
+val removeEnableNSFWButtonPatch = bytecodePatch(
+    name = "Remove Enable NSFW button",
+    description = "Forcibly removes the Enable NSFW button from Reddit settings."
 ) {
     compatibleWith(COMPATIBILITY_REDDIT)
 
     dependsOn(featureFlagHookPatch)
 
     execute {
-        hookFeatureFlag("$EXTENSION_CLASS->hideEnableNSFWButton")
+        hookFeatureFlag("$EXTENSION_CLASS->removeEnableNSFWButton")
     }
 }
