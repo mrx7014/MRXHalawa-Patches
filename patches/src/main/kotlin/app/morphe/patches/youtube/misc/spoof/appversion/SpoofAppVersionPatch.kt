@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 MRX Halawa.
- * https://github.com/mrx7014/MRXHalawa-Patches
+ * Copyright 2026 Morphe.
+ * https://github.com/MorpheApp/morphe-patches
  *
  * See the included NOTICE file for GPLv3 Section 7 terms that apply to Morphe contributions.
  */
@@ -91,7 +91,7 @@ val spoofAppVersionPatch = baseSpoofAppVersionPatch(
 
         /**
          * Fix Shorts no overlay.
-         * See: https://github.com/mrx7014/MRXHalawa-Patches/issues/183.
+         * See: https://github.com/MorpheApp/morphe-patches/issues/183.
          */
         if (is_21_05_or_greater) {
             // YouTube 20.05+ has removed the code for the old Shorts overlay.

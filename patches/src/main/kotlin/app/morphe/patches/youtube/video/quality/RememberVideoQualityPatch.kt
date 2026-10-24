@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 MRX Halawa.
- * https://github.com/mrx7014/MRXHalawa-Patches
+ * Copyright 2026 Morphe.
+ * https://github.com/MorpheApp/morphe-patches
  *
  * Original hard forked code:
  * https://github.com/ReVanced/revanced-patches/commit/724e6d61b2ecd868c1a9a37d465a688e83a74799
@@ -20,7 +20,6 @@ import app.morphe.patches.shared.misc.fix.proto.fixProtoLibraryPatch
 import app.morphe.patches.shared.misc.fix.proto.parseByteArrayMethodRef
 import app.morphe.patches.shared.misc.settings.preference.ListPreference
 import app.morphe.patches.shared.misc.settings.preference.SwitchPreference
-import app.morphe.patches.shared.misc.settings.preference.TextPreference
 import app.morphe.patches.youtube.misc.extension.sharedExtensionPatch
 import app.morphe.patches.youtube.misc.playertype.playerTypeHookPatch
 import app.morphe.patches.youtube.misc.playservice.versionCheckPatch
@@ -87,11 +86,6 @@ val rememberVideoQualityPatch = bytecodePatch {
             ),
             SwitchPreference("morphe_remember_shorts_quality_last_selected", summary = true),
             SwitchPreference("morphe_remember_video_quality_last_selected_toast", summary = true)
-            ,TextPreference(
-                key = "morphe_video_quality_channel_defaults",
-                titleKey = "morphe_video_quality_channel_defaults_title",
-                summaryKey = "morphe_video_quality_channel_defaults_summary"
-            )
         ))
 
         val initialResolutionField = PlaybackStartParametersToStringFingerprint.method

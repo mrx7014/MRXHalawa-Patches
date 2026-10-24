@@ -1,6 +1,6 @@
 /*
- * Copyright 2026 MRX Halawa.
- * https://github.com/mrx7014/MRXHalawa-Patches
+ * Copyright 2026 Morphe.
+ * https://github.com/MorpheApp/morphe-patches
  *
  * Original hard forked code:
  * https://github.com/ReVanced/revanced-patches/commit/724e6d61b2ecd868c1a9a37d465a688e83a74799
@@ -13,9 +13,7 @@ package app.morphe.patches.youtube.video.speed.remember
 import app.morphe.patcher.extensions.InstructionExtensions.addInstruction
 import app.morphe.patcher.patch.bytecodePatch
 import app.morphe.patches.shared.misc.settings.preference.ListPreference
-import app.morphe.patches.shared.misc.settings.preference.NonInteractivePreference
 import app.morphe.patches.shared.misc.settings.preference.SwitchPreference
-import app.morphe.patches.shared.misc.settings.preference.TextPreference
 import app.morphe.patches.youtube.misc.extension.sharedExtensionPatch
 import app.morphe.patches.youtube.misc.settings.PreferenceScreen
 import app.morphe.patches.youtube.misc.settings.settingsPatch
@@ -60,17 +58,7 @@ internal val rememberPlaybackSpeedPatch = bytecodePatch {
                 ),
                 SwitchPreference("morphe_remember_playback_speed_last_selected", summary = true),
                 SwitchPreference("morphe_remember_playback_speed_last_selected_toast", summary = true),
-                SwitchPreference("morphe_disable_playback_speed_music", summary = true),
-                NonInteractivePreference(
-                    key = "morphe_playback_speed_channel_whitelist",
-                    tag = "app.morphe.extension.youtube.settings.preference.ChannelWhitelistPreference",
-                    selectable = true
-                ),
-                TextPreference(
-                    key = "morphe_playback_speed_channel_defaults",
-                    titleKey = "morphe_playback_speed_channel_defaults_title",
-                    summaryKey = "morphe_playback_speed_channel_defaults_summary"
-                )
+                SwitchPreference("morphe_disable_playback_speed_music", summary = true)
             )
         )
 
