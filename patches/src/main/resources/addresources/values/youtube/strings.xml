@@ -1827,4 +1827,4 @@ To fix this, turn on \'Spoof video streams\' and change the \'Default client\' t
     <string name="morphe_remember_live_stream_position_summary">For ongoing live streams, remembers and resumes your playback position instead of seeking to the current live position</string>
     <string name="morphe_remember_live_stream_position_user_dialog_message">This feature does not work with 24/7 live streams and other streams that are \'always on\'</string>
 </resources>
-</resources>
+
