@@ -17,6 +17,7 @@ import app.morphe.patches.shared.misc.settings.preference.NonInteractivePreferen
 import app.morphe.patches.shared.misc.settings.preference.SwitchPreference
 import app.morphe.patches.shared.misc.settings.preference.TextPreference
 import app.morphe.patches.youtube.misc.extension.sharedExtensionPatch
+import app.morphe.patches.youtube.misc.settings.PreferenceScreen
 import app.morphe.patches.youtube.misc.settings.settingsPatch
 import app.morphe.patches.youtube.shared.InitializePlaybackSpeedValuesFingerprint
 import app.morphe.patches.youtube.video.information.EXTENSION_PLAYBACK_SPEED_MENU_INTERFACE
@@ -70,6 +71,17 @@ internal val rememberPlaybackSpeedPatch = bytecodePatch {
                     titleKey = "morphe_playback_speed_channel_defaults_title",
                     summaryKey = "morphe_playback_speed_channel_defaults_summary"
                 )
+            )
+        )
+
+        // The Shorts speed belongs with the other Shorts settings.
+        PreferenceScreen.SHORTS.addPreferences(
+            ListPreference(
+                key = "morphe_shorts_playback_speed_default",
+                // Entries and values are set by the extension code based on the actual speeds available.
+                entriesKey = null,
+                entryValuesKey = null,
+                tag = "app.morphe.extension.youtube.settings.preference.CustomVideoSpeedListPreference"
             )
         )
 

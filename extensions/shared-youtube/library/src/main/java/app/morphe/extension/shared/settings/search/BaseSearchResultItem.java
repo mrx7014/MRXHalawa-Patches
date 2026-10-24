@@ -61,7 +61,7 @@ public abstract class BaseSearchResultItem {
                 case SWITCH ->              getResourceIdentifier("morphe_preference_search_result_switch");
                 case LIST   ->              getResourceIdentifier("morphe_preference_search_result_list");
                 case COLOR_PICKER ->        getResourceIdentifier("morphe_preference_search_result_color");
-                case GROUP_HEADER ->        getResourceIdentifier("morphe_preference_search_result_group_header");
+                case GROUP_HEADER ->        throw new IllegalStateException("Created in code");
                 case NO_RESULTS   ->        getResourceIdentifier("morphe_preference_search_no_result");
             };
         }
@@ -202,7 +202,7 @@ public abstract class BaseSearchResultItem {
         }
 
         /**
-         * Matching is case insensitive and ignores punctuation.
+         * Matching is case-insensitive and ignores punctuation.
          */
         @Override
         boolean matchesQuery(String query) {

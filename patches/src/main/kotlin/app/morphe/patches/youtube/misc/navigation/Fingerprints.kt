@@ -16,8 +16,8 @@ import app.morphe.patcher.checkCast
 import app.morphe.patcher.methodCall
 import app.morphe.patcher.opcode
 import app.morphe.patcher.string
-import app.morphe.patches.all.misc.resources.ResourceType
-import app.morphe.patches.all.misc.resources.resourceLiteral
+import app.morphe.patcher.resource.ResourceType
+import app.morphe.patcher.resourceLiteral
 import app.morphe.patches.youtube.layout.buttons.navigation.navigationBarPatch
 import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.Opcode
@@ -119,6 +119,13 @@ internal object PivotBarButtonsViewSetSelectedFingerprint : Fingerprint(
     filters = listOf(
         methodCall(name = "setSelected")
     )
+)
+
+internal object PivotBarDispatchTouchEventFingerprint : Fingerprint(
+    definingClass = "Lcom/google/android/libraries/youtube/rendering/ui/pivotbar/PivotBar;",
+    name = "dispatchTouchEvent",
+    returnType = "Z",
+    parameters = listOf("Landroid/view/MotionEvent;")
 )
 
 internal object PivotBarConstructorFingerprint : Fingerprint(
