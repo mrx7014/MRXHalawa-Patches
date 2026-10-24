@@ -217,6 +217,9 @@ public class Settings extends SharedYouTubeSettings {
     public static final BooleanSetting DEARROW_CONNECTION_TOAST = new BooleanSetting("morphe_dearrow_connection_toast", TRUE, new DeArrowAvailability());
     public static final EnumSetting<ThumbnailStillTime> DEARROW_THUMBNAIL_STILLS_TIME = new EnumSetting<>("morphe_dearrow_thumbnail_stills_time", ThumbnailStillTime.MIDDLE, new StillImagesAvailability());
 
+    // Block channels
+    public static final BooleanSetting BLOCK_CHANNELS = new BooleanSetting("morphe_block_channels", FALSE);
+    public static final StringSetting BLOCK_CHANNELS_LIST = new StringSetting("morphe_block_channels_list", "", true, parent(BLOCK_CHANNELS));
     // Channel page
     public static final BooleanSetting HIDE_CHANNEL_TAB = new BooleanSetting("morphe_hide_channel_tab", FALSE);
     public static final StringSetting HIDE_CHANNEL_TAB_FILTER_STRINGS = new StringSetting("morphe_hide_channel_tab_filter_strings", "", true, parent(HIDE_CHANNEL_TAB));
