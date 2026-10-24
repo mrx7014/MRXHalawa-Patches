@@ -17,14 +17,13 @@
 
 package app.morphe.extension.shared.settings.preference;
 
-import static app.morphe.extension.shared.StringRef.str;
 import static app.morphe.extension.shared.ResourceUtils.getIdentifierOrThrow;
+import static app.morphe.extension.shared.StringRef.str;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.text.Editable;
@@ -33,7 +32,6 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -42,7 +40,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import androidx.annotation.ColorInt;
-import androidx.annotation.Nullable;
 
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -98,14 +95,10 @@ public class ColorPickerPreference extends EditTextPreference {
     /** Whether the opacity slider is enabled. */
     private boolean opacitySliderEnabled = false;
 
-    public static final int ID_MORPHE_COLOR_PICKER_VIEW =
-            getIdentifierOrThrow(ResourceType.ID, "morphe_color_picker_view");
     public static final int ID_PREFERENCE_COLOR_DOT =
             getIdentifierOrThrow(ResourceType.ID, "preference_color_dot");
     public static final int LAYOUT_MORPHE_COLOR_DOT_WIDGET =
             getIdentifierOrThrow(ResourceType.LAYOUT, "morphe_color_dot_widget");
-    public static final int LAYOUT_MORPHE_COLOR_PICKER =
-            getIdentifierOrThrow(ResourceType.LAYOUT, "morphe_color_picker");
 
     /**
      * Removes non-valid hex characters, converts to all uppercase,
@@ -188,9 +181,7 @@ public class ColorPickerPreference extends EditTextPreference {
         EditText editText = getEditText();
         editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
                 | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            editText.setAutofillHints((String) null);
-        }
+        editText.setAutofillHints((String) null);
 
         // Set the widget layout to a custom layout containing the colored dot.
         setWidgetLayoutResource(LAYOUT_MORPHE_COLOR_DOT_WIDGET);
@@ -274,21 +265,6 @@ public class ColorPickerPreference extends EditTextPreference {
     }
 
     /**
-     * Hook for subclasses to add a custom view to the top of the dialog.
-     */
-    @Nullable
-    protected View createExtraDialogContentView(Context context) {
-        return null; // Default implementation returns no extra view.
-    }
-
-    /**
-     * Hook for subclasses to handle the OK button click.
-     */
-    protected void onDialogOkClicked() {
-        // Default implementation does nothing.
-    }
-
-    /**
      * Hook for subclasses to handle the Neutral button click.
      */
     protected void onDialogNeutralClicked() {
@@ -316,18 +292,12 @@ public class ColorPickerPreference extends EditTextPreference {
         LinearLayout contentContainer = new LinearLayout(context);
         contentContainer.setOrientation(LinearLayout.VERTICAL);
 
-        // Add extra view from subclass if it exists.
-        View extraView = createExtraDialogContentView(context);
-        if (extraView != null) {
-            contentContainer.addView(extraView);
-        }
-
-        // Inflate color picker view.
-        View colorPicker = LayoutInflater.from(context).inflate(LAYOUT_MORPHE_COLOR_PICKER, null);
-        dialogColorPickerView = colorPicker.findViewById(ID_MORPHE_COLOR_PICKER_VIEW);
+        // Color picker view, it measures its own height.
+        dialogColorPickerView = new ColorPickerView(context);
         dialogColorPickerView.setOpacitySliderEnabled(opacitySliderEnabled);
         dialogColorPickerView.setColor(currentColor);
-        contentContainer.addView(colorPicker);
+        contentContainer.addView(dialogColorPickerView, new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
 
         // Horizontal layout for preview and EditText.
         LinearLayout inputLayout = new LinearLayout(context);
@@ -402,8 +372,6 @@ public class ColorPickerPreference extends EditTextPreference {
                             return;
                         }
                         setText(colorString);
-
-                        onDialogOkClicked();
                     } catch (Exception ex) {
                         // Should never happen due to a bad color string,
                         // since the text is validated and fixed while the user types.

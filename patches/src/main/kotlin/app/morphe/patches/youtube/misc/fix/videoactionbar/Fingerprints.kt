@@ -9,12 +9,25 @@ package app.morphe.patches.youtube.misc.fix.videoactionbar
 
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.fieldAccess
-import app.morphe.patches.shared.BuildInnerTubeProtoRequestUriFingerprint
 import app.morphe.patches.youtube.shared.CLIENT_INFO_CLASS
 import com.android.tools.smali.dexlib2.Opcode
 
 internal object BuildInnerTubeProtoRequestBodyFingerprint : Fingerprint(
-    classFingerprint = BuildInnerTubeProtoRequestUriFingerprint,
+//    classFingerprint = BuildInnerTubeProtoRequestUriFingerprint,
+    parameters = listOf("L"),
+    returnType = "Lcom/google/protobuf/MessageLite;",
+    filters = listOf(
+        fieldAccess(
+            opcode = Opcode.IPUT_OBJECT,
+            definingClass = CLIENT_INFO_CLASS
+        )
+    )
+)
+
+/**
+ * [BuildInnerTubeProtoRequestBodyFingerprint] of any request class.
+ */
+internal object InnerTubeRequestBodyFingerprint : Fingerprint(
     parameters = listOf("L"),
     returnType = "Lcom/google/protobuf/MessageLite;",
     filters = listOf(

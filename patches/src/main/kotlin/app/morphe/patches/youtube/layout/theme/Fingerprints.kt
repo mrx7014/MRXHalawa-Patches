@@ -17,8 +17,8 @@ import app.morphe.patcher.anyInstruction
 import app.morphe.patcher.literal
 import app.morphe.patcher.methodCall
 import app.morphe.patcher.opcode
-import app.morphe.patches.all.misc.resources.ResourceType
-import app.morphe.patches.all.misc.resources.resourceLiteral
+import app.morphe.patcher.resource.ResourceType
+import app.morphe.patcher.resourceLiteral
 import app.morphe.patches.youtube.shared.YOUTUBE_MAIN_ACTIVITY_CLASS_TYPE
 import com.android.tools.smali.dexlib2.Opcode
 
@@ -96,18 +96,15 @@ internal object ShowSplashScreenFingerprint : Fingerprint(
             opcode = Opcode.MOVE_RESULT,
             location = MatchAfterImmediately()
         ),
-        opcode(
-            opcode = Opcode.IF_EQZ,
+        anyInstruction(
+            opcode(Opcode.IF_EQZ),
+            opcode(Opcode.IF_NEZ),
             location = MatchAfterImmediately()
-        ),
-        opcode(
-            opcode = Opcode.GOTO,
-            location = MatchAfterWithin(2)
         ),
         anyInstruction(
             opcode(Opcode.CONST_4),
             opcode(Opcode.CONST_16),
-            location = MatchAfterImmediately()
+            location = MatchAfterWithin(3)
         ),
         opcode(
             opcode = Opcode.IF_NE,

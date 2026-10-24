@@ -8,13 +8,14 @@ package app.morphe.patches.youtube.misc.chapters
 
 import app.morphe.patcher.Fingerprint
 import app.morphe.patcher.InstructionLocation.MatchAfterImmediately
+import app.morphe.patcher.InstructionLocation.MatchAfterLast
 import app.morphe.patcher.InstructionLocation.MatchAfterWithin
 import app.morphe.patcher.checkCast
 import app.morphe.patcher.fieldAccess
 import app.morphe.patcher.methodCall
 import app.morphe.patcher.opcode
-import app.morphe.patches.all.misc.resources.ResourceType
-import app.morphe.patches.all.misc.resources.resourceLiteral
+import app.morphe.patcher.resource.ResourceType
+import app.morphe.patcher.resourceLiteral
 import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.Opcode
 
@@ -31,7 +32,8 @@ internal fun getTimelineMarkersArrayFingerprint(timelineMarkerClassName: String)
     returnType = "[$timelineMarkerClassName",
     parameters = listOf("L"),
     filters = listOf(
-        checkCast("[$timelineMarkerClassName")
+        checkCast("[$timelineMarkerClassName"),
+        opcode(Opcode.RETURN_OBJECT, location = MatchAfterLast())
     )
 ) {}
 

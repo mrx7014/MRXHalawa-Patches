@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 group = "app.morphe"
 
 patches {
@@ -14,7 +16,32 @@ patches {
 
 // Separate configuration so gson is available at runtime for the
 // generatePatchesList task but never bundled into the APK.
-val patchListGeneratorClasspath: Configuration by configurations.creating
+val patchListGeneratorClasspath = configurations.create("patchListGeneratorClasspath")
+val jamApk = providers.gradleProperty("jamApk")
+val jamOutput = providers.gradleProperty("jamOutput")
+
+// Resolve local composite build projects (smali, patcher) to jars for compilation,
+// same as the runtime classpath. Otherwise, both the classes directory and the jar
+// are passed to D8 by buildAndroid, and it fails with "Classpath type already present".
+configurations.compileClasspath {
+    attributes {
+        attribute(LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE, objects.named(LibraryElements.JAR))
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+    }
+}
 
 dependencies {
     // Required due to smali, or build fails. Can be removed once smali is bumped.
@@ -26,9 +53,18 @@ dependencies {
 
     // Android API stubs defined here.
     compileOnly(project(":patches:stub"))
+
+    testImplementation(kotlin("test"))
+    testImplementation(libs.kotlinx.coroutines.core)
+    testRuntimeOnly(libs.junit.jupiter.engine)
 }
 
 tasks {
+    test {
+        useJUnitPlatform()
+        jamApk.orNull?.let { systemProperty("jamApk", it) }
+    }
+
     register<JavaExec>("checkStringResources") {
         description = "Checks resource strings for invalid formatting"
 
@@ -45,6 +81,21 @@ tasks {
 
         classpath = sourceSets["main"].runtimeClasspath + patchListGeneratorClasspath
         mainClass.set("app.morphe.util.PatchListGeneratorKt")
+    }
+
+    register<JavaExec>("validateJam") {
+        description = "Patches a supplied YouTube Music APK for Jam validation and optional device testing"
+        group = "verification"
+
+        dependsOn("testClasses")
+        classpath = sourceSets["test"].runtimeClasspath
+        mainClass.set("app.morphe.patches.music.interaction.jam.JamDeviceBuildKt")
+
+        doFirst {
+            val apk = jamApk.orNull
+                ?: throw GradleException("validateJam requires -PjamApk=/absolute/path/to/ytm.apk")
+            setArgs(listOfNotNull(apk, jamOutput.orNull))
+        }
     }
     // Used by gradle-semantic-release-plugin.
     publish {
