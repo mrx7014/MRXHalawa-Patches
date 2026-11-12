@@ -93,10 +93,6 @@ För att använda en äldre version måste du &lt;b&gt;avinstallera&lt;/b&gt; Re
   <string name="morphe_keep_feed_position_summary">Behåller flödet på samma position efter att du har stängt ett inlägg, en bild eller en video, i stället för att flytta det öppnade inlägget till toppen</string>
   <string name="morphe_feed_media_max_height_title">Maxhöjd för media i flödet</string>
   <string name="morphe_feed_media_max_height_summary">Maxhöjd för bilder, videor och gallerier i flödet, som en multipel av deras bredd. Högre media beskärs. 1.33 är Reddits standard</string>
-  <string name="morphe_redgifs_audio_title">Spela Redgifs med ljud</string>
-  <string name="morphe_redgifs_audio_summary">Spelar det ursprungliga Redgifs-videon istället för Reddit:s kopia, som ofta saknar ljud</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD-kvalitet</string>
-  <string name="morphe_redgifs_hd_summary">Spelar Redgifs-video i HD. HD-videor är större och kan pausas för att ladda</string>
   <string name="morphe_download_location_title">Nedladdningsplats</string>
   <string name="morphe_download_location_all_title">Alla konton</string>
   <string name="morphe_download_location_default_summary">Reddits standard: bilder i Pictures/Reddit, videor i Download</string>

@@ -93,10 +93,6 @@ Da biste koristili stariju verziju, morate &lt;b&gt;deinstalirati&lt;/b&gt; Redd
   <string name="morphe_keep_feed_position_summary">Zadržava feed na istom položaju nakon zatvaranja objave, slike ili videozapisa, umjesto da otvorenu objavu pomakne na vrh</string>
   <string name="morphe_feed_media_max_height_title">Maksimalna visina medijskog sadržaja u feedu</string>
   <string name="morphe_feed_media_max_height_summary">Maksimalna visina slika, videozapisa i galerija u feedu, kao višekratnik njihove širine. Viši medijski sadržaj se obrezuje. 1,33 je Redditova zadana vrijednost</string>
-  <string name="morphe_redgifs_audio_title">Sviraj Redgifs s zvukom</string>
-  <string name="morphe_redgifs_audio_summary">Reproducira izvorni Redgifs video umjesto Redditove kopije, koja često nema zvuka</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD kvaliteta</string>
-  <string name="morphe_redgifs_hd_summary">Reproducira HD Redgifs video. HD videozapisi su veći i mogu zastati dok se učitavaju</string>
   <string name="morphe_download_location_title">Lokacija preuzimanja</string>
   <string name="morphe_download_location_all_title">Svi računi</string>
   <string name="morphe_download_location_default_summary">Redditov zadan: slike u Pictures/Reddit, videi u Download</string>

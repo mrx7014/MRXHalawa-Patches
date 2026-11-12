@@ -93,10 +93,6 @@ Per utilitzar una versió més antiga, heu de &lt;b&gt;desinstal·lar&lt;/b&gt; 
   <string name="morphe_keep_feed_position_summary">Manté el feed a la mateixa posició després de tancar una publicació, imatge o vídeo, en lloc de moure la publicació oberta a la part superior</string>
   <string name="morphe_feed_media_max_height_title">Alçada màxima dels mitjans del feed</string>
   <string name="morphe_feed_media_max_height_summary">Alçada màxima de les imatges, els vídeos i les galeries al feed, com a múltiple de la seva amplada. El contingut més alt es retalla. 1,33 és el valor per defecte de Reddit</string>
-  <string name="morphe_redgifs_audio_title">Reproduir Redgifs amb àudio</string>
-  <string name="morphe_redgifs_audio_summary">Reprodueix el vídeo original de Redgifs en lloc de la còpia de Reddit, que sovint no té àudio</string>
-  <string name="morphe_redgifs_hd_title">Qualitat HD de Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Reprodueix el vídeo de Redgifs en HD. Els vídeos en HD són més grans i poden pausar-se per carregar</string>
   <string name="morphe_download_location_title">Ubicació de descàrrega</string>
   <string name="morphe_download_location_all_title">Tots els comptes</string>
   <string name="morphe_download_location_default_summary">Per defecte a Reddit: imatges a Pictures/Reddit, vídeos a Download</string>

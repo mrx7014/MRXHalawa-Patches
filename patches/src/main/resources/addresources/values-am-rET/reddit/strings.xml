@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">አንድን ጽሁፍ፣ ምስል ወይም ቪዲዮ ከዘጉ በኋላ፣ የተከፈተው ጽሁፍ ወደ ላይ ከመሸጋገሩ ይልቅ የፊድ ቦታው እንዳይቀየር ያደርጋል</string>
   <string name="morphe_feed_media_max_height_title">የፊድ ሚዲያ ከፍተኛ ቁመት</string>
   <string name="morphe_feed_media_max_height_summary">በፊድ ውስጥ ያሉ የምስሎች፣ የቪዲዮዎች እና የጋለሪዎች ከፍተኛ ቁመት፣ ከስፋታቸው ጋር ሲነጻጸር። ረጅም ሚዲያዎች ይቆረጣሉ። 1.33 የReddit መደበኛ ቁመት ነው</string>
-  <string name="morphe_redgifs_audio_title">Redgifsን በድምፅ አጫውት</string>
-  <string name="morphe_redgifs_audio_summary">ብዙውን ጊዜ ድምፅ የሌለውን የReddit ቅጂ ከመጫወት ይልቅ ዋናውን የRedgifs ቪዲዮ ያጫውታል</string>
-  <string name="morphe_redgifs_hd_title">የRedgifs HD ጥራት</string>
-  <string name="morphe_redgifs_hd_summary">የHD Redgifs ቪዲዮን ያጫውታል። የHD ቪዲዮዎች መጠናቸው ትልቅ ስለሆነ ለመጫን ሊቆሙ ይችላሉ</string>
   <string name="morphe_download_location_title">የማውረጃ ቦታ</string>
   <string name="morphe_download_location_all_title">ሁሉም አካውንቶች</string>
   <string name="morphe_download_location_default_summary">የReddit መደበኛ፡ ምስሎች በ Pictures/Reddit፣ ቪዲዮዎች በ Download ውስጥ</string>

@@ -93,10 +93,6 @@ Untuk menggunakan versi yang lebih lama, Anda harus &lt;b&gt;mencopot pemasangan
   <string name="morphe_keep_feed_position_summary">Menjaga posisi feed tetap sama setelah menutup postingan, gambar, atau video, alih-alih memindahkan postingan yang dibuka ke atas</string>
   <string name="morphe_feed_media_max_height_title">Tinggi maksimum media feed</string>
   <string name="morphe_feed_media_max_height_summary">Tinggi maksimum gambar, video, dan galeri di feed, sebagai kelipatan dari lebarnya. Media yang lebih tinggi akan dipotong. 1.33 adalah default Reddit</string>
-  <string name="morphe_redgifs_audio_title">Putar Redgifs dengan audio</string>
-  <string name="morphe_redgifs_audio_summary">Memutar video Redgifs asli alih-alin salinan Reddit, yang sering tidak memiliki audio</string>
-  <string name="morphe_redgifs_hd_title">Kualitas HD Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Memutar video Redgifs HD. Video HD lebih besar dan mungkin jeda untuk memuat</string>
   <string name="morphe_download_location_title">Lokasi unduhan</string>
   <string name="morphe_download_location_all_title">Semua akun</string>
   <string name="morphe_download_location_default_summary">Bawaan Reddit: gambar di Pictures/Reddit, video di Download</string>

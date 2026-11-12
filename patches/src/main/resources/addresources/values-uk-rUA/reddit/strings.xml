@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">Зберігає стрічку в тій самій позиції після закриття допису, зображення чи відео, замість переміщення відкритого допису вгору</string>
   <string name="morphe_feed_media_max_height_title">Максимальна висота медіа в стрічці</string>
   <string name="morphe_feed_media_max_height_summary">Максимальна висота зображень, відео та галерей у стрічці, як кратне їхньої ширини. Вищі медіа обрізаються. 1.33 це типове значення Reddit</string>
-  <string name="morphe_redgifs_audio_title">Відтворювати Redgifs зі звуком</string>
-  <string name="morphe_redgifs_audio_summary">Відтворює оригінальне відео з Redgifs замість копії на Reddit, у якій часто немає звуку</string>
-  <string name="morphe_redgifs_hd_title">Redgifs у якості HD</string>
-  <string name="morphe_redgifs_hd_summary">Відтворює відео з Redgifs у форматі HD. Відео у форматі HD мають більший розмір, тому відтворення може призупинятися для завантаження</string>
   <string name="morphe_download_location_title">Розташування завантажень</string>
   <string name="morphe_download_location_all_title">Усі облікові записи</string>
   <string name="morphe_download_location_default_summary">Типове налаштування Reddit: зображення в Pictures/Reddit, відео в Download</string>

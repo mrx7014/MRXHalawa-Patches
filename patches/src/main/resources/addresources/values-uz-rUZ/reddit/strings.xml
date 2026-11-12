@@ -93,10 +93,6 @@ Eski versiyadan foydalanish uchun, Reddit ilovasini &lt;b&gt;o'chirishingiz&lt;/
   <string name="morphe_keep_feed_position_summary">Post, rasm yoki videoni yopgandan so\'ng, ochilgan postni yuqoriga ko\'tarmasdan, lentani avvalgi holatida saqlaydi</string>
   <string name="morphe_feed_media_max_height_title">Lenta media fayllarining maksimal balandligi</string>
   <string name="morphe_feed_media_max_height_summary">Lentadagi rasm, video va galereyalarning kengligiga nisbatan maksimal balandligi. Balandroq media fayllar qirqib tashlanadi. 1.33 - Reddit’ning standart qiymati</string>
-  <string name="morphe_redgifs_audio_title">Redgifs\'larni audio bilan ijro etish</string>
-  <string name="morphe_redgifs_audio_summary">Reddit nusxasi o\'rniga asl Redgifs videosini ijro etadi, chunki nusxada ko\'pincha audio bo\'lmaydi</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD sifati</string>
-  <string name="morphe_redgifs_hd_summary">HD Redgifs videosini ijro etadi. HD videolar hajmi kattaroq bo\'lib, yuklanish uchun to\'xtab qolishi mumkin</string>
   <string name="morphe_download_location_title">Yuklab olish joyi</string>
   <string name="morphe_download_location_all_title">Barcha akkauntlar</string>
   <string name="morphe_download_location_default_summary">Reddit standarti: tasvirlar Pictures/Reddit papkasiga, videolar Download papkasiga</string>

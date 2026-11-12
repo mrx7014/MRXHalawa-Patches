@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">ຮັກສາຕຳແໜ່ງຂອງ feed ໃຫ້ຢູ່ບ່ອນເກົ່າຫຼັງຈາກປິດໂພສ, ຮູບພາບ ຫຼື ວິດີໂອ, ແທນທີ່ຈະຍ້າຍໂພສທີ່ເປີດຢູ່ໄປໄວ້ທາງເທິງ</string>
   <string name="morphe_feed_media_max_height_title">ຄວາມສູງສູງສຸດຂອງສື່ໃນ feed</string>
   <string name="morphe_feed_media_max_height_summary">ຄວາມສູງສູງສຸດຂອງຮູບພາບ, ວິດີໂອ ແລະ ແກ Lເລີຣີ ໃນ feed, ໂດຍຄິດໄລ່ເປັນຕົວຄູນຂອງຄວາມກວ້າງ. ສື່ທີ່ສູງກວ່ານີ້ຈະຖືກຕັດອອກ. 1.33 ແມ່ນຄ່າເລີ່ມຕົ້ນຂອງ Reddit</string>
-  <string name="morphe_redgifs_audio_title">ຫຼິ້ນ Redgifs ພ້ອມສຽງ</string>
-  <string name="morphe_redgifs_audio_summary">ຫຼິ້ນວິດີໂອ Redgifs ຕົ້ນສະບັບ ແທນທີ່ຈະເປັນສຳເນົາຂອງ Reddit, ເຊິ່ງມັກຈະບໍ່ມີສຽງ</string>
-  <string name="morphe_redgifs_hd_title">ຄຸນນະພາບ Redgifs HD</string>
-  <string name="morphe_redgifs_hd_summary">ຫຼິ້ນວິດີໂອ Redgifs HD. ວິດີໂອ HD ຈະມີຂະໜາດໃຫຍ່ກວ່າ ແລະ ອາດຈະມີການຢຸດເພື່ອໂຫຼດ</string>
   <string name="morphe_download_location_title">ສະຖານທີ່ດາວໂຫຼດ</string>
   <string name="morphe_download_location_all_title">ທຸກບັນຊີ</string>
   <string name="morphe_download_location_default_summary">ຄ່າເລີ່ມຕົ້ນຂອງ Reddit: ຮູບພາບຢູ່ໃນ Pictures/Reddit, ວິດີໂອຢູ່ໃນ Download</string>

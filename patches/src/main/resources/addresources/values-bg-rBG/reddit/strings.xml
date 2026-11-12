@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">Запазва позицията на потока след затваряне на публикация, изображение или видео, вместо да премества отворената публикация в началото</string>
   <string name="morphe_feed_media_max_height_title">Максимална височина на медиите в потока</string>
   <string name="morphe_feed_media_max_height_summary">Максимална височина на изображенията, видеоклиповете и галериите в потока, като кратно на тяхната ширина. По-високите медийни елементи се изрязват. 1,33 е стойността по подразбиране в Reddit</string>
-  <string name="morphe_redgifs_audio_title">Възпроизвеждане на Redgifs със звук</string>
-  <string name="morphe_redgifs_audio_summary">Възпроизвежда оригиналното видео от Redgifs вместо копие от Reddit, което често няма аудио</string>
-  <string name="morphe_redgifs_hd_title">HD качество в Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Възпроизвежда HD видеа от Redgifs. HD видеата са по-големи и могат да паузират за зареждане</string>
   <string name="morphe_download_location_title">Местоположение за изтегляне</string>
   <string name="morphe_download_location_all_title">Всички акаунти</string>
   <string name="morphe_download_location_default_summary">По подразбиране на Reddit: изображения в Pictures/Reddit, видеоклипове в Download</string>

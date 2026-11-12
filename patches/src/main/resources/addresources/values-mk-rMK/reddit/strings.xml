@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">Го држи фидот на истата позиција по затворање на објава, слика или видео, наместо да ја помести отворената објава на врвот</string>
   <string name="morphe_feed_media_max_height_title">Максимална висина на медиумите во фидот</string>
   <string name="morphe_feed_media_max_height_summary">Максимална висина на сликите, видеата и галериите во фидот, како множител на нивната ширина. Повисоките медиуми се кратат. 1.33 е стандардната вредност на Reddit</string>
-  <string name="morphe_redgifs_audio_title">Пуштај Redgifs со звук</string>
-  <string name="morphe_redgifs_audio_summary">Пушта го оригиналното Redgifs видео наместо копијата од Reddit, која често нема звук</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD квалитет</string>
-  <string name="morphe_redgifs_hd_summary">Пушта HD Redgifs видео. HD видеата се поголеми и можат да застанат за да се вчитаат</string>
   <string name="morphe_download_location_title">Локација за преземање</string>
   <string name="morphe_download_location_all_title">Сите сметки</string>
   <string name="morphe_download_location_default_summary">Стандардно за Reddit: слики во Pictures/Reddit, видеа во Download</string>

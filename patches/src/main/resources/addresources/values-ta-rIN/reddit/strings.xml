@@ -28,10 +28,6 @@ Second \"item\" text"</string>
   <string name="morphe_show_flairs_in_home_feed_title">முகப்பு ஃபீடில் ஃபிளயர்களைக் காட்டவும்</string>
   <string name="morphe_show_flairs_in_home_feed_summary">முகப்பு ஃபீடில் பதிவின் ஃபிளயர் பேட்ஜ்களைக் காட்டும்</string>
   <string name="morphe_show_flairs_in_home_feed_user_dialog_message">சில ஃபீட் உருப்படிகளில் ஃபிளயர் தெரியாமல் இருக்கலாம்</string>
-  <string name="morphe_redgifs_audio_title">ஆடியோவுடன் Redgifs-ஐ இயக்கவும்</string>
-  <string name="morphe_redgifs_audio_summary">ஆடியோ இல்லாத Reddit-ன் நகலுக்குப் பதிலாக, அசல் Redgifs வீடியோவை இயக்குகிறது</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD தரம்</string>
-  <string name="morphe_redgifs_hd_summary">HD Redgifs வீடியோவை இயக்குகிறது. HD வீடியோக்கள் பெரியவை மற்றும் பதிவிறக்கம் செய்ய இடைநிறுத்தப்படலாம்</string>
   <string name="morphe_download_location_title">பதிவிறக்க இடம்</string>
   <string name="morphe_download_location_all_title">அனைத்து கணக்குகள்</string>
   <string name="morphe_download_location_default_summary">Reddit-ன் இயல்புநிலை: படங்கள் Pictures/Reddit-லும், வீடியோக்கள் Download-லும் சேமிக்கப்படும்</string>

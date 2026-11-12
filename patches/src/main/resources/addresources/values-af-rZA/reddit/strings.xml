@@ -93,10 +93,6 @@ Om 'n ouer weergawe te gebruik, moet jy Reddit &lt;b&gt;deïnstalleer&lt;/b&gt; 
   <string name="morphe_keep_feed_position_summary">Behou die voer op dieselfde posisie nadat \'n pos, beeld of video gesluit is, in plaas daarvan om die geopende pos na bo te skuif</string>
   <string name="morphe_feed_media_max_height_title">Maksimum hoogte vir voermedia</string>
   <string name="morphe_feed_media_max_height_summary">Maksimum hoogte van beelde, video\'s en galerye in die voer, as \'n veelvoud van hul breedte. Hoër media word afgesny. 1.33 is Reddit se verstek</string>
-  <string name="morphe_redgifs_audio_title">Speel Redgifs met klank</string>
-  <string name="morphe_redgifs_audio_summary">Speel die oorspronklike Redgifs-video af in plaas van Reddit se kopie, wat dikwels geen klank het nie</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD-kwaliteit</string>
-  <string name="morphe_redgifs_hd_summary">Speel die HD Redgifs-video af. HD-video\'s is groter en kan pouseer om te laai</string>
   <string name="morphe_download_location_title">Aflaaiplek</string>
   <string name="morphe_download_location_all_title">Alle rekeninge</string>
   <string name="morphe_download_location_default_summary">Reddit se standaard: prente in Beeldmateriaal/Reddit, video\'s in Aflaais</string>

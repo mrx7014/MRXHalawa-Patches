@@ -93,10 +93,6 @@ Til að nota eldri útgáfu þarftu að &lt;b&gt;fjarlægja&lt;/b&gt; Reddit og 
   <string name="morphe_keep_feed_position_summary">Heldur straumnum í sömu stöðu eftir að færslu, mynd eða myndbandi er lokað, í stað þess að færa opnu færsluna efst</string>
   <string name="morphe_feed_media_max_height_title">Hámarkshæð straummiðla</string>
   <string name="morphe_feed_media_max_height_summary">Hámarkshæð mynda, myndbanda og gallería í straumnum, sem margfeldi af breidd þeirra. Hærri miðlar eru klipptir. 1,33 er sjálfgefið hjá Reddit</string>
-  <string name="morphe_redgifs_audio_title">Spila Redgifs með hljóði</string>
-  <string name="morphe_redgifs_audio_summary">Spilar upprunalega Redgifs myndbandið í stað afrits frá Reddit, sem er oft án hljóðs</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD gæði</string>
-  <string name="morphe_redgifs_hd_summary">Spilar HD Redgifs myndbandið. HD myndbönd eru stærri og geta stoppað til að hlaðast</string>
   <string name="morphe_download_location_title">Niðurhalsstaðsetning</string>
   <string name="morphe_download_location_all_title">Allir aðgangar</string>
   <string name="morphe_download_location_default_summary">Sjálfgefið hjá Reddit: myndir í Pictures/Reddit, myndbönd í Download</string>

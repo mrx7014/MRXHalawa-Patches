@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">पोस्ट, इमेज किंवा व्हिडिओ बंद केल्यानंतर, उघडलेली पोस्ट वर नेण्याऐवजी फीड त्याच स्थितीत ठेवते</string>
   <string name="morphe_feed_media_max_height_title">फीड मीडियाची कमाल उंची</string>
   <string name="morphe_feed_media_max_height_summary">फीडमधील प्रतिमा, व्हिडिओ आणि गॅलरीची कमाल उंची, त्यांच्या रुंदीच्या पटीत. अधिक उंचीचे मीडिया क्रॉप केले जातात. 1.33 हे Reddit चे डीफॉल्ट आहे</string>
-  <string name="morphe_redgifs_audio_title">ऑडिओसह Redgifs प्ले करा</string>
-  <string name="morphe_redgifs_audio_summary">Reddit च्या कॉपीऐवजी मूळ Redgifs व्हिडिओ प्ले करते, ज्यामध्ये अनेकदा ऑडिओ नसतो</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD गुणवत्ता</string>
-  <string name="morphe_redgifs_hd_summary">HD Redgifs व्हिडिओ प्ले करते. HD व्हिडिओजची साईझ मोठी असते आणि लोड होण्यासाठी ते थांबू शकतात</string>
   <string name="morphe_download_location_title">डाउनलोड लोकेशन</string>
   <string name="morphe_download_location_all_title">सर्व खाती</string>
   <string name="morphe_download_location_default_summary">Reddit चे डिफॉल्ट: चित्रे Pictures/Reddit मध्ये, व्हिडिओ Download मध्ये</string>

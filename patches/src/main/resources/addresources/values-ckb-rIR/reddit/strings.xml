@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">پێگەی فیدەکە لە هەمان شوێن دەپارێزێت دوای داخستنی پۆستێک، وێنە یان ڤیدیۆ، لە جیاتی ئەوەی پۆستە کراوەکە بباتە سەرەوە</string>
   <string name="morphe_feed_media_max_height_title">بەرزترین بەرزی میدیای فید</string>
   <string name="morphe_feed_media_max_height_summary">بەرزترین بەرزی وێنە و ڤیدیۆ و گەلەرییەکان لە فیدەکەدا، وەک گونجاندنی لەگەڵ پانییان. میدیاکانی بەرزتر بڕین دەکرێن. 1.33 پێشنیاری ڕێدیتە</string>
-  <string name="morphe_redgifs_audio_title">لێدانی Redgifs بە دەنگ</string>
-  <string name="morphe_redgifs_audio_summary">ڤیدیۆ ڕەسەنی Redgifs لێدەدات لە جیاتی کۆپیی Reddit، کە زۆرجار دەنگی نییە</string>
-  <string name="morphe_redgifs_hd_title">کوالیتی HDی Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">ڤیدیۆی HDی Redgifs لێدەدات. ڤیدیۆکانی HD گەورەترن و ڕەنگە بۆ بارکردن بوەستن</string>
   <string name="morphe_download_location_title">شوێنی داگرتن</string>
   <string name="morphe_download_location_all_title">هەموو هەژمارەکان</string>
   <string name="morphe_download_location_default_summary">کەلتەی Reddit: وێنەکان لە Pictures/Reddit، ڤیدیۆکان لە Download</string>

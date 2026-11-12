@@ -93,10 +93,6 @@ Aby korzystać ze starszej wersji, musisz &lt;b&gt;odinstalować&lt;/b&gt; aplik
   <string name="morphe_keep_feed_position_summary">Zatrzymuje kanał w tym samym miejscu po zamknięciu posta, obrazu lub filmu, zamiast przewijać otwarty post na samą górę</string>
   <string name="morphe_feed_media_max_height_title">Maksymalna wysokość multimediów w kanale</string>
   <string name="morphe_feed_media_max_height_summary">Maksymalna wysokość obrazów, filmów i galerii w kanale, wyrażona jako wielokrotność ich szerokości. Wyższe multimedia są przycinane. 1.33 to domyślna wartość Reddita</string>
-  <string name="morphe_redgifs_audio_title">Odtwarzaj Redgifs z dźwiękiem</string>
-  <string name="morphe_redgifs_audio_summary">Odtwarza oryginalny film z Redgifs zamiast kopii z Reddita, która często nie ma dźwięku</string>
-  <string name="morphe_redgifs_hd_title">Jakość HD w Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Odtwarza filmy z Redgifs w jakości HD. Filmy w jakości HD zajmują więcej miejsca i mogą zatrzymywać się na czas buforowania</string>
   <string name="morphe_download_location_title">Lokalizacja pobierania</string>
   <string name="morphe_download_location_all_title">Wszystkie konta</string>
   <string name="morphe_download_location_default_summary">Domyślna dla Reddita: obrazy w Pictures/Reddit, filmy w Download</string>

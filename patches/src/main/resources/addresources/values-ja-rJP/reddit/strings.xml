@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">投稿、画像、または動画を閉じた後、開いた投稿を上部に移動する代わりに、フィードを同じ位置に維持します</string>
   <string name="morphe_feed_media_max_height_title">フィードメディアの最大高さ</string>
   <string name="morphe_feed_media_max_height_summary">フィード内の画像、動画、ギャラリーの最大の高さを、幅に対する倍数で指定します。これより高いメディアは切り抜かれます。1.33はRedditのデフォルトです</string>
-  <string name="morphe_redgifs_audio_title">RedGIFs を音声付きで再生</string>
-  <string name="morphe_redgifs_audio_summary">Reddit が再エンコードした RedGIFs 動画 (音声が無くなる場合が多い) ではなく、オリジナルの RedGIFs 動画を再生します</string>
-  <string name="morphe_redgifs_hd_title">RedGIFs を HD 画質で再生</string>
-  <string name="morphe_redgifs_hd_summary">RedGIFs 動画を HD 画質で再生します。HD 動画はデータサイズが大きいため、読み込みのために再生が一時停止してしまう場合があります</string>
   <string name="morphe_download_location_title">ダウンロード先</string>
   <string name="morphe_download_location_all_title">すべてのアカウント</string>
   <string name="morphe_download_location_default_summary">Redditのデフォルト：画像はPictures/Reddit、動画はDownloadに保存</string>

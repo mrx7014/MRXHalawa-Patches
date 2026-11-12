@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">שומר על הפיד באותו מיקום לאחר סגירת פוסט, תמונה או סרטון, במקום להעביר את הפוסט שנפתח לראש</string>
   <string name="morphe_feed_media_max_height_title">גובה מרבי למדיה בפיד</string>
   <string name="morphe_feed_media_max_height_summary">הגובה המרבי של תמונות, סרטונים וגלריות בפיד, ככפולה של רוחבם. מדיה גבוהה יותר נחתכת. 1.33 הוא ברירת המחדל של Reddit</string>
-  <string name="morphe_redgifs_audio_title">הפעל סרטוני Redgifs עם שמע</string>
-  <string name="morphe_redgifs_audio_summary">מנגן בסרטון המקורי של Redgifs במקום העותק של Reddit, שלרוב אין לו שמע</string>
-  <string name="morphe_redgifs_hd_title">איכות HD לסרטוני Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">מנגן בסרטוני Redgifs באיכות HD. סרטוני HD גדולים יותר ועשויים להיעצר לטעינה</string>
   <string name="morphe_download_location_title">מיקום הורדה</string>
   <string name="morphe_download_location_all_title">כל החשבונות</string>
   <string name="morphe_download_location_default_summary">ברירת המחדל של Reddit: תמונות ב-Pictures/Reddit, סרטונים ב-Download</string>

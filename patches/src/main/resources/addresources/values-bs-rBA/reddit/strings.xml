@@ -93,10 +93,6 @@ Da biste koristili stariju verziju, morate &lt;b&gt;deinstalirati&lt;/b&gt; Redd
   <string name="morphe_keep_feed_position_summary">Zadržava feed na istoj poziciji nakon zatvaranja objave, slike ili videa, umjesto pomjeranja otvorene objave na vrh</string>
   <string name="morphe_feed_media_max_height_title">Maksimalna visina medija u feed-u</string>
   <string name="morphe_feed_media_max_height_summary">Maksimalna visina slika, videa i galerija u feed-u, kao množilac njihove širine. Viši mediji će biti isječeni. 1.33 je Redditov standard</string>
-  <string name="morphe_redgifs_audio_title">Reprodukuj Redgifse sa zvukom</string>
-  <string name="morphe_redgifs_audio_summary">Reprodukuje originalni Redgifs video umjesto Redditove kopije, koja često nema zvuk</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD kvalitet</string>
-  <string name="morphe_redgifs_hd_summary">Reprodukuje HD Redgifs video. HD videi su veći i mogu se pauzirati radi učitavanja</string>
   <string name="morphe_download_location_title">Lokacija preuzimanja</string>
   <string name="morphe_download_location_all_title">Svi računi</string>
   <string name="morphe_download_location_default_summary">Redditov standard: slike u Pictures/Reddit, videi u Download</string>

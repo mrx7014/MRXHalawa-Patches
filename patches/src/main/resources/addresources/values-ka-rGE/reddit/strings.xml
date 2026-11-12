@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">ინარჩუნებს ფიდს იმავე პოზიციაზე პოსტის, სურათის ან ვიდეოს დახურვის შემდეგ, ნაცვლად იმისა, რომ გახსნილი პოსტი გადაიტანოს ზედა ნაწილში</string>
   <string name="morphe_feed_media_max_height_title">ფიდის მედიის მაქსიმალური სიმაღლე</string>
   <string name="morphe_feed_media_max_height_summary">სურათების, ვიდეოებისა და გალერეების მაქსიმალური სიმაღლე ფიდში, როგორც მათი სიგანის ჯერადი. უფრო მაღალი მედია იჭრება. 1.33 არის Reddit-ის ნაგულისხმევი მნიშვნელობა</string>
-  <string name="morphe_redgifs_audio_title">Redgifs-ის დაკვრა აუდიოთი</string>
-  <string name="morphe_redgifs_audio_summary">უკრავს Redgifs-ის ორიგინალ ვიდეოს Reddit-ის ასლის ნაცვლად, რომელსაც ხშირად არ აქვს აუდიო</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD ხარისხი</string>
-  <string name="morphe_redgifs_hd_summary">უკრავს HD Redgifs ვიდეოს. HD ვიდეოები უფრო დიდია და შესაძლოა შეჩერდეს ჩატვირთვისას</string>
   <string name="morphe_download_location_title">ჩამოტვირთვის მდებარეობა</string>
   <string name="morphe_download_location_all_title">ყველა ანგარიში</string>
   <string name="morphe_download_location_default_summary">Reddit-ის სტანდარტი: სურათები Pictures/Reddit-ში, ვიდეოები Download-ში</string>

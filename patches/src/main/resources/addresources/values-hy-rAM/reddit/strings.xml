@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">Հոսքը նույն դիրքում է պահում հրապարակումը, պատկերը կամ տեսանյութը փակելուց հետո՝ բացված հրապարակումը վերև տեղափոխելու փոխարեն</string>
   <string name="morphe_feed_media_max_height_title">Հոսքի մեդիայի առավելագույն բարձրությունը</string>
   <string name="morphe_feed_media_max_height_summary">Հոսքում նկարների, տեսանյութերի և պատկերասրահների առավելագույն բարձրությունը՝ որպես դրանց լայնության բազմապատիկ: Ավելի բարձր մեդիան կտրվում է: 1.33-ը Reddit-ի լռելյայն արժեքն է</string>
-  <string name="morphe_redgifs_audio_title">Նվագարկել Redgifs-ը ձայնով</string>
-  <string name="morphe_redgifs_audio_summary">Նվագարկում է Redgifs-ի բնօրինակ տեսանյութը Reddit-ի պատճենի փոխարեն, որը հաճախ չունի ձայն</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD որակ</string>
-  <string name="morphe_redgifs_hd_summary">Նվագարկում է HD Redgifs տեսանյութը: HD տեսանյութերն ավելի մեծ են և կարող են դադարել բեռնման համար</string>
   <string name="morphe_download_location_title">Ներբեռնման վայրը</string>
   <string name="morphe_download_location_all_title">Բոլոր հաշիվները</string>
   <string name="morphe_download_location_default_summary">Reddit-ի լռելյայն կարգավորումները. պատկերները՝ Pictures/Reddit-ում, տեսանյութերը՝ Download-ում</string>

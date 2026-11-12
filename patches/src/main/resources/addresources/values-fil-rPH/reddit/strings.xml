@@ -93,10 +93,6 @@ Para gumamit ng mas lumang bersyon, kailangang &lt;b&gt;i-uninstall&lt;/b&gt; an
   <string name="morphe_keep_feed_position_summary">Pinapanatili ang feed sa parehong posisyon pagkatapos isara ang isang post, larawan o video, sa halip na ilipat sa itaas ang binuksang post</string>
   <string name="morphe_feed_media_max_height_title">Pinakamataas na taas ng media sa feed</string>
   <string name="morphe_feed_media_max_height_summary">Pinakamataas na taas ng mga larawan, mga video, at mga gallery sa feed, bilang multiple ng kanilang lapad. Ang mas matataas na media ay pinuputol. 1.33 ang default ng Reddit</string>
-  <string name="morphe_redgifs_audio_title">I-play ang Redgifs na may audio</string>
-  <string name="morphe_redgifs_audio_summary">Ina-iplay ang orihinal na Redgifs video sa halip na ang copy ng Reddit, na kadalasang walang audio</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD na kalidad</string>
-  <string name="morphe_redgifs_hd_summary">Ina-iplay ang HD na Redgifs video. Malaki at maaaring huminto ang mga HD na video para mag-load</string>
   <string name="morphe_download_location_title">Lokasyon ng pag-download</string>
   <string name="morphe_download_location_all_title">Lahat ng account</string>
   <string name="morphe_download_location_default_summary">Kadalasan sa Reddit: imahe sa Pictures/Reddit, video sa Download</string>

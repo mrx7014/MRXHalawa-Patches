@@ -93,10 +93,6 @@ Chun leagan níos sine a úsáid, ní mór duit Reddit a &lt;b&gt;dhíshuiteáil
   <string name="morphe_keep_feed_position_summary">Coinníonn sé an fotha san áit chéanna tar éis post, íomhá nó físeán a dhúnadh, seachas an post a osclaíodh a bhogadh go barr</string>
   <string name="morphe_feed_media_max_height_title">Uasairde meáin an fhotha</string>
   <string name="morphe_feed_media_max_height_summary">Uasairde na n-íomhánna, na bhfíseán agus na ngailearaithe san fhotha, mar iolra dá leithead. Gearrtar meáin atá níos airde. Is é 1.33 réamhshocrú Reddit</string>
-  <string name="morphe_redgifs_audio_title">Seinn Redgifs le fuaim</string>
-  <string name="morphe_redgifs_audio_summary">Seinntear an físeán bunaidh ó Redgifs in áit chóip Reddit, nach mbíonn fuaim ar bith ag baint leis go minic.</string>
-  <string name="morphe_redgifs_hd_title">Caighdeán HD ar Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Seinntear an físeán HD ó Redgifs. Bíonn físeáin HD níos mó, agus d’fhéadfadh go gcuirfí an físeán ar sos chun é a luchtú.</string>
   <string name="morphe_download_location_title">Suíomh íoslódála</string>
   <string name="morphe_download_location_all_title">Gach cuntas</string>
   <string name="morphe_download_location_default_summary">Réamhshocrú Reddit: íomhánna i nÍomhánna/Reddit, físeáin in Íoslódáil</string>

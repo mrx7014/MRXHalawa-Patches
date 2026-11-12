@@ -93,10 +93,6 @@ Ukuze usebenzise inguqulwana endala, kumele &lt;b&gt;ususe&lt;/b&gt; i-Reddit be
   <string name="morphe_keep_feed_position_summary">Kugcina i-feed esikhundleni esifanayo emva kokuvala isithombe, ividiyo noma i-post, esikhundleni sokuhambisa i-post evuliwe phezulu</string>
   <string name="morphe_feed_media_max_height_title">Ubude obukhulu bemidlalo ye-feed</string>
   <string name="morphe_feed_media_max_height_summary">Ubude obuphezulu bezithombe, amavidiyo namagalleries ku-feed, njenge-multiple yobubanzi bwawo. Izithombe ezinde ziyasikwa. u-1.33 uyisetingi seqala se-Reddit</string>
-  <string name="morphe_redgifs_audio_title">Dlala ama-Redgifs nomsindo</string>
-  <string name="morphe_redgifs_audio_summary">Idlala i-video yokuqala ye-Redgifs esikhundleni sekopi ye-Reddit, evamise ukungabi nomsindo</string>
-  <string name="morphe_redgifs_hd_title">Ikhwalithi ye-Redgifs HD</string>
-  <string name="morphe_redgifs_hd_summary">Idlalisa ividiyo ye-HD yeRedgifs. Ividiyo ze-HD zinkulu kakhulu futhi zingase zimise ukuze zilayishwe</string>
   <string name="morphe_download_location_title">Indawo yokulanda</string>
   <string name="morphe_download_location_all_title">Zonke ama-akhawunti</string>
   <string name="morphe_download_location_default_summary">Okujwayelekile kwe-Reddit: izithombe ku-Pictures/Reddit, ividiyo ku-Download</string>

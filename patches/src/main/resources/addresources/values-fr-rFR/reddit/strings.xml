@@ -93,10 +93,6 @@ Pour utiliser une ancienne version, vous devez &lt;b&gt;désinstaller&lt;/b&gt; 
   <string name="morphe_keep_feed_position_summary">Conserve le flux à la même position après la fermeture d\'un post, d\'une image ou d\'une vidéo, au lieu de déplacer le post ouvert en haut</string>
   <string name="morphe_feed_media_max_height_title">Hauteur maximale des médias du flux</string>
   <string name="morphe_feed_media_max_height_summary">Hauteur maximale des images, vidéos et galeries dans le flux, exprimée en multiple de leur largeur. Les médias plus hauts sont recadrés. 1,33 est la valeur par défaut de Reddit</string>
-  <string name="morphe_redgifs_audio_title">Lire les vidéos Redgifs avec le son</string>
-  <string name="morphe_redgifs_audio_summary">Lit la vidéo Redgifs d\'origine au lieu de la copie Reddit, qui est souvent sans son</string>
-  <string name="morphe_redgifs_hd_title">Redgifs en qualité HD</string>
-  <string name="morphe_redgifs_hd_summary">Lit la vidéo Redgifs en HD. Les vidéos HD sont plus volumineuses et peuvent se mettre en pause pendant le chargement</string>
   <string name="morphe_download_location_title">Emplacement de téléchargement</string>
   <string name="morphe_download_location_all_title">Tous les comptes</string>
   <string name="morphe_download_location_default_summary">Par défaut sur Reddit : images dans Pictures/Reddit, vidéos dans Download</string>

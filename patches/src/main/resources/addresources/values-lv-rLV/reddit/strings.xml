@@ -93,10 +93,6 @@ Lai izmantotu vecāku versiju, jums jāveic &lt;b&gt;atinstalēšana&lt;/b&gt; R
   <string name="morphe_keep_feed_position_summary">Saglabā plūsmu tajā pašā pozīcijā pēc ieraksta, attēla vai video aizvēršanas, tā vietā lai atvērtais ieraksts tiktu pārvietots uz augšu</string>
   <string name="morphe_feed_media_max_height_title">Plūsmas mediju maksimālais augstums</string>
   <string name="morphe_feed_media_max_height_summary">Attēlu, video un galeriju maksimālais augstums plūsmā kā platuma attiecība. Augstāki mediji tiek apgriezti. 1,33 ir Reddit noklusējums</string>
-  <string name="morphe_redgifs_audio_title">Atskaņot Redgifs ar skaņu</string>
-  <string name="morphe_redgifs_audio_summary">Atskaņo oriģinālo Redgifs video, nevis Reddit kopiju, kurai bieži nav skaņas</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD kvalitāte</string>
-  <string name="morphe_redgifs_hd_summary">Atskaņo HD Redgifs video. HD video ir lielāki un var apturēties ielādes laikā</string>
   <string name="morphe_download_location_title">Lejupielādes vieta</string>
   <string name="morphe_download_location_all_title">Visi konti</string>
   <string name="morphe_download_location_default_summary">Reddit noklusējums: attēli mapē Pictures/Reddit, video mapē Download</string>

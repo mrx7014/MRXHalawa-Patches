@@ -53,6 +53,8 @@ jobs:
           find patches/src/main/resources -type d -name music -prune -exec rm -rf {} +
           rm -f extensions/youtube/src/main/java/app/morphe/extension/youtube/patches/OverrideYouTubeMusicButtonsPatch.java
           rm -f patches/src/main/kotlin/app/morphe/patches/youtube/layout/music/OverrideYouTubeMusicButtonsPatch.kt
+          rm -f extensions/reddit/src/main/java/app/morphe/extension/reddit/patches/RedgifsAudioPatch.java
+          rm -rf patches/src/main/kotlin/app/morphe/patches/reddit/misc/redgifs
 
           python3 - <<'PY'
           import json
@@ -98,7 +100,7 @@ jobs:
               patch['compatiblePackages'] = packages
               if packages or not original:
                   filtered.append(patch)
-          current['patches'] = [p for p in filtered if p.get('name') != 'Override YouTube Music buttons']
+          current['patches'] = [p for p in filtered if p.get('name') not in {'Override YouTube Music buttons', 'Redgifs audio'}]
 
           patches = find_patch_list(current)
           existing = {p.get('name') for p in patches}

@@ -92,10 +92,6 @@ Daha eski bir sürümü kullanmak için, Reddit'i &lt;b&gt;kaldırıp&lt;/b&gt; 
   <string name="morphe_keep_feed_position_summary">Bir gönderi, görsel veya video kapattıktan sonra akışı aynı konumda tutar; açılan gönderiyi en üste taşımak yerine</string>
   <string name="morphe_feed_media_max_height_title">Akış medyası maksimum yüksekliği</string>
   <string name="morphe_feed_media_max_height_summary">Akıştaki görsellerin, videoların ve galerilerin genişliklerinin katı olarak maksimum yüksekliği. Daha uzun medya kırpılır. 1,33 Reddit\'in varsayılanıdır</string>
-  <string name="morphe_redgifs_audio_title">Redgifs\'ı sesli oynat</string>
-  <string name="morphe_redgifs_audio_summary">Genellikle sesi olmayan Reddit\'in kopyası yerine orijinal Redgifs videosunu oynatır</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD kalite</string>
-  <string name="morphe_redgifs_hd_summary">HD Redgifs videosunu oynatır. HD videolar daha büyüktür ve yüklenirken duraklayabilir</string>
   <string name="morphe_download_location_title">İndirme konumu</string>
   <string name="morphe_download_location_all_title">Tüm hesaplar</string>
   <string name="morphe_download_location_default_summary">Reddit\'in varsayılanı: resimler Pictures/Reddit, videolar Download</string>

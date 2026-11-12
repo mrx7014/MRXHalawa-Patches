@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">Постту, сүрөттү же видеону жапкандан кийин, ачылган постту жогоруга жылдыруунун ордуна, лентаны ошол эле абалда сактайт</string>
   <string name="morphe_feed_media_max_height_title">Лентадагы медиа файлдардын максималдуу бийиктиги</string>
   <string name="morphe_feed_media_max_height_summary">Лентадагы сүрөттөрдүн, видеолордун жана галереялардын максималдуу бийиктиги, алардын туурасынан эселеп көрсөтүлөт. Бийик медиа файлдар кесилген. 1.33 — Reddit\'тин стандарттык мааниси</string>
-  <string name="morphe_redgifs_audio_title">Redgifs видеолорун аудио менен ойнотуу</string>
-  <string name="morphe_redgifs_audio_summary">Reddit\'тин көбүнчө аудиосу жок болгон көчүрмөсүнүн ордуна, түп нуска Redgifs видеосун ойнотот</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD сапаты</string>
-  <string name="morphe_redgifs_hd_summary">HD Redgifs видеосун ойнотот. HD видеолор көлөмдүүрөөк жана жүктөө үчүн токтоп калышы мүмкүн</string>
   <string name="morphe_download_location_title">Жүктөө орду</string>
   <string name="morphe_download_location_all_title">Бардык аккаунттар</string>
   <string name="morphe_download_location_default_summary">Reddit\'тин стандарттуу жөндөөсү: сүрөттөр Pictures/Reddit папкасына, видеолор Download папкасына сакталат</string>

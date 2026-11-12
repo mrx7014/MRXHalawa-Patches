@@ -93,10 +93,6 @@ Para usar uma versão mais antiga, você deve &lt;b&gt;desinstalar&lt;/b&gt; o R
   <string name="morphe_keep_feed_position_summary">Mantém o feed na mesma posição após fechar uma publicação, imagem ou vídeo, em vez de mover a publicação aberta para o topo</string>
   <string name="morphe_feed_media_max_height_title">Altura máxima da multimédia do feed</string>
   <string name="morphe_feed_media_max_height_summary">Altura máxima de imagens, vídeos e galerias no feed, como um múltiplo da largura deles. Os conteúdos mais altos são cortados. 1.33 é o padrão do Reddit</string>
-  <string name="morphe_redgifs_audio_title">Reproduzir Redgifs com áudio</string>
-  <string name="morphe_redgifs_audio_summary">Reproduce o vídeo original do Redgifs em vez da cópia do Reddit, que muitas vezes não tem áudio</string>
-  <string name="morphe_redgifs_hd_title">Qualidade HD Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Reproduz o vídeo Redgifs em HD. Os vídeos em HD são maiores e podem pausar para carregar</string>
   <string name="morphe_download_location_title">Local de transferência</string>
   <string name="morphe_download_location_all_title">Todas as contas</string>
   <string name="morphe_download_location_default_summary">Padrão do Reddit: imagens em Pictures/Reddit, vídeos em Download</string>

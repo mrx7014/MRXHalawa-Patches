@@ -93,10 +93,6 @@ Ili kutumia toleo la zamani, lazima &lt;b&gt;uondoe&lt;/b&gt; Reddit na kisha us
   <string name="morphe_keep_feed_position_summary">Inatunza feed katika nafasi ileile baada ya kufunga chapisho, picha au video, badala ya kusogeza chapisho kilichofunguliwa juu</string>
   <string name="morphe_feed_media_max_height_title">Kimo cha juu cha media ya feed</string>
   <string name="morphe_feed_media_max_height_summary">Kimo cha juu zaidi cha picha, video na matunzio katika feed, kama kizidisho cha upana wake. Media ndefu zaidi hukatwa. 1.33 ni chaguo-msingi la Reddit</string>
-  <string name="morphe_redgifs_audio_title">Cheza Redgifs ikiwa na sauti</string>
-  <string name="morphe_redgifs_audio_summary">Inacheza video asilia ya Redgifs badala ya nakala ya Reddit, ambayo mara nyingi haina sauti</string>
-  <string name="morphe_redgifs_hd_title">Ubora wa HD ya Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Inacheza video ya HD ya Redgifs. Video za HD ni kubwa zaidi na zinaweza kusimama ili kupakia</string>
   <string name="morphe_download_location_title">Mahali pa kupakulia</string>
   <string name="morphe_download_location_all_title">Akaunti zote</string>
   <string name="morphe_download_location_default_summary">Chaguo-msingi la Reddit: picha katika Pictures/Reddit, video katika Download</string>

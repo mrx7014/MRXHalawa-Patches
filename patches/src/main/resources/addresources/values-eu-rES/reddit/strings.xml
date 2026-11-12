@@ -93,10 +93,6 @@ Bertsio zaharragoa erabiltzeko, Reddit &lt;b&gt;desinstalatu&lt;/b&gt; behar duz
   <string name="morphe_keep_feed_position_summary">Postu, irudi edo bideo bat itxi ondoren, feed-a leku berean mantentzen du, irekitako postua goialdera mugitu beharrean</string>
   <string name="morphe_feed_media_max_height_title">Feed-eko multimedia gehienezko altuera</string>
   <string name="morphe_feed_media_max_height_summary">Feed-eko irudi, bideo eta galerien gehienezko altuera, zabaleraren multiplo gisa. Multimedia altuagoak moztuko dira. 1,33 da Reddit-en lehenetsia</string>
-  <string name="morphe_redgifs_audio_title">Erreproduzitu Redgifs audioarekin</string>
-  <string name="morphe_redgifs_audio_summary">Redgifs bideo originala erreproduzitzen du Reddit-en kopiaren ordez, askotan audiorik ez duena</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD kalitatea</string>
-  <string name="morphe_redgifs_hd_summary">Redgifs HD bideoa erreproduzitzen du. HD bideoak handiagoak dira eta kargatzen diren bitartean gelditu daitezke</string>
   <string name="morphe_download_location_title">Deskarga kokapena</string>
   <string name="morphe_download_location_all_title">Kontu guztiak</string>
   <string name="morphe_download_location_default_summary">Reddit-en lehenetsua: irudiak Pictures/Reddit-en, bideoak Download-en</string>

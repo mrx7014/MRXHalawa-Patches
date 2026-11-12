@@ -93,10 +93,6 @@ Vanema versiooni kasutamiseks peate Reddit'i &lt;b&gt;desinstalleerima&lt;/b&gt;
   <string name="morphe_keep_feed_position_summary">Hoiab voo pärast postituse, pildi või video sulgemist samas kohas, selle asemel et liigutada avatud postitus üles</string>
   <string name="morphe_feed_media_max_height_title">Feedi meedia maksimaalne kõrgus</string>
   <string name="morphe_feed_media_max_height_summary">Piltide, videote ja galeriide maksimaalne kõrgus voos, väljendatud nende laia kordades. Kõrgemad meedialuused lõigatakse. 1,33 on Redditi vaikimisseade</string>
-  <string name="morphe_redgifs_audio_title">Esita Redgifs heliga</string>
-  <string name="morphe_redgifs_audio_summary">Esitab algset Redgifs videot mitte Reddit\'i koopiat, millel puudub sageli heli</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD kvaliteet</string>
-  <string name="morphe_redgifs_hd_summary">Esitab HD Redgifi videot. HD videod on suuremad ja võivad laadimiseks peatuda</string>
   <string name="morphe_download_location_title">Allalaadimiskoha asukoht</string>
   <string name="morphe_download_location_all_title">Kõik kontod</string>
   <string name="morphe_download_location_default_summary">Reddit\'i vaikevalik: pildid Pictures/Reddit, videod Download</string>

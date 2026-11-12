@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">Пост, зураг эсвэл видеог хаах үед нээгдсэн постыг дээш нь зөөхийн оронд фийдийг өмнөх байрлалдаа хэвээр хадгална</string>
   <string name="morphe_feed_media_max_height_title">Фийдийн медиагийн дээд өндөр</string>
   <string name="morphe_feed_media_max_height_summary">Фийд дэх зураг, видео болон галерейн өндрийн дээд хэмжээг тэдгээрийн өргөний олон тололтоор заана. Илүү өндөр медиаг таслаж харуулна. 1.33 нь Reddit-ийн үндсэн тохиргоо юм</string>
-  <string name="morphe_redgifs_audio_title">Redgifs-ийг дуутай тоглуулах</string>
-  <string name="morphe_redgifs_audio_summary">Дуугүй байх нь элбэг Reddit-ийн хуулбарын оронд Redgifs-ийн эх бичлэгийг тоглуулна</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD чанар</string>
-  <string name="morphe_redgifs_hd_summary">Redgifs-ийн HD бичлэгийг тоглуулна. HD бичлэгүүд нь хэмжээ нь том тул ачаалах явцад түр зогсож болно</string>
   <string name="morphe_download_location_title">Татаж авах байршил</string>
   <string name="morphe_download_location_all_title">Бүх хаяг</string>
   <string name="morphe_download_location_default_summary">Reddit-ийн стандарт: зурагнууд Pictures/Reddit, бичлэгүүд Download хавтас руу</string>

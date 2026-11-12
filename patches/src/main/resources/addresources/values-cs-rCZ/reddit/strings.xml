@@ -93,10 +93,6 @@ Chcete-li použít starší verzi, musíte Reddit &lt;b&gt;odinstalovat&lt;/b&gt
   <string name="morphe_keep_feed_position_summary">Ponechá feed na stejné pozici po zavření příspěvku, obrázku nebo videa, místo přesunutí otevřeného příspěvku na začátek</string>
   <string name="morphe_feed_media_max_height_title">Maximální výška médií ve feedu</string>
   <string name="morphe_feed_media_max_height_summary">Maximální výška obrázků, videí a galerií ve feedu jako násobek jejich šířky. Vyšší média se oříznou. Výchozí hodnota Redditu je 1,33</string>
-  <string name="morphe_redgifs_audio_title">Přehrát Redgify s audiem</string>
-  <string name="morphe_redgifs_audio_summary">Přehraje původní video Redgifs místo kopie z Redditu, která často nemá zvuk</string>
-  <string name="morphe_redgifs_hd_title">Kvalita HD Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Přehrává HD video z Redgifs. HD videa jsou větší a mohou se pozastavit pro načtení</string>
   <string name="morphe_download_location_title">Umístění stahování</string>
   <string name="morphe_download_location_all_title">Všechny účty</string>
   <string name="morphe_download_location_default_summary">Výchozí nastavení Reddit: obrázky v Pictures/Reddit, videa v Download</string>

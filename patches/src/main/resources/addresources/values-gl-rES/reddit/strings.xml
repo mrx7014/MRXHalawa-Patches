@@ -93,10 +93,6 @@ Para usar unha versión máis antiga, debes &lt;b&gt;desinstalar&lt;/b&gt; Reddi
   <string name="morphe_keep_feed_position_summary">Mantén o feed na mesma posición despois de pechar unha publicación, imaxe ou vídeo, en lugar de mover a publicación aberta ao tope</string>
   <string name="morphe_feed_media_max_height_title">Altura máxima do multimedia do feed</string>
   <string name="morphe_feed_media_max_height_summary">Altura máxima de imaxes, vídeos e galerías no feed, como un múltiplo da súa largura. O multimedia máis alto recórtase. 1.33 é o valor predefinido de Reddit</string>
-  <string name="morphe_redgifs_audio_title">Reproducir Redgifs con audio</string>
-  <string name="morphe_redgifs_audio_summary">Reproduce o vídeo orixinal de Redgifs en lugar da copia de Reddit, que a miúdo non ten audio</string>
-  <string name="morphe_redgifs_hd_title">Calidade HD de Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Reproduce o vídeo de Redgifs en HD. Os vídeos HD son máis grandes e poden pausarse para cargar</string>
   <string name="morphe_download_location_title">Localización de descarga</string>
   <string name="morphe_download_location_all_title">Todas as contas</string>
   <string name="morphe_download_location_default_summary">Predeterminado de Reddit: imaxes en Pictures/Reddit, vídeos en Download</string>

@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">تُبقي الخلاصة في الموضع نفسه بعد إغلاق منشور أو صورة أو فيديو، بدلاً من نقل المنشور المفتوح إلى الأعلى</string>
   <string name="morphe_feed_media_max_height_title">أقصى ارتفاع لوسائط الخلاصة</string>
   <string name="morphe_feed_media_max_height_summary">الحد الأقصى لارتفاع الصور والفيديوهات والمعارض في الخلاصة، كمضاعف لعرضها. يتم اقتصاص الوسائط الأطول. 1.33 هو الإعداد الافتراضي في Reddit</string>
-  <string name="morphe_redgifs_audio_title">تشغيل فيديوهات Redgifs مع الصوت</string>
-  <string name="morphe_redgifs_audio_summary">يشغل الفيديو الأصلي من Redgifs بدلاً من النسخة الموجودة على Reddit، والتي غالباً ما تفتقر إلى الصوت</string>
-  <string name="morphe_redgifs_hd_title">جودة عالية الدقة لـ Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">يشغل فيديو Redgifs بجودة عالية الدقة. تتطلب الفيديوهات ذات الجودة العالية مساحة تخزين أكبر وقد يتوقف التحميل مؤقتاً</string>
   <string name="morphe_download_location_title">موضع التنزيل</string>
   <string name="morphe_download_location_all_title">جميع الحسابات</string>
   <string name="morphe_download_location_default_summary">إعدادات Reddit الافتراضية: الصور في Pictures/Reddit، وفيديوهات في Download</string>

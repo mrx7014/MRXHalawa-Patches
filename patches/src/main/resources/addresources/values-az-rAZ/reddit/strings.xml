@@ -93,10 +93,6 @@ Köhnə versiyanı istifadə etmək üçün Reddit-i &lt;b&gt;silməlisiz&lt;/b&
   <string name="morphe_keep_feed_position_summary">Paylaşım, şəkil və ya videonu bağladıqdan sonra açılmış paylaşımı yuxarıya çəkmək əvəzinə, lenti eyni mövqedə saxlayır</string>
   <string name="morphe_feed_media_max_height_title">Lent mediasının maksimum hündürlüyü</string>
   <string name="morphe_feed_media_max_height_summary">Lentdəki şəkil, video və qalereyaların maksimum hündürlüyünü onların eninin misilləri ilə təyin edir. Daha hündür media kəsilir. 1.33 Reddit-in ilkin seçimidir</string>
-  <string name="morphe_redgifs_audio_title">Redgifs-ləri səsli oynat</string>
-  <string name="morphe_redgifs_audio_summary">Reddit-in adətən səssiz olan nüsxəsi əvəzinə orijinal Redgifs videosunu oynadır</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD keyfiyyəti</string>
-  <string name="morphe_redgifs_hd_summary">Redgifs-in HD videosunu oynadır. HD videolar daha böyükdür və yüklənmək üçün fasilə verə bilər</string>
   <string name="morphe_download_location_title">Yükləmə yeri</string>
   <string name="morphe_download_location_all_title">Bütün hesablar</string>
   <string name="morphe_download_location_default_summary">Reddit-in standartı: şəkillər Şəkillər/Reddit-də, videolar Yükləmədə</string>

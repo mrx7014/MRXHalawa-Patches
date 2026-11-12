@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">এটা পোষ্ট, ছবি বা ভিডিঅ\' বন্ধ কৰাৰ পিছত, খোলা পোষ্টটো ওপৰলৈ লৈ যোৱাৰ পৰিৱৰ্তে ফিডটো একেই স্থানত ৰাখে</string>
   <string name="morphe_feed_media_max_height_title">ফিড মিডিয়াৰ সৰ্বাধিক উচ্চতা</string>
   <string name="morphe_feed_media_max_height_summary">ফিডত ছবি, ভিডিঅ\' আৰু গেলাৰীৰ সৰ্বাধিক উচ্চতা, ইয়াৰ প্ৰস্থৰ গুণক হিচাপে। অধিক ওখ মিডিয়া কাটি দিয়া হয়। ১.৩৩ হৈছে Reddit-ৰ ডিফল্ট</string>
-  <string name="morphe_redgifs_audio_title">অডিঅৰ সৈতে Redgifs প্লে কৰক</string>
-  <string name="morphe_redgifs_audio_summary">ৰেডিটৰ কপিৰ পৰিৱৰ্তে মূল Redgifs ভিডিঅ’টো প্লে কৰে, যাৰ প্ৰায়ে কোনো অডিঅ নাথাকে</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD কোৱালিটি</string>
-  <string name="morphe_redgifs_hd_summary">HD Redgifs ভিডিঅ’টো প্লে কৰে। HD ভিডিঅ’বোৰ ডাঙৰ হয় আৰু লোড হ’বলৈ কিছু সময়ত ৰৈ যাব পাৰে</string>
   <string name="morphe_download_location_title">ডাউনলোড স্থান</string>
   <string name="morphe_download_location_all_title">সকলো একাউণ্ট</string>
   <string name="morphe_download_location_default_summary">Reddit-ৰ ডিফল্ট: ছবিবোৰ Pictures/Reddit-ত, ভিডিঅ’বোৰ Download-ত</string>

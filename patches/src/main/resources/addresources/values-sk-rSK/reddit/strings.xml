@@ -93,10 +93,6 @@ Ak chcete použiť staršiu verziu, musíte Reddit &lt;b&gt;odinštalovať&lt;/b
   <string name="morphe_keep_feed_position_summary">Zachováva informačný kanál na rovnakej pozícii po zatvorení príspevku, obrázka alebo videa, namiesto presunutia otvoreného príspevku na začiatok</string>
   <string name="morphe_feed_media_max_height_title">Maximálna výška médií v informačnom kanáli</string>
   <string name="morphe_feed_media_max_height_summary">Maximálna výška obrázkov, videí a galérií v informačnom kanáli ako násobok ich šírky. Vyššie médiá sa orezávajú. Predvolená hodnota Redditu je 1,33.</string>
-  <string name="morphe_redgifs_audio_title">Prehrať Redgifs s audiom</string>
-  <string name="morphe_redgifs_audio_summary">Prehráva pôvodné video z Redgifs namiesto kópie z Redditu, ktorá často nemá žiadne audio</string>
-  <string name="morphe_redgifs_hd_title">Kvalita HD na Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Prehráva videá Redgifs v kvalite HD. Videá HD sú väčšie a môžu sa pozastaviť, aby sa načítali</string>
   <string name="morphe_download_location_title">Umiestnenie na sťahovanie</string>
   <string name="morphe_download_location_all_title">Všetky účty</string>
   <string name="morphe_download_location_default_summary">Predvolené nastavenie Reddit: obrázky v Pictures/Reddit, videá v Download</string>

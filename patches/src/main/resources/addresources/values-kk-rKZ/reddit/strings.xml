@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">Жазбаны, кескінді немесе бейнені жапқаннан кейін, ашылған жазбаны жоғарыға жылжытудың орнына, лентаны сол позициясында сақтайды</string>
   <string name="morphe_feed_media_max_height_title">Лента медиафайлдарының максималды биіктігі</string>
   <string name="morphe_feed_media_max_height_summary">Лентадағы кескіндердің, бейнелердің және галереялардың енінің еселігі ретіндегі максималды биіктігі. Биік медиафайлдар қиылады. 1.33 — Reddit-тің әдепкі мәні</string>
-  <string name="morphe_redgifs_audio_title">Redgifs-ті аудиомен ойнату</string>
-  <string name="morphe_redgifs_audio_summary">Reddit-тің көбіне аудиосы жоқ көшірмесінің орнына түпнұсқа Redgifs видеосын ойнатады</string>
-  <string name="morphe_redgifs_hd_title">Redgifs HD сапасы</string>
-  <string name="morphe_redgifs_hd_summary">HD Redgifs видеосын ойнатады. HD видеолар көлемі үлкенірек және жүктелу үшін тоқтап қалуы мүмкін</string>
   <string name="morphe_download_location_title">Жүктеу орны</string>
   <string name="morphe_download_location_all_title">Барлық аккаунттар</string>
   <string name="morphe_download_location_default_summary">Reddit бойынша әдепкі: суреттер Pictures/Reddit папкасында, видеолар Download папкасында</string>

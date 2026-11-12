@@ -93,10 +93,6 @@ A régebbi verzió használatához &lt;b&gt;törölnie&lt;/b&gt; kell a Redditet
   <string name="morphe_keep_feed_position_summary">A hírfolyamot ugyanazon a pozíción tartja egy bejegyzés, kép vagy videó bezárása után, ahelyett, hogy a megnyitott bejegyzést a tetejére mozgatná</string>
   <string name="morphe_feed_media_max_height_title">Hírfolyam médiatartalmainak maximális magassága</string>
   <string name="morphe_feed_media_max_height_summary">A képek, videók és galériák maximális magassága a hírfolyamban, a szélességük többszöröseként megadva. A magasabb médiatartalmak le vannak vágva. Az 1,33 a Reddit alapértelmezése</string>
-  <string name="morphe_redgifs_audio_title">RedGifok lejátszása hanggal</string>
-  <string name="morphe_redgifs_audio_summary">Az eredeti Redgifs videót játssza le, nem a Reddit másolatát, amelynek gyakran nincs hangja</string>
-  <string name="morphe_redgifs_hd_title">RedGifok HD minőségben</string>
-  <string name="morphe_redgifs_hd_summary">HD RedGif-videót játszik le. A HD videók nagyobbak, és betöltésükhöz szünetelhetnek</string>
   <string name="morphe_download_location_title">Letöltési hely</string>
   <string name="morphe_download_location_all_title">Minden fiók</string>
   <string name="morphe_download_location_default_summary">Reddit alapértelmezése: képek a Pictures/Reddit mappában, videók a Download mappában</string>

@@ -93,10 +93,6 @@ Podatki aplikacije iz novejše različice ne delujejo s starejšimi različnicam
   <string name="morphe_keep_feed_position_summary">Po zaprtju objave, slike ali videoposnetka ohrani vir na istem položaju, namesto da odprto objavo premakne na vrh</string>
   <string name="morphe_feed_media_max_height_title">Največja višina medijev v viru</string>
   <string name="morphe_feed_media_max_height_summary">Največja višina slik, videoposnetkov in galerij v viru, kot večkratnik njihove širine. Višji mediji so obrezani. 1,33 je Redditova privzeta vrednost</string>
-  <string name="morphe_redgifs_audio_title">Predvajaj Redgifs z zvokom</string>
-  <string name="morphe_redgifs_audio_summary">Predvaja izvirni video Redgifs namesto kopije Reddit, ki pogosto nima zvoka</string>
-  <string name="morphe_redgifs_hd_title">Kakovost HD Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Predvaja video Redgifs v HD kakovosti. Videi v HD so večji in se lahko zaustavijo za nalaganje</string>
   <string name="morphe_download_location_title">Mesto prenosa</string>
   <string name="morphe_download_location_all_title">Vsi računi</string>
   <string name="morphe_download_location_default_summary">Privzeto Reddit: slike v Pictures/Reddit, videoposnetki v Download</string>

@@ -93,10 +93,6 @@ Second \"item\" text"</string>
   <string name="morphe_keep_feed_position_summary">Захоўвае стужку ў той жа пазіцыі пасля закрыцця паста, выявы або відэа, замест таго, каб перамясціць адкрыты паст уверх</string>
   <string name="morphe_feed_media_max_height_title">Макс. вышыня медыя ў стужцы</string>
   <string name="morphe_feed_media_max_height_summary">Максімальная вышыня выяваў, відэа і галерэй у стужцы, як множнік іх шырыні. Вышэйшыя матэрыялы абрэзаюцца. 1.33 — значэнне Reddit па змаўчанні</string>
-  <string name="morphe_redgifs_audio_title">Прайграваць Redgifs з гукам</string>
-  <string name="morphe_redgifs_audio_summary">Прайграе арыгінальнае відэа Redgifs замест копіі Reddit, у якой часта няма гуку</string>
-  <string name="morphe_redgifs_hd_title">Якасць Redgifs HD</string>
-  <string name="morphe_redgifs_hd_summary">Прайграе HD-відэа Redgifs. HD-відэа маюць большы памер і могуць спыняцца для загрузкі</string>
   <string name="morphe_download_location_title">Месца загрузкі</string>
   <string name="morphe_download_location_all_title">Усе ўліковыя запісы</string>
   <string name="morphe_download_location_default_summary">Па змаўчанні Reddit: выявы ў Pictures/Reddit, відэа ў Download</string>

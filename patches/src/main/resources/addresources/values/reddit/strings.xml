@@ -97,10 +97,6 @@ To use an older version, you must &lt;b>uninstall&lt;/b> Reddit and then install
     <string name="morphe_keep_feed_position_summary">Keeps the feed at the same position after closing a post, image or video, instead of moving the opened post to the top</string>
     <string name="morphe_feed_media_max_height_title">Feed media max height</string>
     <string name="morphe_feed_media_max_height_summary">Maximum height of images, videos and galleries in the feed, as a multiple of their width. Taller media is cropped. 1.33 is Reddit\'s default</string>
-    <string name="morphe_redgifs_audio_title">Play Redgifs with audio</string>
-    <string name="morphe_redgifs_audio_summary">Plays the original Redgifs video instead of Reddit\'s copy, which often has no audio</string>
-    <string name="morphe_redgifs_hd_title">Redgifs HD quality</string>
-    <string name="morphe_redgifs_hd_summary">Plays the HD Redgifs video. HD videos are larger and can pause to load</string>
     <string name="morphe_download_location_title">Download location</string>
     <string name="morphe_download_location_all_title">All accounts</string>
     <string name="morphe_download_location_default_summary">Reddit\'s default: images in Pictures/Reddit, videos in Download</string>

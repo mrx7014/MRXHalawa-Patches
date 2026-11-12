@@ -93,10 +93,6 @@ Untuk menggunakan versi yang lebih lama, anda mesti &lt;b&gt;nyahpasang&lt;/b&gt
   <string name="morphe_keep_feed_position_summary">Mengekalkan suapan pada kedudukan yang sama selepas menutup hantaran, imej atau video, berbanding mengalihkan hantaran yang dibuka ke bahagian atas</string>
   <string name="morphe_feed_media_max_height_title">Tinggi maksimum media suapan</string>
   <string name="morphe_feed_media_max_height_summary">Tinggi maksimum imej, video dan galeri dalam suapan, sebagai gandaan lebarnya. Media yang lebih tinggi akan dipotong. 1.33 adalah lalai Reddit</string>
-  <string name="morphe_redgifs_audio_title">Mainkan Redgifs dengan audio</string>
-  <string name="morphe_redgifs_audio_summary">Memainkan video asal Redgifs dan bukannya salinan Reddit, yang sering kali tiada audio</string>
-  <string name="morphe_redgifs_hd_title">Kualiti HD Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Memainkan video Redgifs HD. Video HD lebih besar dan mungkin terhenti seketika untuk dimuatkan</string>
   <string name="morphe_download_location_title">Lokasi muat turun</string>
   <string name="morphe_download_location_all_title">Semua akaun</string>
   <string name="morphe_download_location_default_summary">Lalai Reddit: imej dalam Pictures/Reddit, video dalam Download</string>

@@ -93,10 +93,6 @@ Ji bo bikaranîna versiyoneke kevin, divê hûn Reddit &lt;b&gt;jêderkeşin&lt;
   <string name="morphe_keep_feed_position_summary">Piştî girtina post, wêneyekî an vîdyoyekê, feedi li heman pozîsyonê diheleve, li şûma ku posta hatî vekirin bibe serî</string>
   <string name="morphe_feed_media_max_height_title">Hêchtirîn bilindiya medyayên feedê</string>
   <string name="morphe_feed_media_max_height_summary">Bilindiya herî zêde ya wêneyan, vîdyoyan û galeriyan di feedê de, wekî herêkê yaleya wan. Medyaya بلندtir tê jêbirin. 1.33 defaultê Redditê ye</string>
-  <string name="morphe_redgifs_audio_title">Redgifs bi deng bîne</string>
-  <string name="morphe_redgifs_audio_summary">Li şûyê kopiya Reddit\'ê, ku pir caran dengê wê tune ye, vîdyoya orîjînal a Redgifs lî dike</string>
-  <string name="morphe_redgifs_hd_title">Kîjanîya HD ya Redgifs</string>
-  <string name="morphe_redgifs_hd_summary">Vîdyoya HD ya Redgifs lî dike. Vîdyoyên HD mezin hơn in û dibe ku ji bo barkirinan rawestin</string>
   <string name="morphe_download_location_title">Cihê daxistinê</string>
   <string name="morphe_download_location_all_title">Hemû hesab</string>
   <string name="morphe_download_location_default_summary">Default\'ê Reddit: wêne di Pictures/Reddit, vîdyo di Download</string>
