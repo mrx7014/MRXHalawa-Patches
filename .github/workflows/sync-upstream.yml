@@ -174,10 +174,8 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          if ! gh pr create \
-              --base main \
-              --head "$SYNC_BRANCH" \
-              --title "chore: sync Morphe upstream (${{ inputs.upstream_ref }})" \
-              --body "This PR merges Morphe upstream while preserving MRX custom patches and excluding YouTube Music. Review the generated diff and run the build before merging."; then
-            echo "::warning::GitHub did not allow GITHUB_TOKEN to create a pull request. The sync branch was pushed successfully: https://github.com/${GITHUB_REPOSITORY}/tree/${SYNC_BRANCH}"
-          fi
+          gh pr create \
+            --base main \
+            --head "$SYNC_BRANCH" \
+            --title "chore: sync Morphe upstream (${{ inputs.upstream_ref }})" \
+            --body "This PR merges Morphe upstream while preserving MRX custom patches and excluding YouTube Music and Redgifs. Review the generated diff and run the build before merging."
