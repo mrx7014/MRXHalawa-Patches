@@ -103,21 +103,6 @@ tasks {
         mainClass.set("app.morphe.util.PatchListGeneratorKt")
     }
 
-    register<JavaExec>("validateJam") {
-        description = "Patches a supplied YouTube Music APK for Jam validation and optional device testing"
-        group = "verification"
-
-        dependsOn("testClasses")
-        classpath = sourceSets["test"].runtimeClasspath
-        mainClass.set("app.morphe.patches.music.interaction.jam.JamDeviceBuildKt")
-
-        doFirst {
-            val apk = jamApk.orNull
-                ?: throw GradleException("validateJam requires -PjamApk=/absolute/path/to/ytm.apk")
-            setArgs(listOfNotNull(apk, jamOutput.orNull))
-        }
-    }
-
     register<JavaExec>("validatePlaylistQueue") {
         description = "Applies Native playlist queue to a stock APK and verifies it with Android SDK tools"
         group = "verification"

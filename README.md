@@ -35,7 +35,7 @@ All modifications made by Morphe, along with their dates, can be found in the Gi
 ## 🩹 Patches list
 
 <!-- PATCHES_START -->
-> **[v2.2.0](https://github.com/MorpheApp/morphe-patches/releases/tag/v2.2.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;202 patches total
+> **[v2.2.0](https://github.com/mrx7014/MRXHalawa-Patches/releases/tag/v2.2.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`sync/upstream-main-20261112122502`&nbsp;&nbsp;•&nbsp;&nbsp;152 patches total
 <details>
 <summary>📦 YouTube&nbsp;&nbsp;•&nbsp;&nbsp;114 patches</summary>
 <br>
@@ -52,6 +52,7 @@ All modifications made by Morphe, along with their dates, can be found in the Gi
 | [Ambient mode](#ambient-mode) | Adds Enhanced Ambient mode and options to force Ambient mode on, bypass its power saving restrictions, and disable it entirely or in fullscreen. |  |
 | [App refresh rate](#app-refresh-rate) | Adds an option to change the app refresh rate. |  |
 | [Ask flyout menu](#ask-flyout-menu) | Adds a video menu entry that opens Ask for the video and summarizes the video. This patch works with YouTube 21.16.256 and newer. |  |
+| [Block Channel](#block-channel) | Adds an option to permanently hide content and channel results from specific YouTube channels by channel ID, @handle, or channel URL in Home, Subscriptions, Search, related videos, Shorts shelves, and comments. |  |
 | [Bypass image region restrictions](#bypass-image-region-restrictions) | Adds an option to use a different host for user avatar and channel images and can fix missing images that are blocked in some countries. |  |
 | [Bypass link redirects](#bypass-link-redirects) | Adds an option to bypass redirects and open the original link directly. |  |
 | [Captions](#captions) | Adds options to disable captions from being automatically enabled, select a preferred and a secondary caption language, add more auto-translate languages, and show captions in stable blocks and in picture-in-picture. Stable blocks and bilingual captions work with YouTube 21.15 and newer, on Android 10 and newer. |  |
@@ -123,7 +124,6 @@ All modifications made by Morphe, along with their dates, can be found in the Gi
 | [Open links externally](#open-links-externally) | Adds an option to always open links in your browser instead of with the in-app browser. |  |
 | [Open system share sheet](#open-system-share-sheet) | Adds an option to always open the system share sheet instead of the in-app share sheet. |  |
 | [Open videos fullscreen](#open-videos-fullscreen) | Adds options to automatically open videos in fullscreen portrait or landscape mode. |  |
-| [Override YouTube Music buttons](#override-youtube-music-buttons) | Overrides YouTube Music buttons to open Morphe Music or any compatible third-party client. |  |
 | [Picture-in-picture button](#picture-in-picture-button) | Adds an option to display a picture-in-picture button in the video player. |  |
 | [Play all](#play-all) | Adds an option to play all the videos from a channel and to display play all button in the video player. |  |
 | [Playback buffer](#playback-buffer) | Adds an option to change the video playback buffer size. |  |
@@ -165,72 +165,7 @@ All modifications made by Morphe, along with their dates, can be found in the Gi
 </details>
 
 <details>
-<summary>📦 YouTube Music&nbsp;&nbsp;•&nbsp;&nbsp;51 patches</summary>
-<br>
-
-**🎯 Supported versions:**
-
-| 🧪&nbsp;9.45.51 | 🧪&nbsp;9.44.52 | 🧪&nbsp;9.43.51 | 9.30.53 | 9.20.53 | 9.15.51 |
-| :---: | :---: | :---: | :---: | :---: | :---: |
-
-| 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
-|----------|----------------|-----------|
-| [Android Auto](#android-auto) | Bypasses certificate checks and restores YouTube Music Home recommendations, Library collections, and podcasts in Android Auto. |  |
-| [App refresh rate](#app-refresh-rate) | Adds an option to change the app refresh rate. |  |
-| [Change header](#change-header) | Adds an option to change the header logo in the top left corner of the app. | • Custom header logo |
-| [Change miniplayer color](#change-miniplayer-color) | Adds an option to change the miniplayer background color to match the fullscreen player. |  |
-| [Change start page](#change-start-page) | Adds an option to set which page the app opens in instead of the homepage. |  |
-| [Check watch history domain name resolution](#check-watch-history-domain-name-resolution) | Checks if the device DNS server is preventing user watch history from being saved. |  |
-| [Crossfade](#crossfade) | Adds a true dual-player crossfade between consecutive tracks. |  |
-| [Custom branding](#custom-branding) | Adds options to change the app icon and app name. For mounted (root) installations the branding is applied while patching, because it cannot be changed from the app settings. | • App name<br>• Custom icon<br>• App icon |
-| [Custom font](#custom-font) | Adds an option to show the app with the device system font or a custom TTF or OTF font file instead of YouTube Sans. |  |
-| [Disable DRC audio](#disable-drc-audio) | Adds an option to disable DRC (Dynamic Range Compression) audio. |  |
-| [Disable QUIC protocol](#disable-quic-protocol) | Adds an option to disable QUIC (Quick UDP Internet Connections) network protocol. |  |
-| [Disable dislike redirection](#disable-dislike-redirection) | Adds an option to prevent skipping to the next track when the dislike button is pressed. |  |
-| [Downloads](#downloads) | Adds support to download songs, albums and playlists using the in-app download button, either with an external downloader app or inside YouTube Music. |  |
-| [Enable audio/video switch](#enable-audio-video-switch) | Adds an option to switch between the audio and the video version of a track by redirecting videoId. |  |
-| [Enable debugging](#enable-debugging) | Adds options for debugging and exporting Morphe logs to the clipboard. |  |
-| [Enable exclusive audio playback](#enable-exclusive-audio-playback) | Enables the option to play audio without video. |  |
-| [Enable forced miniplayer](#enable-forced-miniplayer) | Adds an option to enable forced miniplayer when switching between music videos, podcasts, or songs. |  |
-| [Enable swipe to dismiss miniplayer](#enable-swipe-to-dismiss-miniplayer) | Adds an option to enable dismissing the miniplayer by swiping down on it. |  |
-| [Force original audio](#force-original-audio) | Adds an option to always use the original audio track. |  |
-| [Force portrait orientation](#force-portrait-orientation) | Adds an option to keep the app in portrait orientation when the device is rotated. |  |
-| [GmsCore support](#gmscore-support) | Allows the app to work without root by using a different package name when patched using a GmsCore instead of Google Play Services. |  |
-| [Hide ads](#hide-ads) | Adds options to hide fullscreen ads, Premium promotions and video ads. |  |
-| [Hide buttons](#hide-buttons) | Adds options to hide the cast, history, notification, search, voice search, sound search, and Library New buttons. |  |
-| [Hide flyout menu components](#hide-flyout-menu-components) | Adds options to hide individual items from the player and queue flyout menus. |  |
-| [Hide layout components](#hide-layout-components) | Adds options to hide general layout components. |  |
-| [Hide music action buttons](#hide-music-action-buttons) | Adds options to hide action buttons under the player. |  |
-| [Jam queue sharing](#jam-queue-sharing) | Shares the host queue and playback controls through an authenticated Jam bridge. Root installation is not supported. |  |
-| [Media notification controls](#media-notification-controls) | Adds options to disable the seekbar and previous/next buttons in the media notification and headphone controls. |  |
-| [Miniplayer previous and next buttons](#miniplayer-previous-and-next-buttons) | Adds options to show previous and next track buttons in the miniplayer. |  |
-| [Navigation bar](#navigation-bar) | Adds options to hide navigation bar, labels and buttons, and to show the navigation bar as glass. |  |
-| [Network proxy](#network-proxy) | Adds settings to route supported network requests through an HTTP or HTTPS proxy. Including this patch may cause connectivity problems on certain devices |  |
-| [Play albums songs](#play-albums-songs) | Adds an option to play the song version of album tracks instead of music videos. |  |
-| [Playback speed](#playback-speed) | Adds options to change the playback speed and pitch of tracks. |  |
-| [Playlist tags](#playlist-tags) | Adds an option to tag playlists from their menu, and to filter the Library playlists by tag. |  |
-| [Playlist track tap action](#playlist-track-tap-action) | Adds an option to play only the tapped track of a playlist or album, or to add it to the queue, instead of replacing the queue with the whole playlist. |  |
-| [PoToken provider](#potoken-provider) | Adds option to get PoToken using an external PoToken minter app. |  |
-| [Remember repeat state](#remember-repeat-state) | Adds an option to remember the repeat state when playing a new track or playlist. |  |
-| [Remember shuffle state](#remember-shuffle-state) | Adds an option to remember the shuffle state when playing a new track or playlist. |  |
-| [Remove background playback restrictions](#remove-background-playback-restrictions) | Removes restrictions on background playback, including playing kids videos in the background. |  |
-| [Remove viewer discretion dialog](#remove-viewer-discretion-dialog) | Adds an option to remove the dialog that appears when opening a video that has been age-restricted by accepting it automatically. This does not bypass the age restriction. |  |
-| [Return YouTube Dislike](#return-youtube-dislike) | Adds an option to show the dislike count of tracks with Return YouTube Dislike. |  |
-| [Sanitize sharing links](#sanitize-sharing-links) | Removes the tracking query parameters from shared links. |  |
-| [Scrobbling](#scrobbling) | Adds options to add played tracks to Last.fm and ListenBrainz. |  |
-| [Settings menu filter](#settings-menu-filter) | Adds an option to hide items on the standard YouTube Music settings screen by their visible name. |  |
-| [Skip silence](#skip-silence) | Adds an option to automatically skip silent pauses in audio playback. |  |
-| [SoundProof](#soundproof) | Adds an option to skip tracks of artists reported as AI in the SoundProof community database. |  |
-| [SponsorBlock](#sponsorblock) | Adds options to enable and configure SponsorBlock, which can skip non-music segments. |  |
-| [Spoof app version](#spoof-app-version) | Adds an option to trick the app into thinking you are running an older version. |  |
-| [Spoof video streams](#spoof-video-streams) | Adds options to spoof the client video streams to fix playback. |  |
-| [Theme](#theme) | Adds options for theming, and settings to change the app foreground and background colors. | • Dark theme color |
-| [Third-party lyrics](#third-party-lyrics) | Adds an option to show synced lyrics with experience enhancement from 19+ providers in the lyrics panel. |  |
-
-</details>
-
-<details>
-<summary>📦 Reddit&nbsp;&nbsp;•&nbsp;&nbsp;32 patches</summary>
+<summary>📦 Reddit&nbsp;&nbsp;•&nbsp;&nbsp;33 patches</summary>
 <br>
 
 **🎯 Supported versions:**
@@ -267,6 +202,7 @@ All modifications made by Morphe, along with their dates, can be found in the Gi
 | [Open links externally](#open-links-externally) | Adds an option to always open links in your browser instead of with the in-app-browser. |  |
 | [Redgifs audio](#redgifs-audio) | Adds an option to play the original Redgifs video, which has audio, instead of Reddit's silent copy. |  |
 | [Remember collapsed comments](#remember-collapsed-comments) | Adds an option to keep comments you collapsed collapsed when reopening a post. |  |
+| [Remove Enable NSFW button](#remove-enable-nsfw-button) | Forcibly removes the Enable NSFW button from Reddit settings. |  |
 | [Remove subreddit dialog](#remove-subreddit-dialog) | Adds options to remove the NSFW community warning and notifications suggestion dialogs by dismissing them automatically. |  |
 | [Sanitize sharing links](#sanitize-sharing-links) | Adds an option to sanitize sharing links by removing tracking query parameters. |  |
 | [Show flairs in home feed](#show-flairs-in-home-feed) | Adds an option to show post flair badges in the home feed. This patch works with Reddit 2026.24.0 and newer. |  |
