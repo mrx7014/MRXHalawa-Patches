@@ -45,7 +45,6 @@ public class MiscellaneousPreferenceCategory extends ConditionalPreferenceCatego
                 DownloadLocationPatch.isPatchIncluded() ||
                 OpenLinksDirectlyPatch.isPatchIncluded() ||
                 OpenLinksExternallyPatch.isPatchIncluded() ||
-                RedgifsAudioPatch.isPatchIncluded() ||
                 SanitizeSharingLinksPatch.isPatchIncluded();
     }
 
