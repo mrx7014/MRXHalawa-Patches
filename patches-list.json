@@ -1,6 +1,6 @@
 {
   "NOTE": "Do NOT manually edit this file. This file is automatically updated when semantic release (release.yml) runs. Manually editing this file can break your releases and break third party tools that use this file.",
-  "version": "2.2.0",
+  "version": "2.1.0",
   "patches": [
     {
       "name": "AI channel filter",
@@ -480,42 +480,42 @@
           "formFactor": "MOBILE",
           "targets": [
             {
-              "version": "21.42.241",
+              "version": "21.45.82",
               "versionCodes": null,
               "isExperimental": true,
               "minSdk": 29,
               "description": null
             },
             {
-              "version": "21.41.525",
+              "version": "21.44.528",
               "versionCodes": null,
               "isExperimental": true,
+              "minSdk": 29,
+              "description": null
+            },
+            {
+              "version": "21.43.523",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": 29,
+              "description": null
+            },
+            {
+              "version": "21.30.216",
+              "versionCodes": null,
+              "isExperimental": false,
               "minSdk": 29,
               "description": null
             },
             {
               "version": "21.28.208",
               "versionCodes": null,
-              "isExperimental": true,
+              "isExperimental": false,
               "minSdk": 29,
               "description": null
             },
             {
               "version": "21.23.492",
-              "versionCodes": null,
-              "isExperimental": true,
-              "minSdk": 28,
-              "description": null
-            },
-            {
-              "version": "21.20.405",
-              "versionCodes": null,
-              "isExperimental": false,
-              "minSdk": 28,
-              "description": null
-            },
-            {
-              "version": "21.16.256",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 28,
@@ -529,7 +529,7 @@
               "description": null
             },
             {
-              "version": "20.21.37",
+              "version": "20.26.46",
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
@@ -950,7 +950,7 @@
       "description": "Spoofs the installer source so the app appears to be installed from an app store.",
       "default": false,
       "category": null,
-      "compatiblePackages": [],
+      "compatiblePackages": null,
       "options": [
         {
           "key": "packageInstallerName",
@@ -1369,7 +1369,7 @@
       "description": "Changes the app package name to allow installing the same app multiple times. By default \".morphe\" is appended to the package name. Each cloned install must use a unique package name. Cloning does not work with all apps and using this patch may cause app crashes or other unexpected behavior.",
       "default": false,
       "category": null,
-      "compatiblePackages": [],
+      "compatiblePackages": null,
       "options": [
         {
           "key": "packageName",
@@ -2265,7 +2265,7 @@
       "description": "Disables Play Store updates by setting the version code to the maximum allowed. This patch may cause unexpected issues with some apps and does not work if the app is installed by root mounting",
       "default": false,
       "category": null,
-      "compatiblePackages": [],
+      "compatiblePackages": null,
       "options": []
     },
     {
@@ -7857,7 +7857,7 @@
       "description": "Overrides certificate pinning, allowing to inspect traffic via a proxy.",
       "default": false,
       "category": null,
-      "compatiblePackages": [],
+      "compatiblePackages": null,
       "options": []
     },
     {
@@ -8717,6 +8717,70 @@
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
+              "description": null
+            }
+          ]
+        }
+      ],
+      "options": []
+    },
+    {
+      "name": "Remove Enable NSFW button",
+      "description": "Forcibly removes the Enable NSFW button from Reddit settings.",
+      "default": true,
+      "category": null,
+      "compatiblePackages": [
+        {
+          "packageName": "com.reddit.frontpage",
+          "name": "Reddit",
+          "description": null,
+          "apkFileType": "APKM",
+          "appIconColor": "#FF4500",
+          "signatures": [
+            "970b91143813b4c9d5f3634f672c9fcaa5621b4efaaedafd6c235cbbb869736f"
+          ],
+          "formFactor": "MOBILE",
+          "targets": [
+            {
+              "version": "2026.45.0",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": 29,
+              "description": null
+            },
+            {
+              "version": "2026.44.0",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": 29,
+              "description": null
+            },
+            {
+              "version": "2026.43.0",
+              "versionCodes": null,
+              "isExperimental": true,
+              "minSdk": 29,
+              "description": null
+            },
+            {
+              "version": "2026.40.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 29,
+              "description": null
+            },
+            {
+              "version": "2026.24.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 29,
+              "description": null
+            },
+            {
+              "version": "2026.10.0",
+              "versionCodes": null,
+              "isExperimental": false,
+              "minSdk": 28,
               "description": null
             }
           ]
@@ -10353,7 +10417,7 @@
       "description": "Spoofs the package signature of the original APK.",
       "default": false,
       "category": null,
-      "compatiblePackages": [],
+      "compatiblePackages": null,
       "options": []
     },
     {
@@ -11244,70 +11308,6 @@
               "versionCodes": null,
               "isExperimental": false,
               "minSdk": 26,
-              "description": null
-            }
-          ]
-        }
-      ],
-      "options": []
-    },
-    {
-      "name": "Remove Enable NSFW button",
-      "description": "Forcibly removes the Enable NSFW button from Reddit settings.",
-      "default": true,
-      "category": null,
-      "compatiblePackages": [
-        {
-          "packageName": "com.reddit.frontpage",
-          "name": "Reddit",
-          "description": null,
-          "apkFileType": "APKM",
-          "appIconColor": "#FF4500",
-          "signatures": [
-            "970b91143813b4c9d5f3634f672c9fcaa5621b4efaaedafd6c235cbbb869736f"
-          ],
-          "formFactor": "MOBILE",
-          "targets": [
-            {
-              "version": "2026.45.0",
-              "versionCodes": null,
-              "isExperimental": true,
-              "minSdk": 29,
-              "description": null
-            },
-            {
-              "version": "2026.44.0",
-              "versionCodes": null,
-              "isExperimental": true,
-              "minSdk": 29,
-              "description": null
-            },
-            {
-              "version": "2026.43.0",
-              "versionCodes": null,
-              "isExperimental": true,
-              "minSdk": 29,
-              "description": null
-            },
-            {
-              "version": "2026.40.0",
-              "versionCodes": null,
-              "isExperimental": false,
-              "minSdk": 29,
-              "description": null
-            },
-            {
-              "version": "2026.24.0",
-              "versionCodes": null,
-              "isExperimental": false,
-              "minSdk": 29,
-              "description": null
-            },
-            {
-              "version": "2026.10.0",
-              "versionCodes": null,
-              "isExperimental": false,
-              "minSdk": 28,
               "description": null
             }
           ]

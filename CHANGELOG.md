@@ -1,3 +1,18 @@
+## [2.1.0](https://github.com/mrx7014/MRXHalawa-Patches/compare/v2.0.0...v2.1.0) (2026-11-12)
+
+### ✨ New Features
+
+* restore Reddit NSFW patch and remove YouTube Music [skip ci] ([655fc62](https://github.com/mrx7014/MRXHalawa-Patches/commit/655fc6293bd4de28c681a30220282e1fe37a2442))
+
+### 🐛 Bug Fixes
+
+* keep removed patches out of future syncs [skip ci] ([852a8a8](https://github.com/mrx7014/MRXHalawa-Patches/commit/852a8a8281659b4fcc5ffad681d9a82609e7673c))
+* keep sync green when PR token is restricted [skip ci] ([a9e44aa](https://github.com/mrx7014/MRXHalawa-Patches/commit/a9e44aad0c7f32eda67d307f61856cb873c9a601))
+* make upstream sync preserve MRX custom patch ([8fed35c](https://github.com/mrx7014/MRXHalawa-Patches/commit/8fed35cf8a5fcd7f594811572fc88f32f2fa4b1b))
+* remove stale Redgifs settings reference [skip ci] ([72d37c2](https://github.com/mrx7014/MRXHalawa-Patches/commit/72d37c2c0aee86c8dbade48e9f7669f328d3d2c8))
+* require pull request for upstream sync [skip ci] ([23e6f0c](https://github.com/mrx7014/MRXHalawa-Patches/commit/23e6f0c2dd8e2050e236231bf53e904868bf65fe))
+* support dedicated token for sync pull requests [skip ci] ([a957e98](https://github.com/mrx7014/MRXHalawa-Patches/commit/a957e98ed9cc64bc60cb7720f5e1216da0be4651))
+
 ## [2.2.0](https://github.com/MorpheApp/morphe-patches/compare/v2.1.0...v2.2.0) (2026-11-10)
 
 ### ✨ New Features
