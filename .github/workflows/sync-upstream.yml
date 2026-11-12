@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Merge upstream
+      - name: Merge upstream and preserve MRX custom patch
         env:
           UPSTREAM_REF: ${{ inputs.upstream_ref }}
         run: |
@@ -32,7 +32,74 @@ jobs:
           git fetch --no-tags upstream "$UPSTREAM_REF"
           branch="sync/upstream-${UPSTREAM_REF//\//-}-$(date -u +%Y%m%d%H%M%S)"
           git switch -c "$branch"
-          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-ff --no-edit "upstream/$UPSTREAM_REF"
+
+          # Save MRX-only data before taking upstream's canonical files.
+          git show HEAD:patches-list.json > /tmp/mrx-patches-list.json
+          git show HEAD:patches/src/main/resources/addresources/values/youtube/strings.xml > /tmp/mrx-youtube-strings.xml
+
+          # Upstream wins ordinary conflicts; the custom MRX data is restored below.
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-ff -X theirs --no-edit "upstream/$UPSTREAM_REF"
+
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          ours = json.loads(Path('/tmp/mrx-patches-list.json').read_text())
+          current_path = Path('patches-list.json')
+          current = json.loads(current_path.read_text())
+
+          def find_patch(value):
+              if isinstance(value, dict):
+                  if value.get('name') in ('Block Channel', 'Block Channels'):
+                      return value
+                  for child in value.values():
+                      result = find_patch(child)
+                      if result:
+                          return result
+              elif isinstance(value, list):
+                  for child in value:
+                      result = find_patch(child)
+                      if result:
+                          return result
+              return None
+
+          def find_patch_list(value):
+              if isinstance(value, dict):
+                  if isinstance(value.get('patches'), list):
+                      return value['patches']
+                  for child in value.values():
+                      result = find_patch_list(child)
+                      if result is not None:
+                          return result
+              elif isinstance(value, list):
+                  for child in value:
+                      result = find_patch_list(child)
+                      if result is not None:
+                          return result
+              return None
+
+          custom = find_patch(ours)
+          patches = find_patch_list(current)
+          if custom and patches and not any(p.get('name') in ('Block Channel', 'Block Channels') for p in patches):
+              index = next((i for i, p in enumerate(patches) if p.get('name', '') > custom.get('name', '')), len(patches))
+              patches.insert(index, custom)
+              current_path.write_text(json.dumps(current, ensure_ascii=False, indent=2) + '\n')
+          PY
+
+          python3 - <<'PY'
+          from pathlib import Path
+          upstream = Path('patches/src/main/resources/addresources/values/youtube/strings.xml')
+          custom = Path('/tmp/mrx-youtube-strings.xml').read_text()
+          text = upstream.read_text()
+          start = custom.find('    <!-- Block Channels -->')
+          end = custom.find('</resources>', start)
+          if start >= 0 and end >= 0 and 'morphe_block_channels_screen_title' not in text:
+              text = text.replace('</resources>', '\n' + custom[start:end].rstrip() + '\n</resources>')
+              upstream.write_text(text)
+          PY
+
+          git add patches-list.json patches/src/main/resources/addresources/values/youtube/strings.xml
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit --amend --no-edit
           echo "SYNC_BRANCH=$branch" >> "$GITHUB_ENV"
 
       - name: Push sync branch
@@ -46,4 +113,4 @@ jobs:
             --base main \
             --head "$SYNC_BRANCH" \
             --title "chore: sync Morphe upstream (${{ inputs.upstream_ref }})" \
-            --body "This PR merges the latest changes from MorpheApp/morphe-patches into MRXHalawa-Patches. Review conflicts and verify the custom Block Channel patch before merging."
+            --body "This PR merges the latest changes from MorpheApp/morphe-patches into MRXHalawa-Patches. Review the generated diff and run the build before merging."
