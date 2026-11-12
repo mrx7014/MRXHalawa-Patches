@@ -1,6 +1,11 @@
 import com.android.build.api.dsl.ApplicationExtension
 
 dependencies {
+    testImplementation(libs.junit)
+    testImplementation(libs.json)
+    testImplementation(project(":extensions:shared:library"))
+    testImplementation(libs.morphe.extensions.library)
+    testImplementation(project(":extensions:shared-youtube:library"))
     compileOnly(libs.morphe.extensions.library)
     compileOnly(project(":extensions:shared-youtube:library"))
     compileOnly(project(":extensions:shared-youtube:stub"))
@@ -13,5 +18,8 @@ dependencies {
 configure<ApplicationExtension> {
     defaultConfig {
         minSdk = 26
+    }
+    testOptions {
+        unitTests.isReturnDefaultValues = true
     }
 }

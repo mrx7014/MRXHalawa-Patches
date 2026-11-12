@@ -16,18 +16,19 @@ import app.morphe.patcher.extensions.InstructionExtensions.getInstruction
 import app.morphe.patcher.fieldAccess
 import app.morphe.patcher.methodCall
 import app.morphe.patcher.opcode
-import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patcher.patch.patch
+import app.morphe.patcher.util.findFreeRegister
+import app.morphe.patcher.util.getReference
 import app.morphe.patcher.util.proxy.mutableTypes.MutableMethod.Companion.toMutable
 import app.morphe.patcher.util.smali.ExternalLabel
 import app.morphe.patches.music.misc.extension.sharedExtensionPatch
+import app.morphe.patches.music.misc.playservice.is_9_43_or_greater
 import app.morphe.patches.music.misc.playservice.versionCheckPatch
 import app.morphe.patches.music.misc.settings.PreferenceScreen
 import app.morphe.patches.music.misc.settings.settingsPatch
 import app.morphe.patches.music.shared.Constants.COMPATIBILITY_YOUTUBE_MUSIC
 import app.morphe.patches.shared.misc.settings.preference.SwitchPreference
 import app.morphe.util.addInstructionsAtControlFlowLabel
-import app.morphe.util.findFreeRegister
-import app.morphe.util.getReference
 import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.Opcode
 import com.android.tools.smali.dexlib2.builder.MutableMethodImplementation
@@ -43,7 +44,7 @@ private const val EXTENSION_CLASS = "Lapp/morphe/extension/music/patches/EnableS
 private const val CROSSFADE_MANAGER_CLASS = "Lapp/morphe/extension/music/patches/CrossfadePatch;"
 
 @Suppress("unused")
-val enableSwipeToDismissMiniplayerPatch = bytecodePatch(
+val enableSwipeToDismissMiniplayerPatch = patch(
     name = "Enable swipe to dismiss miniplayer",
     description = "Adds an option to enable dismissing the miniplayer by swiping down on it."
 ) {
@@ -64,8 +65,7 @@ val enableSwipeToDismissMiniplayerPatch = bytecodePatch(
 
         val interactionLoggingSwipeField = InteractionLoggingEnumFingerprint
             .instructionMatches[1]
-            .instruction
-            .getReference<FieldReference>()!!
+            .fieldReference
 
         val widgetReferences = mutableListOf<Reference>()
         val widgetInstructionMatches = MusicActivityWidgetFingerprint.instructionMatches
@@ -219,17 +219,44 @@ val enableSwipeToDismissMiniplayerPatch = bytecodePatch(
 
         // region Disable player page motion event
 
-        PlayerPageBehaviorFingerprint.method.addInstructionsWithLabels(
-            0,
-            """
-                invoke-static { }, $EXTENSION_CLASS->enableSwipeToDismissMiniplayer()Z
-                move-result v0
-                if-eqz v0, :ignore
-                return-void
-                :ignore
-                nop
-            """
-        )
+        if (is_9_43_or_greater) {
+            // The motion field is now set directly from several places,
+            // but it is only read by the touch methods. Clear it before they run.
+            val motionField = PlayerPageBehaviorInterceptTouchEventFingerprint
+                .instructionMatches
+                .first()
+                .fieldReference
+
+            listOf(
+                PlayerPageBehaviorInterceptTouchEventFingerprint,
+                PlayerPageBehaviorTouchEventFingerprint
+            ).forEach {
+                it.method.addInstructionsWithLabels(
+                    0,
+                    """
+                        invoke-static { }, $EXTENSION_CLASS->enableSwipeToDismissMiniplayer()Z
+                        move-result v0
+                        if-eqz v0, :ignore
+                        const/4 v0, 0x0
+                        iput-boolean v0, p0, $motionField
+                        :ignore
+                        nop
+                    """
+                )
+            }
+        } else {
+            PlayerPageBehaviorFingerprint.method.addInstructionsWithLabels(
+                0,
+                """
+                    invoke-static { }, $EXTENSION_CLASS->enableSwipeToDismissMiniplayer()Z
+                    move-result v0
+                    if-eqz v0, :ignore
+                    return-void
+                    :ignore
+                    nop
+                """
+            )
+        }
 
         // endregion
 

@@ -9,19 +9,21 @@
 package app.morphe.patches.music.layout.lyrics
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstruction
-import app.morphe.patcher.extensions.InstructionExtensions.getInstruction
-import app.morphe.patcher.patch.bytecodePatch
-import app.morphe.patcher.patch.resourcePatch
+import app.morphe.patcher.extensions.InstructionExtensions.addInstructionsWithLabels
+import app.morphe.patcher.fieldAccess
+import app.morphe.patcher.patch.classDefBy
+import app.morphe.patcher.patch.patch
 import app.morphe.patches.all.misc.resources.addResourcesPatch
 import app.morphe.patches.music.misc.extension.sharedExtensionPatch
 import app.morphe.patches.music.misc.litho.filter.lithoFilterPatch
+import app.morphe.patches.music.misc.mediasession.addSetMetadataHook
+import app.morphe.patches.music.misc.mediasession.addSetMetadataWithSessionHook
+import app.morphe.patches.music.misc.mediasession.addSetPlaybackStateHook
+import app.morphe.patches.music.misc.mediasession.mediaSessionHookPatch
 import app.morphe.patches.music.misc.settings.PreferenceScreen
 import app.morphe.patches.music.misc.settings.settingsPatch
 import app.morphe.patches.music.shared.Constants.COMPATIBILITY_YOUTUBE_MUSIC
-import app.morphe.patches.music.shared.hookMediaSessionArgument
 import app.morphe.patches.music.video.information.musicVideoInformationPatch
-import app.morphe.patches.shared.MediaSessionSetMetadataFingerprint
-import app.morphe.patches.shared.MediaSessionSetPlaybackStateFingerprint
 import app.morphe.patches.shared.misc.litho.filter.addLithoFilter
 import app.morphe.patches.shared.misc.settings.preference.InputType
 import app.morphe.patches.shared.misc.settings.preference.ListPreference
@@ -33,16 +35,13 @@ import app.morphe.patches.shared.misc.settings.preference.TextPreference
 import app.morphe.patches.shared.misc.settings.preference.screenInfoPreferenceCategory
 import app.morphe.util.ResourceGroup
 import app.morphe.util.copyResources
-import app.morphe.util.getReference
 import app.morphe.util.indexOfFirstInstructionOrThrow
 import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.Opcode
-import com.android.tools.smali.dexlib2.iface.instruction.FiveRegisterInstruction
-import com.android.tools.smali.dexlib2.iface.reference.FieldReference
 import java.util.logging.Logger
 
 private const val EXTENSION_CLASS = "Lapp/morphe/extension/music/patches/lyrics/LyricsPatch;"
-private const val PANEL_INSTALLER_CLASS = "Lapp/morphe/extension/music/patches/lyrics/ui/LyricsPanelInstaller;"
+internal const val PANEL_INSTALLER_CLASS = "Lapp/morphe/extension/music/patches/lyrics/ui/LyricsPanelInstaller;"
 private const val LOCKSCREEN_CLASS = "Lapp/morphe/extension/music/patches/lyrics/session/LockScreenLyrics;"
 private const val MINIPLAYER_LYRICS_CLASS = "Lapp/morphe/extension/music/patches/lyrics/session/MiniplayerLyrics;"
 
@@ -50,19 +49,20 @@ private const val LYRICS_PANEL_FILTER =
     "Lapp/morphe/extension/music/patches/components/LyricsPanelFilter;"
 
 @Suppress("unused")
-val lyricsPatch = bytecodePatch(
+val lyricsPatch = patch(
     name = "Third-party lyrics",
-    description = "Adds an option to show synced lyrics with experience enhancement from 18+ providers in the lyrics panel."
+    description = "Adds an option to show synced lyrics with experience enhancement from 19+ providers in the lyrics panel."
 ) {
     dependsOn(
         sharedExtensionPatch,
         settingsPatch,
         addResourcesPatch,
         lithoFilterPatch,
+        mediaSessionHookPatch,
         musicVideoInformationPatch,
         // The copy and romanize buttons need their icons whether the patches
         // that own these resources are applied.
-        resourcePatch {
+        patch {
             execute {
                 copyResources(
                     "copyvideolinkbutton",
@@ -100,6 +100,37 @@ val lyricsPatch = bytecodePatch(
                         dependency = "morphe_music_lyrics_enabled"
                     ),
                     NonInteractivePreference(
+                        key = "morphe_music_lyrics_translation_provider",
+                        summaryKey = null,
+                        tag = "app.morphe.extension.music.settings.preference.LyricsOrderedListPreference",
+                        selectable = false,
+                        dependency = "morphe_music_lyrics_enabled"
+                    ),
+                    NonInteractivePreference(
+                        key = "morphe_music_lyrics_translation_language",
+                        titleKey = null,
+                        summaryKey = null,
+                        tag = "app.morphe.extension.music.settings.preference.LyricsTargetLanguagePreference",
+                        selectable = true,
+                        dependency = "morphe_music_lyrics_enabled"
+                    ),
+                    NonInteractivePreference(
+                        key = "morphe_music_lyrics_romanization_provider",
+                        summaryKey = null,
+                        tag = "app.morphe.extension.music.settings.preference.LyricsOrderedListPreference",
+                        selectable = false,
+                        dependency = "morphe_music_lyrics_enabled"
+                    ),
+                    NonInteractivePreference(
+                        key = "morphe_music_lyrics_romanize_language",
+                        titleKey = null,
+                        summaryKey = null,
+                        tag = "app.morphe.extension.music.settings.preference.LyricsTargetLanguagePreference",
+                        selectable = true,
+                        dependency = "morphe_music_lyrics_enabled"
+                    ),
+                    SwitchPreference("morphe_music_lyrics_allow_transliteration", summary = true),
+                    NonInteractivePreference(
                         key = "morphe_music_lyrics_clear_cache",
                         tag = "app.morphe.extension.music.settings.preference.LyricsClearCachePreference",
                         dependency = "morphe_music_lyrics_enabled"
@@ -118,11 +149,22 @@ val lyricsPatch = bytecodePatch(
                         dependency = "morphe_music_lyrics_enabled"
                     ),
                     SwitchPreference("morphe_music_lyrics_word_sync", summary = true),
+                    SwitchPreference("morphe_music_lyrics_line_scale", summary = true),
                     SwitchPreference("morphe_music_lyrics_split_background", summary = true),
                     SwitchPreference("morphe_music_lyrics_show_section", summary = true),
+                    SwitchPreference(
+                        key = "morphe_music_lyrics_use_ai_section",
+                        summary = true,
+                        tag = "app.morphe.extension.music.settings.preference.LyricsAiPromptPreference"
+                    ),
                     SwitchPreference("morphe_music_lyrics_hide_played", summary = true),
                     SwitchPreference("morphe_music_lyrics_hide_unplayed", summary = true),
-                    SwitchPreference("morphe_music_lyrics_hide_info", summary = true)
+                    SwitchPreference("morphe_music_lyrics_hide_info", summary = true),
+                    SwitchPreference("morphe_music_lyrics_force_capitalize", summary = true),
+                    SwitchPreference("morphe_music_lyrics_strip_trailing_punctuation", summary = true),
+                    SwitchPreference("morphe_music_lyrics_han_form", summary = true),
+                    SwitchPreference("morphe_music_lyrics_swap_trans_roma", summary = true),
+                    SwitchPreference("morphe_music_lyrics_force_center", summary = true)
                 )
             ),
             PreferenceCategory(
@@ -131,28 +173,12 @@ val lyricsPatch = bytecodePatch(
                 preferences = setOf(
                     SwitchPreference("morphe_music_lyrics_tap_to_seek", summary = true),
                     SwitchPreference("morphe_music_lyrics_keep_screen_on", summary = true),
+                    SwitchPreference("morphe_music_lyrics_dynamic_background", summary = true),
+                    SwitchPreference("morphe_music_lyrics_dynamic_background_animated", summary = true),
                     SwitchPreference("morphe_music_lyrics_show_copy_button", summary = true),
+                    SwitchPreference("morphe_music_lyrics_show_refresh_button", summary = true),
                     SwitchPreference("morphe_music_lyrics_show_translate_button", summary = true),
-                    SwitchPreference("morphe_music_lyrics_show_romanize_button", summary = true),
-                    SwitchPreference("morphe_music_lyrics_show_refresh_button", summary = true)
-                )
-            ),
-            PreferenceCategory(
-                key = "morphe_music_lyrics_section_languages",
-                sorting = Sorting.UNSORTED,
-                preferences = setOf(
-                    ListPreference(
-                        key = "morphe_music_lyrics_translation_language",
-                        entriesKey = "morphe_language_entries",
-                        entryValuesKey = "morphe_language_entry_values"
-                    ),
-                    ListPreference(key = "morphe_music_lyrics_romanize_language"),
-                    SwitchPreference(
-                        key = "morphe_music_lyrics_local_romanization",
-                        summary = true,
-                        tag = "app.morphe.extension.music.settings.preference.LyricsLocalRomanizationPreference"
-                    ),
-                    SwitchPreference("morphe_music_lyrics_swap_trans_roma", summary = true)
+                    SwitchPreference("morphe_music_lyrics_show_romanize_button", summary = true)
                 )
             ),
             PreferenceCategory(
@@ -169,41 +195,32 @@ val lyricsPatch = bytecodePatch(
                     SwitchPreference("morphe_music_lyrics_sb_matching", summary = true),
                     SwitchPreference("morphe_music_lyrics_miniplayer", summary = true),
                     SwitchPreference("morphe_music_lyrics_mediasession", summary = true),
-                    SwitchPreference("morphe_music_lyrics_display_artist_first", summary = true)
-                )
-            ),
-            PreferenceCategory(
-                key = "morphe_music_lyrics_section_ai_endpoint",
-                sorting = Sorting.UNSORTED,
-                preferences = setOf(
                     NonInteractivePreference(
-                        key = "morphe_music_lyrics_ai_config",
-                        titleKey = "morphe_music_lyrics_use_ai_title",
-                        summaryKey = null,
-                        tag = "app.morphe.extension.music.settings.preference.LyricsAiConfigPreference",
+                        key = "morphe_music_lyrics_mini_track_format",
+                        summaryKey = "morphe_music_lyrics_mini_track_format_menu_summary",
+                        tag = "app.morphe.extension.music.settings.preference.LyricsTrackFormatPreference",
                         selectable = true,
                         dependency = "morphe_music_lyrics_enabled"
                     ),
-                    SwitchPreference(
-                        key = "morphe_music_lyrics_use_ai_translation",
-                        summary = true,
-                        tag = "app.morphe.extension.music.settings.preference.LyricsAiPromptPreference"
-                    ),
-                    SwitchPreference(
-                        key = "morphe_music_lyrics_use_ai_romanization",
-                        summary = true,
-                        tag = "app.morphe.extension.music.settings.preference.LyricsAiPromptPreference"
-                    ),
-                    SwitchPreference(
-                        key = "morphe_music_lyrics_use_ai_section",
-                        summary = true,
-                        tag = "app.morphe.extension.music.settings.preference.LyricsAiPromptPreference"
+                    TextPreference(
+                        key = "morphe_music_lyrics_mini_encapsulation",
+                        tag = "app.morphe.extension.music.settings.preference.LyricsEncapsulationPreference"
                     ),
                     NonInteractivePreference(
-                        key = "morphe_music_lyrics_transcribe_key",
-                        titleKey = "morphe_music_lyrics_transcribe_key_title",
-                        summaryKey = "morphe_music_lyrics_transcribe_key_summary",
-                        tag = "app.morphe.extension.music.settings.preference.LyricsTranscribeKeyPreference",
+                        key = "morphe_music_lyrics_mini_line_limits",
+                        summaryKey = "morphe_music_lyrics_mini_line_limits_summary",
+                        tag = "app.morphe.extension.music.settings.preference.LyricsLineLimitsPreference",
+                        selectable = true,
+                        dependency = "morphe_music_lyrics_enabled"
+                    ),
+                    TextPreference(
+                        key = "morphe_music_lyrics_mini_instrumental",
+                        inputType = InputType.TEXT_MULTI_LINE
+                    ),
+                    NonInteractivePreference(
+                        key = "morphe_music_lyrics_mini_next_offset_ms",
+                        summaryKey = "morphe_music_lyrics_mini_next_offset_ms_summary",
+                        tag = "app.morphe.extension.shared.settings.preference.SeekBarPreference",
                         selectable = true,
                         dependency = "morphe_music_lyrics_enabled"
                     )
@@ -233,10 +250,6 @@ val lyricsPatch = bytecodePatch(
                     NonInteractivePreference(
                         key = "morphe_music_lyrics_about",
                         titleKey = null,
-                        // The summary is written by the preference itself, since what the fetched
-                        // reading dictionaries add to it is not known when the layout is built.
-                        summaryKey = null,
-                        tag = "app.morphe.extension.music.settings.preference.LyricsAboutPreference",
                         dependency = "morphe_music_lyrics_enabled"
                     )
                 )
@@ -247,13 +260,20 @@ val lyricsPatch = bytecodePatch(
         // lyrics component is the earliest signal that the opened panel is the lyrics one.
         addLithoFilter(LYRICS_PANEL_FILTER)
 
+        // Some accounts get lyrics as a player tab instead of an engagement panel. A tab page can
+        // be built long before it is selected, so the litho filter alone can't install the panel.
+        TabbedViewTabSelectedFingerprint.method.addInstruction(
+            0,
+            "invoke-static { p0 }, $PANEL_INSTALLER_CLASS->onTabSelected(Landroid/view/ViewGroup;)V"
+        )
+
         // Some accounts get the panel without a heading, and then nothing in the view tree
         // tells the lyrics panel from the other panels sharing the same container. The panel
         // the app itself put in the container is what tells them apart. Panels with a
         // heading do not need this, so a miss here leaves the rest of the patch working.
         val log = Logger.getLogger(this::class.java.name)
-        runCatching {
-            EngagementPanelControllerFingerprint.classDef.apply {
+        val engagementPanelType = runCatching {
+            EngagementPanelControllerFingerprint.classDef.run {
                 val controllerType = type
 
                 // Only instance fields the controller reassigns can hold the panel it shows,
@@ -277,51 +297,70 @@ val lyricsPatch = bytecodePatch(
                     // Hooked after the assignment, because the argument is cleared to null
                     // before it when the panel is being closed rather than shown. The panel
                     // is also handed to other objects here, so the owner is checked too.
-                    val assignIndex = indexOfFirstInstructionOrThrow {
-                        opcode == Opcode.IPUT_OBJECT &&
-                            getReference<FieldReference>()?.let { field ->
-                                field.type == panelType && field.definingClass == controllerType
-                            } == true
-                    }
+                    val assignIndex = indexOfFirstInstructionOrThrow(
+                        fieldAccess(
+                            opcode = Opcode.IPUT_OBJECT,
+                            definingClass = controllerType,
+                            type = panelType
+                        )
+                    )
                     addInstruction(
                         assignIndex + 1,
                         "invoke-static { p1 }, " +
                             "$PANEL_INSTALLER_CLASS->onEngagementPanelChanged(Ljava/lang/Object;)V"
                     )
                 }
+
+                panelType
             }
         }.onFailure {
             log.warning(
                 "Engagement panel controller not found, a lyrics panel shown without a " +
                     "heading will not be used: ${it.message}"
             )
+        }.getOrNull()
+
+        // The panel identifier says which panel this is in any language, and with or without
+        // a heading. The app reads it with a static helper taking the panel renderer, and the
+        // panel hands out its renderer through the only method of the panel type that takes
+        // nothing and returns that type.
+        if (engagementPanelType != null) {
+            val identifierHelper = PanelIdentifierFingerprint.instructionMatches.first().methodReference
+            val rendererType = identifierHelper.parameterTypes.single().toString()
+            val panelClass = classDefBy(engagementPanelType)
+            val rendererGetter = panelClass.methods.single { method ->
+                method.parameterTypes.isEmpty() && method.returnType == rendererType
+            }
+            val invokeGetter = if (AccessFlags.INTERFACE.isSet(panelClass.accessFlags)) {
+                "invoke-interface"
+            } else {
+                "invoke-virtual"
+            }
+
+            GetPanelIdentifierFingerprint.method.addInstructionsWithLabels(
+                0,
+                """
+                    check-cast p0, $engagementPanelType
+                    $invokeGetter { p0 }, $rendererGetter
+                    move-result-object p0
+                    if-eqz p0, :no_renderer
+                    invoke-static { p0 }, $identifierHelper
+                    move-result-object p0
+                    return-object p0
+                    :no_renderer
+                    const/4 p0, 0x0
+                    return-object p0
+                """
+            )
         }
 
-        MediaSessionSetMetadataFingerprint.hookMediaSessionArgument(
-            "$EXTENSION_CLASS->onSetMetadata(Landroid/media/MediaMetadata;)V"
+        addSetMetadataHook("$EXTENSION_CLASS->onSetMetadata(Landroid/media/MediaMetadata;)V")
+        addSetMetadataWithSessionHook(
+            "$MINIPLAYER_LYRICS_CLASS->onMediaSessionSetMetadata(Landroid/media/session/MediaSession;Landroid/media/MediaMetadata;)V"
         )
-
-        MediaSessionSetMetadataFingerprint.let {
-            it.clearMatch()
-            val method = it.method
-            val index = it.instructionMatches.last().index
-            val instruction = method.getInstruction<FiveRegisterInstruction>(index)
-            val sessionRegister = instruction.registerC
-            val metadataRegister = instruction.registerD
-            method.addInstruction(
-                index,
-                "invoke-static { v$sessionRegister, v$metadataRegister }, " +
-                    "$LOCKSCREEN_CLASS->onMediaSessionSetMetadata(Landroid/media/session/MediaSession;Landroid/media/MediaMetadata;)V"
-            )
-            method.addInstruction(
-                index,
-                "invoke-static { v$sessionRegister, v$metadataRegister }, " +
-                    "$MINIPLAYER_LYRICS_CLASS->onMediaSessionSetMetadata(Landroid/media/session/MediaSession;Landroid/media/MediaMetadata;)V"
-            )
-        }
-
-        MediaSessionSetPlaybackStateFingerprint.hookMediaSessionArgument(
-            "$EXTENSION_CLASS->onSetPlaybackState(Landroid/media/session/PlaybackState;)V"
+        addSetMetadataWithSessionHook(
+            "$LOCKSCREEN_CLASS->onMediaSessionSetMetadata(Landroid/media/session/MediaSession;Landroid/media/MediaMetadata;)V"
         )
+        addSetPlaybackStateHook("$EXTENSION_CLASS->onSetPlaybackState(Landroid/media/session/PlaybackState;)V")
     }
 }

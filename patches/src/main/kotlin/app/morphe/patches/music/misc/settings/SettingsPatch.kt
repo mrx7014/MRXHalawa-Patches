@@ -9,8 +9,12 @@ package app.morphe.patches.music.misc.settings
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstruction
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructionsWithLabels
-import app.morphe.patcher.patch.bytecodePatch
-import app.morphe.patcher.patch.resourcePatch
+import app.morphe.patcher.patch.patch
+import app.morphe.patcher.patch.readXml
+import app.morphe.patcher.patch.resourceXml
+import app.morphe.patcher.util.cloneParameters
+import app.morphe.patcher.util.getFreeRegisterProvider
+import app.morphe.patcher.util.p0Register
 import app.morphe.patches.all.misc.clone.setOrGetFallbackPackageName
 import app.morphe.patches.all.misc.crashlog.crashLogPatch
 import app.morphe.patches.all.misc.fix.openurllinks.removeLinkVerification
@@ -26,6 +30,7 @@ import app.morphe.patches.music.shared.Constants.COMPATIBILITY_YOUTUBE_MUSIC
 import app.morphe.patches.music.shared.MusicActivityOnCreateFingerprint
 import app.morphe.patches.shared.BoldIconsFeatureFlagFingerprint
 import app.morphe.patches.shared.GoogleApiActivityOnCreateFingerprint
+import app.morphe.patches.shared.misc.announcements.patchesUpdateNoticePatch
 import app.morphe.patches.shared.misc.checks.experimentalAppNoticePatch
 import app.morphe.patches.shared.misc.initialization.initializationPatch
 import app.morphe.patches.shared.misc.settings.MORPHE_SETTINGS_INTENT
@@ -46,19 +51,14 @@ import app.morphe.patches.shared.misc.settings.settingsPatch
 import app.morphe.patches.youtube.misc.settings.modifyActivityForSettingsInjection
 import app.morphe.util.ResourceGroup
 import app.morphe.util.copyResources
-import app.morphe.util.copyXmlNode
-import app.morphe.util.getFreeRegisterProvider
-import app.morphe.util.getReference
 import app.morphe.util.inputStreamFromBundledResource
 import app.morphe.util.insertLiteralOverride
-import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
-import com.android.tools.smali.dexlib2.iface.reference.FieldReference
 
 private const val MUSIC_ACTIVITY_HOOK_CLASS = "Lapp/morphe/extension/music/settings/MusicActivityHook;"
 
 private val preferences = mutableSetOf<BasePreference>()
 
-private val settingsResourcePatch = resourcePatch {
+private val settingsResourcePatch = patch {
     dependsOn(
         settingsPatch(
             rootPreferences = listOf(
@@ -107,32 +107,27 @@ private val settingsResourcePatch = resourcePatch {
         // Set the style for the Morphe settings to follow the style of the music settings,
         // namely: action bar height, menu item padding and remove horizontal dividers.
         val targetResource = "values/styles.xml"
-        inputStreamFromBundledResource(
-            "settings/music",
-            targetResource
-        )!!.let { inputStream ->
-            "resources".copyXmlNode(
-                document(inputStream),
-                document("res/$targetResource")
-            ).close()
-        }
+        readXml(inputStreamFromBundledResource("settings/music", targetResource)!!).use { source ->
+            resourceXml("res/$targetResource").use { styles ->
+                source.root.children.forEach { styles.root.appendCopy(it) }
 
-        // Remove horizontal dividers from the music settings.
-        val styleFile = get("res/values/styles.xml")
-        styleFile.writeText(
-            styleFile.readText()
-                .replace(
-                    "allowDividerAbove\">true",
-                    "allowDividerAbove\">false"
-                ).replace(
-                    "allowDividerBelow\">true",
-                    "allowDividerBelow\">false"
-                )
-        )
+                // Remove horizontal dividers from the music settings.
+                styles.root.children.forEach { style ->
+                    style.children("item").forEach { item ->
+                        val name = item.attribute("name").orEmpty()
+                        if ((name.endsWith("allowDividerAbove") || name.endsWith("allowDividerBelow")) &&
+                            item.text == "true"
+                        ) {
+                            item.text = "false"
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
-val settingsPatch = bytecodePatch(
+val settingsPatch = patch(
     description = "Adds settings for Morphe to YouTube Music."
 ) {
     dependsOn(
@@ -147,6 +142,10 @@ val settingsPatch = bytecodePatch(
         experimentalAppNoticePatch(
             mainActivityFingerprint = youTubeMusicApplicationInitOnCreateHook.fingerprint,
             recommendedAppVersion = COMPATIBILITY_YOUTUBE_MUSIC.targets.first { !it.isExperimental }.version!!
+        ),
+        patchesUpdateNoticePatch(
+            mainActivityFingerprint = youTubeMusicApplicationInitOnCreateHook.fingerprint,
+            changelogScope = "YouTube Music"
         ),
         initializationPatch(
             extensionPatch = sharedExtensionPatch
@@ -176,6 +175,11 @@ val settingsPatch = bytecodePatch(
         )
 
         PreferenceScreen.MISC.addPreferences(
+            NonInteractivePreference(
+                key = "morphe_settings_new_indicator_days",
+                tag = "app.morphe.extension.shared.settings.preference.SeekBarPreference",
+                selectable = true
+            ),
             TextPreference(
                 key = null,
                 titleKey = "morphe_pref_import_export_title",
@@ -187,6 +191,7 @@ val settingsPatch = bytecodePatch(
                 key = "morphe_language",
                 tag = "app.morphe.extension.shared.settings.preference.SortedListPreference"
             ),
+            ListPreference("morphe_patches_update_notice"),
             NonInteractivePreference(
                 key = "morphe_music_app_language",
                 summaryKey = null,
@@ -196,14 +201,15 @@ val settingsPatch = bytecodePatch(
         )
 
         SettingsHeadersOnCreatePreferencesFingerprint.let {
+            val peerMethod = it.instructionMatches.first().methodReference
             val fragmentField = it.instructionMatches.last()
-                .instruction.getReference<FieldReference>()!!
+                .fieldReference
 
-            it.method.apply {
+            // 9.44+ overwrites the peer register before returning, so the peer is
+            // read again from the unchanged p0.
+            it.method.cloneParameters().apply {
                 val insertIndex = implementation!!.instructions.size - 1
-                val peerRegister = it.instructionMatches[1]
-                    .getInstruction<OneRegisterInstruction>().registerA
-                val registerProvider = getFreeRegisterProvider(insertIndex, 3, peerRegister)
+                val registerProvider = getFreeRegisterProvider(insertIndex, 3, p0Register)
                 val screenRegister = registerProvider.getFreeRegister()
                 val preferenceRegister = registerProvider.getFreeRegister()
                 val nameRegister = registerProvider.getFreeRegister()
@@ -212,7 +218,9 @@ val settingsPatch = bytecodePatch(
                     insertIndex,
                     customSettingsNameInstructions(
                         getPreferenceScreen = """
-                            iget-object v$screenRegister, v$peerRegister, $fragmentField
+                            invoke-virtual { p0 }, $peerMethod
+                            move-result-object v$screenRegister
+                            iget-object v$screenRegister, v$screenRegister, $fragmentField
                             invoke-virtual { v$screenRegister }, $SETTINGS_HEADERS_FRAGMENT_CLASS->getPreferenceScreen()Landroidx/preference/PreferenceScreen;
                             move-result-object v$screenRegister
                         """,
@@ -222,6 +230,9 @@ val settingsPatch = bytecodePatch(
                     )
                 )
             }
+
+            // Other patches hook the cloned method.
+            it.clearMatch()
         }
 
         modifyActivityForSettingsInjection(

@@ -19,12 +19,11 @@ import java.nio.file.Path;
 import app.morphe.extension.shared.Logger;
 
 /**
- * The reading of a word, held in a file rather than in the heap. There are hundreds of thousands
- * of them per language and a lyric touches a few hundred, so the table is a hash table on disk
- * and opening it maps the file, leaving the paging to the kernel.
+ * The reading of a word, held in a hash table on disk rather than in the heap: a language has
+ * hundreds of thousands of words and a lyric touches a few hundred, so opening maps the file and
+ * leaves the paging to the kernel. Readings pack one byte per kana, with an escape outside the
+ * katakana block; three bytes per kana would cost twenty megabytes more.
  *
- * <p>A reading is stored as one byte per kana, with an escape for anything outside the katakana
- * block; three bytes per kana would have cost twenty megabytes more.
  * <p>The file layout, all integers little endian:
  * <pre>
  *   0   magic, eight bytes, which say what dictionary wrote the file
@@ -34,11 +33,12 @@ import app.morphe.extension.shared.Logger;
  *   20  the offset the records start at
  *   24  how many bytes of records there are
  *   32  slots: one int per slot, the offset of a record plus one, or zero when the slot is empty
- *   ..  records: surface length, surface bytes, reading length, reading bytes
+ *       records: surface length, surface bytes, reading length, reading bytes
  * </pre>
  */
 public final class WordReadingTable implements AutoCloseable {
 
+    public static final int MAX_WORD_LENGTH = 12;
     static final int MAGIC_OFFSET = 0;
     static final int VERSION_OFFSET = 8;
     static final int SLOT_COUNT_OFFSET = 12;
@@ -46,14 +46,10 @@ public final class WordReadingTable implements AutoCloseable {
     static final int RECORDS_OFFSET_FIELD = 20;
     static final int RECORDS_LENGTH_FIELD = 24;
     static final int HEADER_BYTES = 32;
-
     // Clearing what the largest table asks for, since passing either ceiling drops the entries
     // that no longer fit rather than failing, and they would only be missed later.
     static final int MAX_FILE_BYTES = 128 << 20;
     private static final int MAX_SLOT_COUNT = 1 << 23;
-
-    public static final int MAX_WORD_LENGTH = 12;
-
     private final MappedByteBuffer buffer;
     private final int recordsOffset;
     private final int entryCount;
@@ -68,25 +64,46 @@ public final class WordReadingTable implements AutoCloseable {
 
     /** Null when the file is missing, oversized, or is not a table this build can read. */
     public static WordReadingTable open(Path file, byte[] magic) {
+        if (file == null || !Files.isRegularFile(file)) {
+            return null;
+        }
         try {
             long size = Files.size(file);
-            if (size < HEADER_BYTES || size > MAX_FILE_BYTES) return null;
+            if (size < HEADER_BYTES || size > MAX_FILE_BYTES) {
+                Logger.printDebug(() -> "Reading table has invalid size " + size + ": " + file);
+                return null;
+            }
 
             try (RandomAccessFile handle = new RandomAccessFile(file.toFile(), "r");
                  FileChannel channel = handle.getChannel()) {
                 MappedByteBuffer mapped = channel.map(FileChannel.MapMode.READ_ONLY, 0, size);
                 mapped.order(ByteOrder.LITTLE_ENDIAN);
                 for (int i = 0; i < magic.length; i++) {
-                    if (mapped.get(MAGIC_OFFSET + i) != magic[i]) return null;
+                    if (mapped.get(MAGIC_OFFSET + i) != magic[i]) {
+                        Logger.printDebug(() -> "Reading table has invalid magic: " + file);
+                        return null;
+                    }
                 }
                 int slots = mapped.getInt(SLOT_COUNT_OFFSET);
-                if (slots <= 0 || slots > MAX_SLOT_COUNT || Integer.bitCount(slots) != 1) return null;
+                if (slots <= 0 || slots > MAX_SLOT_COUNT || Integer.bitCount(slots) != 1) {
+                    Logger.printDebug(() -> "Reading table has invalid slot count " + slots + ": " + file);
+                    return null;
+                }
                 return new WordReadingTable(mapped, slots);
             }
         } catch (IOException ex) {
             Logger.printDebug(() -> "Could not open the reading table " + file, ex);
             return null;
         }
+    }
+
+    private static int hash(byte[] bytes) {
+        int value = 0x811C9DC5;
+        for (byte b : bytes) {
+            value ^= b & 0xFF;
+            value *= 0x01000193;
+        }
+        return value & 0x7FFFFFFF;
     }
 
     /** The reading in katakana, empty for a word listed in kana, or null when absent. */
@@ -143,17 +160,10 @@ public final class WordReadingTable implements AutoCloseable {
         // still reachable.
     }
 
-    private static int hash(byte[] bytes) {
-        int value = 0x811C9DC5;
-        for (byte b : bytes) {
-            value ^= b & 0xFF;
-            value *= 0x01000193;
-        }
-        return value & 0x7FFFFFFF;
-    }
-
-    /** Writes a table. Words go in as they are read, so a dictionary of a few hundred
-     * megabytes never has to be held anywhere. */
+    /**
+     * Writes a table. Words go in as they are read, so a dictionary of a few hundred
+     * megabytes never has to be held anywhere.
+     */
     public static final class Builder {
 
         private final Path file;
@@ -183,6 +193,26 @@ public final class WordReadingTable implements AutoCloseable {
             }
             buffer.putInt(SLOT_COUNT_OFFSET, slotCount);
             buffer.putInt(RECORDS_OFFSET_FIELD, recordsOffset);
+        }
+
+        private static byte[] pack(String reading) {
+            byte[] out = new byte[reading.length() * 3];
+            int length = 0;
+            for (int i = 0; i < reading.length(); i++) {
+                char c = reading.charAt(i);
+                if (KanaRomanizer.isPackable(c)) {
+                    out[length++] = KanaRomanizer.pack(c);
+                } else {
+                    if (length + 3 > out.length) break;
+                    // Low byte first, which is the order a character is read back in.
+                    out[length++] = 0;
+                    out[length++] = (byte) c;
+                    out[length++] = (byte) (c >>> 8);
+                }
+            }
+            byte[] packed = new byte[length];
+            System.arraycopy(out, 0, packed, 0, length);
+            return packed;
         }
 
         /** The first reading of a surface form wins: the one a listener is likelier to mean. */
@@ -231,26 +261,6 @@ public final class WordReadingTable implements AutoCloseable {
                 if (buffer.get(start + i) != query[i]) return false;
             }
             return true;
-        }
-
-        private static byte[] pack(String reading) {
-            byte[] out = new byte[reading.length() * 3];
-            int length = 0;
-            for (int i = 0; i < reading.length(); i++) {
-                char c = reading.charAt(i);
-                if (KanaRomanizer.isPackable(c)) {
-                    out[length++] = KanaRomanizer.pack(c);
-                } else {
-                    if (length + 3 > out.length) break;
-                    // Low byte first, which is the order a character is read back in.
-                    out[length++] = 0;
-                    out[length++] = (byte) c;
-                    out[length++] = (byte) (c >>> 8);
-                }
-            }
-            byte[] packed = new byte[length];
-            System.arraycopy(out, 0, packed, 0, length);
-            return packed;
         }
 
         public int size() {

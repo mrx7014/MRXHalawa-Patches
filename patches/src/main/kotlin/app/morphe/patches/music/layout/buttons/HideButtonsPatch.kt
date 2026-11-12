@@ -14,18 +14,18 @@ import app.morphe.patcher.extensions.InstructionExtensions.addInstruction
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructionsWithLabels
 import app.morphe.patcher.extensions.InstructionExtensions.getInstruction
-import app.morphe.patcher.patch.bytecodePatch
+import app.morphe.patcher.patch.patch
 import app.morphe.patcher.resource.ResourceType
 import app.morphe.patcher.resource.resourceId
+import app.morphe.patcher.util.findFreeRegister
+import app.morphe.patcher.util.p0Register
 import app.morphe.patches.music.misc.extension.sharedExtensionPatch
 import app.morphe.patches.music.misc.settings.PreferenceScreen
 import app.morphe.patches.music.misc.settings.settingsPatch
 import app.morphe.patches.music.shared.Constants.COMPATIBILITY_YOUTUBE_MUSIC
 import app.morphe.patches.shared.misc.settings.preference.SwitchPreference
-import app.morphe.util.findFreeRegister
 import app.morphe.util.indexOfFirstInstructionOrThrow
 import app.morphe.util.indexOfFirstLiteralInstructionOrThrow
-import app.morphe.util.p0Register
 import com.android.tools.smali.dexlib2.Opcode
 import com.android.tools.smali.dexlib2.iface.instruction.FiveRegisterInstruction
 import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
@@ -33,7 +33,7 @@ import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
 private const val EXTENSION_CLASS = "Lapp/morphe/extension/music/patches/HideButtonsPatch;"
 
 @Suppress("unused")
-val hideButtonsPatch = bytecodePatch(
+val hideButtonsPatch = patch(
     name = "Hide buttons",
     description = "Adds options to hide the cast, history, notification, search, voice search, sound search, and Library New buttons."
 ) {
@@ -117,7 +117,7 @@ val hideButtonsPatch = bytecodePatch(
             it.method.apply {
                 val targetIndex = it.instructionMatches[1].index
                 val targetRegister = getInstruction<OneRegisterInstruction>(targetIndex).registerA
-                val optionalField = it.instructionMatches.last().getFieldAccessed()
+                val optionalField = it.instructionMatches.last().fieldReference
 
                 // Before this point only the inflated layout and the image view are still in use.
                 val insertIndex = targetIndex + 1

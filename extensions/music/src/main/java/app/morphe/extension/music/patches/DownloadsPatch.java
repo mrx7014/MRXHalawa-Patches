@@ -10,21 +10,30 @@ package app.morphe.extension.music.patches;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
+import app.morphe.extension.music.patches.components.DownloadedMarkFilter;
+import app.morphe.extension.music.patches.components.PlaylistPageFilter;
+import app.morphe.extension.music.patches.components.SongMenuFilter;
+import app.morphe.extension.music.patches.downloads.DownloadedMark;
 import app.morphe.extension.music.patches.downloads.LocalDownloadManager;
+import app.morphe.extension.music.patches.downloads.PlaylistDownloader;
 import app.morphe.extension.music.settings.Settings;
 import app.morphe.extension.music.shared.VideoInformation;
 import app.morphe.extension.shared.Logger;
+import app.morphe.extension.shared.ResourceUtils;
 import app.morphe.extension.shared.Utils;
 import app.morphe.extension.shared.patches.DownloadMode;
+import app.morphe.extension.shared.patches.components.ByteArrayFilterGroup;
 import app.morphe.extension.shared.patches.components.ContextInterface;
 import app.morphe.extension.shared.settings.BaseActivityHook;
 import app.morphe.extension.shared.settings.preference.ExternalDownloaderPreference;
@@ -44,31 +53,123 @@ public final class DownloadsPatch {
             "com.google.android.libraries.youtube.rendering.elements.sender_view";
     private static final int IGNORE_DOUBLE_CLICK_DURATION_MS = 1000;
 
-    private static volatile String cachedFlyoutVideoId = "";
     private static volatile String downloadButtonLabel = "";
 
+    /** Command field of the 'ypc/get_offline_upsell' endpoint. */
+    private static final int OFFLINE_UPSELL_ENDPOINT = 133724106;
+    /**
+     * Command field of the offline playlist endpoint, with the playlist id in field 1 and the
+     * action in field 2.
+     */
+    private static final int OFFLINE_PLAYLIST_ENDPOINT = 73082583;
+    /** Action of the offline playlist endpoint that saves the playlist. The others remove or refresh it. */
+    private static final long OFFLINE_PLAYLIST_ACTION_ADD = 1;
+    /**
+     * Fields of the encoded parameters of the offline upsell of an album or a playlist, which
+     * hold its id in a nested message. The parameters of a song hold its video ID instead.
+     */
+    private static final int UPSELL_PARAMETERS_PLAYLIST = 5;
+    private static final int UPSELL_PLAYLIST_ITEM = 10;
+    private static final int UPSELL_PLAYLIST_ID = 3;
+    private static final Pattern VIDEO_ID = Pattern.compile("[A-Za-z0-9_-]{11}");
+    /**
+     * Liked music, user and editorial playlists, mixes, album playlists and album pages,
+     * with or without the 'VL' prefix of a playlist page.
+     */
+    public static final Pattern PLAYLIST_ID = Pattern.compile(
+            "(VL)?(LM|PL[A-Za-z0-9_-]{16,}|OLAK5uy_[A-Za-z0-9_-]{11,}|RD[A-Za-z0-9_-]{10,})"
+                    + "|MPRE[A-Za-z0-9_-]{8,}");
+
     private static volatile long lastFlyoutDownloadTime;
+    private static volatile long lastPlaylistDownloadTime;
     private static volatile long lastMainPlayerDownloadTime;
+    /** When the player button was last left to the app, because only menus are overridden. */
+    private static volatile long lastStockPlayerButtonTime;
     private static volatile long lastLocalDownloadsOpenTime;
     /** Browse id of the stock offline tab, which the local catalogue replaces. */
-    private static final byte[] OFFLINE_BROWSE_ID =
-            "FEmusic_offline".getBytes(StandardCharsets.US_ASCII);
+    private static final ByteArrayFilterGroup OFFLINE_BROWSE_COMMAND =
+            new ByteArrayFilterGroup(null, "FEmusic_offline");
+    /**
+     * Menu Download action of accounts offered Premium, which opens the Premium sheet
+     * and has no video ID.
+     */
+    private static final ByteArrayFilterGroup PREMIUM_UPSELL_COMMAND =
+            new ByteArrayFilterGroup(null, "premium_upsell");
+    /**
+     * Opening the menu of an item resolves a command that holds the whole menu, so it also
+     * holds the Download action of the menu without being that action.
+     */
+    private static final ByteArrayFilterGroup MENU_COMMAND =
+            new ByteArrayFilterGroup(null, "panel_header.", "tile_button_carousel.");
+    /** Field of the renderer of a native song row that holds the command of a tap on the row. */
+    private static final int ROW_TAP_COMMAND = 5;
+    /** Extension of a command that holds the watch endpoint, with the video ID in its field 1. */
+    private static final int WATCH_ENDPOINT = 48_687_757;
+    private static final int WATCH_ENDPOINT_VIDEO_ID = 1;
+    /**
+     * Field of the renderer of a native song row of a playlist page that describes its entry in
+     * the playlist, with the video ID in its field 6.
+     */
+    private static final int ROW_PLAYLIST_ITEM = 12;
+    private static final int PLAYLIST_ITEM_VIDEO_ID = 6;
 
     /**
      * Injection point.
-     * Usually is called of the main thread.
+     * Usually is called off the main thread, when a litho text is created and its style runs
+     * are applied.
+     *
+     * @return The text, with the downloaded mark if it is the details text of a downloaded song.
      */
-    public static void onLithoTextLoaded(ContextInterface conversionContext, CharSequence original) {
+    public static CharSequence onLithoTextLoaded(ContextInterface conversionContext, CharSequence original) {
         try {
+            // Such as the text of an icon only button.
+            //noinspection SizeReplaceableByIsEmpty
+            if (original.length() == 0) return original;
+
+            StringBuilder path = conversionContext.patch_getPathBuilder();
             if (isFlyoutMenuOverridden()
                     && downloadButtonLabel.isEmpty()
-                    && Utils.contains(conversionContext.patch_getPathBuilder(),
-                    "music_download_button.")) {
+                    && Utils.contains(path, "music_download_button.")) {
                 downloadButtonLabel = original.toString();
                 Logger.printDebug(() -> "Found download button label: " + downloadButtonLabel);
             }
+
+            if (DownloadedMark.isEnabled() && DownloadedMarkFilter.isDownloadedSongDetails(path)) {
+                return DownloadedMark.addTo(original);
+            }
         } catch (Exception ex) {
-            Logger.printDebug(() -> "onLithoTextLoaded failure", ex);
+            Logger.printException(() -> "onLithoTextLoaded failure", ex);
+        }
+        return original;
+    }
+
+    /**
+     * Injection point.
+     * Called on the main thread when a song is bound to a native row of a playlist, of Liked
+     * music or of the song results, once the details text of the row is set.
+     *
+     * @param details  The text of the row with the artist, the album and the length of the song.
+     * @param renderer The renderer of the row, which holds its song in the command of a tap.
+     */
+    public static void onTwoColumnItemBound(TextView details, Object renderer) {
+        try {
+            if (!DownloadedMark.isEnabled()
+                    || !(renderer instanceof ProtocolBufferFieldInterface message)) {
+                return;
+            }
+
+            ProtoMessage row = new ProtoMessage(message.toByteArray());
+            String videoId = row.messagePath(ROW_TAP_COMMAND, WATCH_ENDPOINT)
+                    .stringField(WATCH_ENDPOINT_VIDEO_ID);
+            if (videoId.isEmpty()) {
+                videoId = row.messageField(ROW_PLAYLIST_ITEM).stringField(PLAYLIST_ITEM_VIDEO_ID);
+            }
+            // The rows of albums, artists and playlists have no video ID, and open a page instead.
+            if (DownloadedMark.isDownloaded(videoId)) {
+                details.setText(DownloadedMark.addTo(details.getText()));
+            }
+        } catch (Exception ex) {
+            Logger.printException(() -> "onTwoColumnItemBound failure", ex);
         }
     }
 
@@ -84,7 +185,7 @@ public final class DownloadsPatch {
      * The download mode replaces the Download menu, and the external downloader
      * can replace it in the other modes too.
      */
-    private static boolean isFlyoutMenuOverridden() {
+    public static boolean isFlyoutMenuOverridden() {
         return Settings.DOWNLOAD_MODE.get() != DownloadMode.DEFAULT
                 || Settings.EXTERNAL_DOWNLOADER_MENU.get();
     }
@@ -98,17 +199,7 @@ public final class DownloadsPatch {
                 || Settings.EXTERNAL_DOWNLOADER_MENU.get();
     }
 
-    /**
-     * Downloads the track that is playing.
-     */
-    private static void startDownload(boolean externalDownloader) {
-        startDownload(VideoInformation.getVideoId(), externalDownloader);
-    }
-
     private static void startDownload(String videoId, boolean externalDownloader) {
-        cachedFlyoutVideoId = "";
-        // Do not clear download button label.
-
         if (!externalDownloader) {
             LocalDownloadManager.enqueue(videoId);
             return;
@@ -136,85 +227,6 @@ public final class DownloadsPatch {
         activity.startActivity(intent);
     }
 
-    private static boolean isOfflineBrowseCommand(byte[] bytes) {
-        byte[] target = OFFLINE_BROWSE_ID;
-        outer: for (int i = 0; i <= bytes.length - target.length; i++) {
-            for (int j = 0; j < target.length; j++) {
-                if (bytes[i + j] != target[j]) continue outer;
-            }
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Scans the raw bytes of the Command object looking for the specific
-     * Protobuf binary signature of an 11-byte String field.
-     */
-    private static String extractVideoIdFromCommand(ProtocolBufferFieldInterface commandObj) {
-        byte[] bytes = commandObj.toByteArray();
-        if (bytes == null) {
-            return null;
-        }
-
-        for (int i = 1, lastIndex = bytes.length - 11; i < lastIndex; i++) {
-            // Protobuf: field tag (wire type 2, length-delimited) followed by length 11
-            if (bytes[i] == 11 && (bytes[i - 1] & 0b00000111) == 2) {
-                if (isLikelyVideoId(bytes, i + 1) && !isBlacklisted(bytes, i + 1)) {
-                    return new String(bytes, i + 1, 11, StandardCharsets.US_ASCII);
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Checks if the 11 bytes at the given offset are a valid YouTube video ID character set.
-     */
-    private static boolean isLikelyVideoId(byte[] bytes, int offset) {
-        for (int i = 0; i < 11; i++) {
-            byte b = bytes[offset + i];
-            // YouTube video IDs consist of [A-Za-z0-9_-]
-            if (!((b >= 'a' && b <= 'z') || (b >= 'A' && b <= 'Z')
-                    || (b >= '0' && b <= '9') || b == '_' || b == '-')) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Checks if the potential ID is blacklisted such as common Protobuf keys.
-     */
-    private static boolean isBlacklisted(byte[] bytes, int offset) {
-        return matchesIgnoreCase(bytes, offset, "yt_") ||
-                matchesIgnoreCase(bytes, offset, "video_") ||
-                containsIgnoreCase(bytes, offset, 11, "download") ||
-                containsIgnoreCase(bytes, offset, 11, "list_item") ||
-                containsIgnoreCase(bytes, offset, 11, "button");
-    }
-
-    private static boolean matchesIgnoreCase(byte[] bytes, int offset, String target) {
-        for (int i = 0, length = target.length(); i < length; i++) {
-            byte b = bytes[offset + i];
-            int lowerB = (b >= 'A' && b <= 'Z') ? (b + 32) : b;
-            if (lowerB != target.charAt(i)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private static boolean containsIgnoreCase(byte[] bytes, int offset, int len, String target) {
-        for (int i = 0, lastIndex = len - target.length(); i <= lastIndex; i++) {
-            if (matchesIgnoreCase(bytes, offset + i, target)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
      * Determines if the clicked view is inside a Dialog/BottomSheet by comparing
      * its Window root to the main Activity's Window root.
@@ -233,27 +245,115 @@ public final class DownloadsPatch {
     }
 
     /**
-     * Injection point.
+     * The player button is handled by the command resolver, so a Download command that reaches
+     * the app is from a menu, unless the player button was just left to the app.
      */
-    public static boolean offlineVideoEndpointOnClick(ProtocolBufferFieldInterface endpoint,
-                                                       @Nullable Map<Object, Object> map) {
+    private static boolean onMenuDownload(String videoId) {
+        if (!isFlyoutMenuOverridden()) return false;
+
+        final long now = System.currentTimeMillis();
+        if (now - lastStockPlayerButtonTime < IGNORE_DOUBLE_CLICK_DURATION_MS) return false;
+        // The song menu stays open after Download, so repeated taps can repeat the request.
+        // Keep this timer separate from the player button so a menu download of another song is not blocked.
+        if (now - lastFlyoutDownloadTime < IGNORE_DOUBLE_CLICK_DURATION_MS) return true;
+        lastFlyoutDownloadTime = now;
+
+        Logger.printDebug(() -> "Menu download of " + videoId);
+        Utils.runOnMainThreadNowOrLater(() -> startDownload(videoId, flyoutMenuUsesExternalDownloader()));
+        return true;
+    }
+
+    /**
+     * @param parameters The encoded parameters of the offline upsell endpoint.
+     * @return The video ID in field 4, or null if the parameters are of an album or a playlist.
+     */
+    @Nullable
+    private static String getOfflineUpsellVideoId(ProtoMessage parameters) {
         try {
-            if (!isActionButtonOverridden()) {
+            String videoId = parameters.stringField(4);
+            return VIDEO_ID.matcher(videoId).matches() ? videoId : null;
+        } catch (IllegalArgumentException ex) {
+            // The parameters of an album or a playlist hold other fields at this number.
+            Logger.printDebug(() -> "Offline upsell parameters are not those of a song", ex);
+            return null;
+        }
+    }
+
+    /**
+     * Injection point.
+     * Called for the Download button of the playlists the app offers to save itself, such as
+     * Liked music, which it otherwise queues as an offline playlist whose tracks all need Premium.
+     */
+    public static boolean offlinePlaylistEndpointOnClick(@Nullable Object command) {
+        try {
+            if (!isActionButtonOverridden()
+                    || !(command instanceof ProtocolBufferFieldInterface message)) {
                 return false;
             }
             Utils.verifyOnMainThread();
 
-            String videoId = endpoint == null ? null : extractVideoIdFromCommand(endpoint);
-            if (videoId == null || videoId.isEmpty()) {
-                videoId = VideoInformation.getVideoId();
-            }
-            if (videoId.isEmpty()) return false;
+            ProtoMessage endpoint = new ProtoMessage(message.toByteArray())
+                    .messageField(OFFLINE_PLAYLIST_ENDPOINT);
+            String playlistId = endpoint.stringField(1);
+            final long action = endpoint.varintField(2);
+            Logger.printDebug(() -> "Offline playlist endpoint of " + playlistId + ", action: " + action);
 
-            long now = System.currentTimeMillis();
-            if (now - lastMainPlayerDownloadTime < IGNORE_DOUBLE_CLICK_DURATION_MS) return true;
-            lastMainPlayerDownloadTime = now;
-            startDownload(videoId, !inAppDownloads());
+            // Removing or refreshing a playlist the app saved is left to the app.
+            if (action != OFFLINE_PLAYLIST_ACTION_ADD || !PLAYLIST_ID.matcher(playlistId).matches()) {
+                return false;
+            }
+            startPlaylistDownload(playlistId);
             return true;
+        } catch (Exception ex) {
+            Logger.printException(() -> "offlinePlaylistEndpointOnClick failure", ex);
+            return false;
+        }
+    }
+
+    /**
+     * Downloads the tracks of a playlist or an album with the local downloads, or hands its page
+     * to the external downloader, as the download mode says. Only used if the mode is not the default.
+     */
+    private static void startPlaylistDownload(String playlistId) {
+        // A single tap can resolve the command twice.
+        final long now = System.currentTimeMillis();
+        if (now - lastPlaylistDownloadTime < IGNORE_DOUBLE_CLICK_DURATION_MS) return;
+        lastPlaylistDownloadTime = now;
+
+        Logger.printDebug(() -> "Playlist download of " + playlistId);
+        Utils.runOnMainThreadNowOrLater(() -> {
+            if (inAppDownloads()) {
+                PlaylistDownloader.start(playlistId);
+            } else {
+                ExternalDownloaderPreference.launchExternalDownloader(playlistId, Utils.getActivity(),
+                        playlistUrl(playlistId));
+            }
+        });
+    }
+
+    /**
+     * @return If the Premium upsell of a playlist or an album was replaced by its download.
+     */
+    private static boolean onPlaylistUpsell(@Nullable String playlistId) {
+        if (playlistId == null || !isActionButtonOverridden()) return false;
+
+        startPlaylistDownload(playlistId);
+        return true;
+    }
+
+    private static String playlistUrl(String playlistId) {
+        if (playlistId.startsWith("MPRE")) return "https://music.youtube.com/browse/" + playlistId;
+        return "https://music.youtube.com/playlist?list=" + playlistId.replaceFirst("^VL", "");
+    }
+
+    /**
+     * Injection point.
+     * Called for accounts that are allowed to save the song.
+     */
+    public static boolean offlineVideoEndpointOnClick(String videoId) {
+        try {
+            Utils.verifyOnMainThread();
+            return onMenuDownload(videoId);
         } catch (Exception ex) {
             Logger.printException(() -> "offlineVideoEndpointOnClick failure", ex);
             return false;
@@ -261,47 +361,74 @@ public final class DownloadsPatch {
     }
 
     /**
+     * Injection point.
+     * Called for accounts that are offered Premium instead of saving the song.
+     */
+    public static boolean offlineUpsellOnClick(@Nullable Object command) {
+        try {
+            if (!isFlyoutMenuOverridden()
+                    || !(command instanceof ProtocolBufferFieldInterface message)) {
+                return false;
+            }
+            Utils.verifyOnMainThread();
+
+            // The endpoint holds the video ID of a song, or encoded parameters.
+            String value = new ProtoMessage(message.toByteArray())
+                    .messageField(OFFLINE_UPSELL_ENDPOINT).stringField(1);
+            if (value.isEmpty()) return false;
+            if (VIDEO_ID.matcher(value).matches()) return onMenuDownload(value);
+
+            ProtoMessage parameters = new ProtoMessage(Base64.decode(Uri.decode(value), Base64.URL_SAFE));
+            String videoId = getOfflineUpsellVideoId(parameters);
+            if (videoId != null) return onMenuDownload(videoId);
+
+            // Albums and playlists are downloaded track by track with the local downloads, or
+            // handed whole to the external downloader.
+            if (!isActionButtonOverridden()) return false;
+            String playlistId = parameters.messagePath(UPSELL_PARAMETERS_PLAYLIST, UPSELL_PLAYLIST_ITEM)
+                    .stringField(UPSELL_PLAYLIST_ID);
+            if (!PLAYLIST_ID.matcher(playlistId).matches()) return false;
+
+            startPlaylistDownload(playlistId);
+            return true;
+        } catch (Exception ex) {
+            Logger.printException(() -> "offlineUpsellOnClick failure", ex);
+            return false;
+        }
+    }
+
+    /**
      * The label is the localized download text litho gave us, so no hard coded language is needed.
      */
-    private static boolean isDownloadSender(@Nullable Map<Object, Object> map) {
+    private static boolean isPlayerDownloadButton(@Nullable Map<Object, Object> map) {
         if (map == null || downloadButtonLabel.isEmpty()
                 || !(map.get(ELEMENTS_SENDER_VIEW) instanceof ViewGroup senderViewGroup)) {
             return false;
         }
         CharSequence description = senderViewGroup.getContentDescription();
-        if (description == null) return false;
+        //noinspection SizeReplaceableByIsEmpty
+        if (description == null || description.length() == 0) return false;
 
         String value = description.toString().toLowerCase(Locale.ROOT);
         String label = downloadButtonLabel.toLowerCase(Locale.ROOT);
-        return value.contains(label) || label.contains(value);
+        if (!value.contains(label) && !label.contains(value)) return false;
+
+        return isViewInsideActionBar(senderViewGroup);
     }
 
-    public static boolean inAppDownloadButtonOnClick(@Nullable Map<Object, Object> map) {
-        try {
-            if (!isActionButtonOverridden()
-                    || downloadButtonLabel.isEmpty() || map == null) {
-                return false;
-            }
-            Utils.verifyOnMainThread();
-
-            if (isDownloadSender(map)) {
-                final long now = System.currentTimeMillis();
-                if (now - lastMainPlayerDownloadTime < IGNORE_DOUBLE_CLICK_DURATION_MS) {
-                    return true;
-                }
-                lastMainPlayerDownloadTime = now;
-
-                startDownload(!inAppDownloads());
-                return true;
-            }
-        } catch (Exception ex) {
-            Logger.printException(() -> "inAppDownloadButtonOnClick failure", ex);
+    private static boolean isViewInsideActionBar(View view) {
+        int actionBarId = ResourceUtils.getIdIdentifier("video_action_bar");
+        while (view.getParent() instanceof View parent) {
+            if (parent.getId() == actionBarId) return true;
+            view = parent;
         }
         return false;
     }
 
     /**
      * Injection point.
+     *
+     * Can be called on or off main thread.
      */
     public static boolean commandResolverOnClick(ProtocolBufferFieldInterface p1, Map<Object, Object> map) {
         try {
@@ -309,12 +436,25 @@ public final class DownloadsPatch {
                     || p1 == null || map == null) {
                 return false;
             }
-            Utils.verifyOnMainThread();
+
+            byte[] commandBytes = p1.toByteArray();
+            final boolean insideDialog = isViewInsideDialog(map.get(ELEMENTS_SENDER_VIEW));
+            final boolean premiumUpsell = PREMIUM_UPSELL_COMMAND.check(commandBytes).isFiltered()
+                    && !MENU_COMMAND.check(commandBytes).isFiltered();
+
+            if (insideDialog && premiumUpsell) {
+                String videoId = SongMenuFilter.getMenuVideoId();
+                if (videoId != null) return onMenuDownload(videoId);
+
+                String playlistId = PlaylistPageFilter.getMenuPlaylistId();
+                return onPlaylistUpsell(playlistId != null
+                        ? playlistId
+                        : PlaylistPageFilter.getPagePlaylistId());
+            }
 
             if (inAppDownloads()) {
-                byte[] commandBytes = p1.toByteArray();
-                if (commandBytes != null && isOfflineBrowseCommand(commandBytes)) {
-                    openLocalDownloads();
+                if (OFFLINE_BROWSE_COMMAND.check(commandBytes).isFiltered()) {
+                    Utils.runOnMainThreadNowOrLater(DownloadsPatch::openLocalDownloads);
                     // The local screen is opened on top of the stock one rather than in place of
                     // it. Consuming the command instead leaves the app with a navigation it never
                     // finished, which it replays on the next start and cancels again.
@@ -322,93 +462,33 @@ public final class DownloadsPatch {
                 }
             }
 
-            if (inAppDownloadButtonOnClick(map)) {
-                Logger.printDebug(() -> "inAppDownloadButtonOnClicked");
-                cachedFlyoutVideoId = "";
+            // Song menus in search results, playlists and the queue share the player's Download label.
+            // Only the player action bar button should use the playing song's ID.
+            if (!insideDialog && isPlayerDownloadButton(map)) {
+                if (!isActionButtonOverridden()) {
+                    lastStockPlayerButtonTime = System.currentTimeMillis();
+                    return false;
+                }
+
+                String videoId = VideoInformation.getVideoId();
+                if (videoId.isEmpty()) return false;
+
+                final long now = System.currentTimeMillis();
+                if (now - lastMainPlayerDownloadTime < IGNORE_DOUBLE_CLICK_DURATION_MS) {
+                    return true;
+                }
+                lastMainPlayerDownloadTime = now;
+                Utils.runOnMainThreadNowOrLater(() -> startDownload(videoId, !inAppDownloads()));
                 return true;
             }
-
-            String p1String = p1.toString();
-            Logger.printDebug(() -> "commandResolverOnClick: " + p1String);
-
-            final boolean isMenuOpen = p1String.contains("[98150882]");
-            if (isMenuOpen) {
-                Logger.printDebug(() -> "Flyout isMenuOpen");
-                String extractedId = extractVideoIdFromCommand(p1);
-                if (extractedId != null) {
-                    cachedFlyoutVideoId = extractedId;
-                    Logger.printDebug(() -> "Found flyout isMenuOpen videoId: " + extractedId);
-                } else {
-                    cachedFlyoutVideoId = "";
-                }
-                return false;
+            // Only a tap can be the page button: commands the app resolves itself have no sender view.
+            if (!insideDialog && premiumUpsell
+                    && map.get(ELEMENTS_SENDER_VIEW) instanceof View senderView
+                    && !isViewInsideActionBar(senderView)) {
+                return onPlaylistUpsell(PlaylistPageFilter.getPagePlaylistId());
             }
 
-            final boolean isDownloadClick = Utils.containsAny(p1String,
-                    "[133724106]", "[443434441]");
-            if (isDownloadClick) {
-                Object viewObj = map.get(ELEMENTS_SENDER_VIEW);
-
-                if (viewObj == null) {
-                    Logger.printDebug(() -> "Ignored programmatic download click (no sender_view).");
-                    return false;
-                }
-
-                if (viewObj instanceof ViewGroup senderViewGroup) {
-                    CharSequence cd = senderViewGroup.getContentDescription();
-                    if (cd != null && !downloadButtonLabel.isEmpty()) {
-                        String cdLower = cd.toString().toLowerCase(Locale.ROOT);
-                        String labelLower = downloadButtonLabel.toLowerCase(Locale.ROOT);
-
-                        if (!cdLower.contains(labelLower) && !labelLower.contains(cdLower)) {
-                            Logger.printDebug(() -> "Ignored false positive UI click (Content description mismatch).");
-                            return false;
-                        }
-                    }
-                }
-
-                Logger.printDebug(() -> "Flyout isDownloadClick");
-                final long now = System.currentTimeMillis();
-                if (now - lastFlyoutDownloadTime < IGNORE_DOUBLE_CLICK_DURATION_MS) {
-                    return true;
-                }
-
-                final boolean inDialog = isViewInsideDialog(viewObj);
-                if (!inDialog && !isActionButtonOverridden() && isDownloadSender(map)) {
-                    // The Download button of the player, which only the download mode replaces.
-                    return false;
-                }
-
-                String targetId = extractVideoIdFromCommand(p1);
-
-                if (targetId == null && inDialog) {
-                    targetId = cachedFlyoutVideoId;
-                    Logger.printDebug(() -> "Using flyout isDownloadClick videoId: " + cachedFlyoutVideoId);
-                }
-
-                if (targetId != null && !targetId.isEmpty()) {
-                    lastFlyoutDownloadTime = now;
-                    final String flyoutId = targetId;
-                    Logger.printDebug(() -> "Flyout download of " + flyoutId
-                            + " inDialog=" + inDialog);
-                    startDownload(targetId, flyoutMenuUsesExternalDownloader());
-                    return true;
-
-                } else if (inDialog) {
-                    lastFlyoutDownloadTime = now;
-                    // The flyout of a queue row carries no id either, so this can only be
-                    // the track that is playing.
-                    Logger.printDebug(() -> "Now Playing Download Intercepted via Window Check.");
-                    startDownload(flyoutMenuUsesExternalDownloader());
-                    return true;
-
-                } else {
-                    // A download click with no video id is a whole album or playlist, which the
-                    // app only offers with Premium, so the stock UI handles it.
-                    Logger.printDebug(() -> "Playlist Download detected via Window Check. Falling back to native UI");
-                    return false;
-                }
-            }
+            // Endpoint Download commands have no sender view.
         } catch (Exception ex) {
             Logger.printException(() -> "commandResolverOnClick failure", ex);
         }

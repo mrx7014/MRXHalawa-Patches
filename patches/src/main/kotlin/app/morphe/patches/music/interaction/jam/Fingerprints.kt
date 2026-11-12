@@ -15,12 +15,12 @@ import app.morphe.patcher.fieldAccess
 import app.morphe.patcher.literal
 import app.morphe.patcher.methodCall
 import app.morphe.patcher.opcode
-import app.morphe.patcher.patch.BytecodePatchContext
+import app.morphe.patcher.patch.classDefByOrNull
 import app.morphe.patcher.resource.ResourceType
 import app.morphe.patcher.resourceLiteral
 import app.morphe.patcher.string
+import app.morphe.patcher.util.getReference
 import app.morphe.util.findInstructionIndicesReversed
-import app.morphe.util.getReference
 import app.morphe.util.indexOfFirstInstruction
 import com.android.tools.smali.dexlib2.AccessFlags
 import com.android.tools.smali.dexlib2.Opcode
@@ -176,7 +176,7 @@ internal fun seekForwarderConstructorFingerprint(ownerType: String, controlTypes
     )
 
 /** Finds the seek callback that forwards a position and native seek context. */
-internal fun seekForwarderFingerprint() = Fingerprint(
+internal object SeekForwarderFingerprint : Fingerprint(
     returnType = "V",
     parameters = listOf("J", "L"),
     filters = listOf(methodCall(parameters = listOf("J", "L"), returnType = "V")),
@@ -190,8 +190,18 @@ internal fun seekForwarderFingerprint() = Fingerprint(
     }
 )
 
+/** Finds the player palette source's local apply method, which stores the palette entity. */
+internal object PaletteEntityFingerprint : Fingerprint(
+    returnType = "V",
+    parameters = listOf("L"),
+    filters = listOf(
+        string("YTM_PLAYER_COLOR_SAMPLE_PALETTE_ENTITY_KEY")
+    )
+)
+
 /** Finds the palette source's publish-then-apply entry point. */
 internal object PalettePublicationFingerprint : Fingerprint(
+    classFingerprint = PaletteEntityFingerprint,
     returnType = "V",
     parameters = emptyList(),
     filters = listOf(
@@ -468,7 +478,7 @@ internal fun queueStorageFingerprint(manager: ClassDef) = Fingerprint(
     custom = { _, owner -> manager.fields.any { it.type == owner.type } },
 )
 
-internal fun BytecodePatchContext.queueLaneAccessorFingerprint(storageType: String) = Fingerprint(
+internal fun queueLaneAccessorFingerprint(storageType: String) = Fingerprint(
     definingClass = storageType,
     parameters = listOf("I"),
     returnType = "L",
@@ -484,7 +494,7 @@ internal fun queueLaneSliceFingerprint(laneType: String) = Fingerprint(
 )
 
 /** State accessors forward to an interface held by the resolved native store. */
-internal fun BytecodePatchContext.queueStateAccessorFingerprint(
+internal fun queueStateAccessorFingerprint(
     storageType: String,
     mode: Boolean,
 ) = Fingerprint(
@@ -523,7 +533,7 @@ internal fun clockModelTimestampFingerprint(modelType: String) = Fingerprint(
     returnType = "J"
 )
 
-internal fun BytecodePatchContext.clockModelSetterFingerprint(timeBarType: String) = Fingerprint(
+internal fun clockModelSetterFingerprint(timeBarType: String) = Fingerprint(
     parameters = listOf("L"),
     returnType = "V",
     custom = { method, owner ->
@@ -538,7 +548,7 @@ internal fun clockDraggingFingerprint(timeBaseType: String) = Fingerprint(
     returnType = "Z"
 )
 
-internal fun BytecodePatchContext.clockMutableModelFingerprint(modelType: String) = Fingerprint(
+internal fun clockMutableModelFingerprint(modelType: String) = Fingerprint(
     parameters = listOf("J", "J", "J", "J"),
     returnType = "V",
     custom = { _, owner ->
@@ -572,18 +582,6 @@ internal fun accountPeerDispatchFingerprint(peerType: String, forwarder: MethodR
     filters = listOf(methodCall(reference = forwarder)),
 )
 
-internal fun protoDefaultInstanceFingerprint(messageType: String) = Fingerprint(
-    definingClass = messageType,
-    name = "<clinit>",
-    filters = listOf(
-        fieldAccess(
-            definingClass = messageType,
-            type = messageType,
-            opcode = Opcode.SPUT_OBJECT
-        )
-    )
-)
-
 /** Generic protobuf parser inherited by the already resolved native message type. */
 internal fun protoParserFingerprint(messageHierarchy: Set<String>) = Fingerprint(
     name = "parseFrom",
@@ -597,11 +595,19 @@ internal fun protoParserFingerprint(messageHierarchy: Set<String>) = Fingerprint
     }
 )
 
-/** A palette source owns an extractor producing the same type its local apply method consumes. */
-internal fun paletteExtractorFingerprint(paletteType: String, ownedTypes: Set<String>) = Fingerprint(
+/** The extractor produces the same type the palette source's local apply method consumes. */
+internal fun paletteExtractorFingerprint(paletteType: String) = Fingerprint(
     parameters = listOf("Landroid/graphics/Bitmap;"),
     returnType = paletteType,
-    custom = { _, owner -> owner.type in ownedTypes },
+)
+
+/** Finds the end of the palette extractor constructor. */
+internal fun paletteExtractorConstructorFingerprint(extractorType: String) = Fingerprint(
+    definingClass = extractorType,
+    name = "<init>",
+    filters = listOf(
+        opcode(Opcode.RETURN_VOID)
+    )
 )
 
 internal fun queueItemEndpointFingerprint(ownerType: String, commandType: String) = Fingerprint(
@@ -685,7 +691,7 @@ internal fun queueCallbackCaptureFingerprint(enqueue: Method, managerType: Strin
     }
 )
 
-internal fun BytecodePatchContext.queueSuccessCallbackFingerprint(callbackType: String) = Fingerprint(
+internal fun queueSuccessCallbackFingerprint(callbackType: String) = Fingerprint(
     definingClass = callbackType,
     parameters = listOf("L"),
     returnType = "V",
@@ -752,7 +758,7 @@ internal fun queuePresenterRefreshFingerprint(ownerTypes: Set<String>, callers: 
 )
 
 /** Artwork container holds one repeated thumbnail list; rich text has several repeated fields. */
-internal fun BytecodePatchContext.queueArtworkAccessorFingerprint(metadataType: String) = Fingerprint(
+internal fun queueArtworkAccessorFingerprint(metadataType: String) = Fingerprint(
     definingClass = metadataType,
     parameters = emptyList(),
     returnType = "L",
@@ -763,7 +769,7 @@ internal fun BytecodePatchContext.queueArtworkAccessorFingerprint(metadataType: 
     }
 )
 
-internal fun BytecodePatchContext.queueArtworkContractFingerprint(sharedTypes: Set<String>) = Fingerprint(
+internal fun queueArtworkContractFingerprint(sharedTypes: Set<String>) = Fingerprint(
     parameters = emptyList(),
     returnType = "L",
     custom = { method, owner ->
@@ -774,7 +780,7 @@ internal fun BytecodePatchContext.queueArtworkContractFingerprint(sharedTypes: S
     }
 )
 
-internal fun BytecodePatchContext.queueMenuResponseConstructorFingerprint(
+internal fun queueMenuResponseConstructorFingerprint(
     responseTypes: Set<String>
 ) = Fingerprint(
     name = "<init>",
@@ -788,7 +794,7 @@ internal fun BytecodePatchContext.queueMenuResponseConstructorFingerprint(
     }
 )
 
-internal fun BytecodePatchContext.nativeImplementationFingerprint(contractType: String) = Fingerprint(
+internal fun nativeImplementationFingerprint(contractType: String) = Fingerprint(
     name = "<init>",
     custom = { _, owner ->
         !AccessFlags.ABSTRACT.isSet(owner.accessFlags) &&

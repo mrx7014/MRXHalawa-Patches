@@ -43,6 +43,252 @@ public final class RMMProvider implements LyricsProvider {
         return sb.toString();
     }
 
+    /**
+     * Public iTunes search, scored with the shared match scale. Unlike the Apple catalog
+     * search this needs no token, so the provider works for anyone who enables it.
+     */
+    private static List<JSONObject> searchItunesCandidates(TrackInfo track) {
+        HttpURLConnection connection = null;
+        try {
+            String term = LyricsRequests.encode(track.title() + " " + track.artist());
+            String url = LyricsRequests.ITUNES_SEARCH_URL + "?term=" + term + "&entity=song&limit=5";
+            connection = LyricsRequests.openConnection(url);
+            final int code = connection.getResponseCode();
+            if (code != 200) {
+                return new ArrayList<>();
+            }
+            JSONObject root = LyricsRequests.parseGzipJsonObject(connection);
+            JSONArray results = root.optJSONArray("results");
+            if (results == null || results.length() == 0) {
+                return new ArrayList<>();
+            }
+
+            final String title = track.title().toLowerCase(Locale.ROOT).trim();
+            final String artist = track.artist().toLowerCase(Locale.ROOT).trim();
+
+            List<ScoredItem> scored = new ArrayList<>();
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject item = results.optJSONObject(i);
+                if (item == null) {
+                    continue;
+                }
+                final long trackId = item.optLong("trackId", 0);
+                if (trackId == 0) {
+                    continue;
+                }
+                String itemTitle = item.optString("trackName", "");
+                String itemArtist = item.optString("artistName", "");
+                int score = LyricsRequests.scoreTrackCandidate(itemTitle, itemArtist,
+                        item.optLong("trackTimeMillis", 0) / 1000, track);
+                if (score < LyricsRequests.SOFT_MIN) {
+                    continue;
+                }
+                boolean exact = !title.isEmpty() && !artist.isEmpty()
+                        && itemTitle.toLowerCase(Locale.ROOT).contains(title)
+                        && itemArtist.toLowerCase(Locale.ROOT).contains(artist);
+                scored.add(new ScoredItem(item, score, exact));
+            }
+
+            scored.sort((a, b) -> {
+                if (a.exact != b.exact) {
+                    return a.exact ? -1 : 1;
+                }
+                return Integer.compare(b.score, a.score);
+            });
+
+            List<JSONObject> ordered = new ArrayList<>(scored.size());
+            for (ScoredItem entry : scored) {
+                ordered.add(entry.item);
+            }
+            return ordered;
+        } catch (Exception ex) {
+            Logger.printDebug(() -> "Could not search iTunes for RMM Revival candidates", ex);
+            return new ArrayList<>();
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    @Nullable
+    private static JSONObject fetchRmmJson(long trackId) {
+        HttpURLConnection connection = null;
+        try {
+            connection = LyricsRequests.openConnection(RMM_LYRICS + trackId);
+            connection.setRequestProperty("Accept", "application/json");
+            connection.setReadTimeout(READ_TIMEOUT_MS);
+            final int code = connection.getResponseCode();
+            if (code != 200) {
+                return null;
+            }
+            return LyricsRequests.parseGzipJsonObject(connection);
+        } catch (Exception ex) {
+            Logger.printDebug(() -> "Could not fetch RMM Revival lyrics", ex);
+            return null;
+        } finally {
+            if (connection != null) {
+                connection.disconnect();
+            }
+        }
+    }
+
+    /** SpicyLyrics hands the url over without a scheme, which nothing can open. */
+    @Nullable
+    private static String usableUrl(@Nullable String url) {
+        if (url == null) {
+            return null;
+        }
+        String trimmed = url.trim();
+        if (trimmed.isEmpty()) {
+            return null;
+        }
+        if (trimmed.startsWith("//")) {
+            return "https:" + trimmed;
+        }
+        int schemeEnd = trimmed.indexOf("://");
+        if (schemeEnd <= 0) {
+            return "https://" + trimmed;
+        }
+        return trimmed;
+    }
+
+    @Nullable
+    private static Uploader parseUploader(@Nullable JSONObject root) {
+        if (root == null) {
+            return null;
+        }
+        JSONObject attribution = root.optJSONObject("uploadAttribution");
+        if (attribution == null) {
+            attribution = root.optJSONObject("UploadAttribution");
+        }
+        if (attribution == null) {
+            return null;
+        }
+        JSONObject uploader = attribution.optJSONObject("Uploader");
+        if (uploader == null) {
+            return null;
+        }
+        String username = uploader.optString("username", "").trim();
+        if (username.isEmpty()) {
+            return null;
+        }
+        return new Uploader(username, LyricsRequests.optString(uploader, "url"));
+    }
+
+    @Nullable
+    private static List<String> parseJsonSongwriters(JSONObject root) {
+        JSONArray array = root.optJSONArray("songWriters");
+        if (array == null || array.length() == 0) {
+            return null;
+        }
+        List<String> names = new ArrayList<>(array.length());
+        for (int i = 0; i < array.length(); i++) {
+            String name = array.optString(i, "").trim();
+            if (!name.isEmpty()) {
+                names.add(name);
+            }
+        }
+        return names.isEmpty() ? null : names;
+    }
+
+    /** Whoever uploaded the sync is a credit, not a songwriter. */
+    @Nullable
+    private static String uploaderCredit(@Nullable Uploader uploader) {
+        return uploader == null ? null : "Uploaded by " + uploader.username();
+    }
+
+    @Nullable
+    private static List<LyricsLine> parseLineLyrics(JSONObject root) {
+        JSONArray array = root.optJSONArray("lineLyrics");
+        if (array == null || array.length() == 0) {
+            return null;
+        }
+        List<LyricsLine> lines = new ArrayList<>(array.length());
+        for (int i = 0; i < array.length(); i++) {
+            JSONObject entry = array.optJSONObject(i);
+            if (entry == null) {
+                continue;
+            }
+            String text = entry.optString("text", "").trim();
+            if (text.isEmpty()) {
+                continue;
+            }
+            double seconds = entry.optDouble("time", -1);
+            if (seconds < 0) {
+                continue;
+            }
+            String agent = LyricsRequests.optString(entry, "speakerLabel");
+            lines.add(new LyricsLine(Math.round(seconds * 1000), text, List.of(),
+                    agent, false, false));
+        }
+        return lines.isEmpty() ? null : lines;
+    }
+
+    @Nullable
+    private static Lyrics buildLyrics(JSONObject root, long trackId) {
+        if (!root.optBoolean("hasLyrics", false)) {
+            return null;
+        }
+
+        Uploader uploader = parseUploader(root);
+        String providerName = uploader != null ? DISPLAY_NAME_VIA : DISPLAY_NAME;
+        String sourceUrl = uploader != null ? usableUrl(uploader.url()) : null;
+
+        List<String> jsonSongwriters = parseJsonSongwriters(root);
+        String uploaderCredit = uploaderCredit(uploader);
+        List<String> credits = uploaderCredit == null ? null : List.of(uploaderCredit);
+
+        String ttml = root.optString("ttml", "");
+        if (!ttml.isEmpty()) {
+            Lyrics parsed = TTMLParser.ttmlToLyrics(ttml, providerName, sourceUrl);
+            if (parsed != null && !parsed.isEmpty()) {
+                if (uploaderCredit == null) {
+                    return parsed;
+                }
+                List<String> mergedCredits = new ArrayList<>();
+                if (parsed.credits() != null) {
+                    mergedCredits.addAll(parsed.credits());
+                }
+                if (!mergedCredits.contains(uploaderCredit)) {
+                    mergedCredits.add(uploaderCredit);
+                }
+                return new Lyrics(parsed.lines(), providerName, parsed.synced(),
+                        parsed.romanization(), parsed.translations(), parsed.romanizations(),
+                        parsed.songwriters(), mergedCredits, parsed.rawFormat(),
+                        parsed.formatType(), sourceUrl,
+                        parsed.about(), parsed.agentNames());
+            }
+        }
+
+        List<LyricsLine> lineLevel = parseLineLyrics(root);
+        if (lineLevel != null) {
+            String raw = lrcFormat(lineLevel);
+            return new Lyrics(lineLevel, providerName, true, null, null, null,
+                    jsonSongwriters, credits, raw, "lrc", sourceUrl, null, null);
+        }
+
+        String syncedLyrics = root.optString("syncedLyrics", "");
+        if (!syncedLyrics.isEmpty()) {
+            List<LyricsLine> lines = LRCParser.parseSynced(syncedLyrics);
+            if (!lines.isEmpty()) {
+                return new Lyrics(lines, providerName, true, null, null, null,
+                        jsonSongwriters, credits, syncedLyrics, "lrc", sourceUrl, null, null);
+            }
+        }
+
+        String plainLyrics = root.optString("lyrics", "");
+        if (!plainLyrics.isEmpty()) {
+            List<LyricsLine> lines = LRCParser.parsePlain(plainLyrics);
+            if (!lines.isEmpty()) {
+                return new Lyrics(lines, providerName, false, null, null, null,
+                        jsonSongwriters, credits, plainLyrics, "txt", sourceUrl, null, null);
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public String name() {
         return "RMM";
@@ -117,97 +363,7 @@ public final class RMMProvider implements LyricsProvider {
         return Lyrics.sortScoredByScore(scored);
     }
 
-    /**
-     * Public iTunes search, scored with the shared match scale. Unlike the Apple catalog
-     * search this needs no token, so the provider works for anyone who enables it.
-     */
-    private static List<JSONObject> searchItunesCandidates(TrackInfo track) {
-        HttpURLConnection connection = null;
-        try {
-            String term = LyricsRequests.encode(track.title() + " " + track.artist());
-            String url = LyricsRequests.ITUNES_SEARCH_URL + "?term=" + term + "&entity=song&limit=5";
-            connection = LyricsRequests.openConnection(url);
-            final int code = connection.getResponseCode();
-            if (code != 200) {
-                return new ArrayList<>();
-            }
-            JSONObject root = LyricsRequests.parseGzipJsonObject(connection);
-            JSONArray results = root.optJSONArray("results");
-            if (results == null || results.length() == 0) {
-                return new ArrayList<>();
-            }
-
-            final String title = track.title().toLowerCase(Locale.ROOT).trim();
-            final String artist = track.artist().toLowerCase(Locale.ROOT).trim();
-
-            List<ScoredItem> scored = new ArrayList<>();
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject item = results.optJSONObject(i);
-                if (item == null) {
-                    continue;
-                }
-                final long trackId = item.optLong("trackId", 0);
-                if (trackId == 0) {
-                    continue;
-                }
-                String itemTitle = item.optString("trackName", "");
-                String itemArtist = item.optString("artistName", "");
-                int score = LyricsRequests.scoreTrackCandidate(itemTitle, itemArtist,
-                        item.optLong("trackTimeMillis", 0) / 1000, track);
-                if (score < LyricsRequests.SOFT_MIN) {
-                    continue;
-                }
-                boolean exact = !title.isEmpty() && !artist.isEmpty()
-                        && itemTitle.toLowerCase(Locale.ROOT).contains(title)
-                        && itemArtist.toLowerCase(Locale.ROOT).contains(artist);
-                scored.add(new ScoredItem(item, score, exact));
-            }
-
-            scored.sort((a, b) -> {
-                if (a.exact != b.exact) {
-                    return a.exact ? -1 : 1;
-                }
-                return Integer.compare(b.score, a.score);
-            });
-
-            List<JSONObject> ordered = new ArrayList<>(scored.size());
-            for (ScoredItem entry : scored) {
-                ordered.add(entry.item);
-            }
-            return ordered;
-        } catch (Exception ex) {
-            Logger.printDebug(() -> "Could not search iTunes for RMM Revival candidates", ex);
-            return new ArrayList<>();
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-    }
-
     private record ScoredItem(JSONObject item, int score, boolean exact) {
-    }
-
-    @Nullable
-    private static JSONObject fetchRmmJson(long trackId) {
-        HttpURLConnection connection = null;
-        try {
-            connection = LyricsRequests.openConnection(RMM_LYRICS + trackId);
-            connection.setRequestProperty("Accept", "application/json");
-            connection.setReadTimeout(READ_TIMEOUT_MS);
-            final int code = connection.getResponseCode();
-            if (code != 200) {
-                return null;
-            }
-            return LyricsRequests.parseGzipJsonObject(connection);
-        } catch (Exception ex) {
-            Logger.printDebug(() -> "Could not fetch RMM Revival lyrics", ex);
-            return null;
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
     }
 
     /**
@@ -215,174 +371,5 @@ public final class RMMProvider implements LyricsProvider {
      * Apple lyrics relayed through the same API.
      */
     private record Uploader(String username, @Nullable String url) {
-    }
-
-    /** SpicyLyrics hands the url over without a scheme, which nothing can open. */
-    @Nullable
-    private static String usableUrl(@Nullable String url) {
-        if (url == null) {
-            return null;
-        }
-        String trimmed = url.trim();
-        if (trimmed.isEmpty()) {
-            return null;
-        }
-        if (trimmed.startsWith("//")) {
-            return "https:" + trimmed;
-        }
-        int schemeEnd = trimmed.indexOf("://");
-        if (schemeEnd <= 0) {
-            return "https://" + trimmed;
-        }
-        return trimmed;
-    }
-
-    @Nullable
-    private static Uploader parseUploader(@Nullable JSONObject root) {
-        if (root == null) {
-            return null;
-        }
-        JSONObject attribution = root.optJSONObject("uploadAttribution");
-        if (attribution == null) {
-            attribution = root.optJSONObject("UploadAttribution");
-        }
-        if (attribution == null) {
-            return null;
-        }
-        JSONObject uploader = attribution.optJSONObject("Uploader");
-        if (uploader == null) {
-            return null;
-        }
-        String username = uploader.optString("username", "").trim();
-        if (username.isEmpty()) {
-            return null;
-        }
-        return new Uploader(username, LyricsRequests.optString(uploader, "url"));
-    }
-
-    @Nullable
-    private static List<String> parseJsonSongwriters(JSONObject root) {
-        JSONArray array = root.optJSONArray("songWriters");
-        if (array == null || array.length() == 0) {
-            return null;
-        }
-        StringBuilder sb = new StringBuilder("Written by ");
-        int count = 0;
-        for (int i = 0; i < array.length(); i++) {
-            String name = array.optString(i, "").trim();
-            if (name.isEmpty()) {
-                continue;
-            }
-            if (count > 0) {
-                sb.append(" · ");
-            }
-            sb.append(name);
-            count++;
-        }
-        return count == 0 ? null : List.of(sb.toString());
-    }
-
-    /**
-     * The writers the lyrics themselves name, then whoever uploaded the sync. The TTML head carries
-     * the writers whenever it has any, and the JSON array is the fallback for the rest.
-     */
-    @Nullable
-    private static List<String> buildCredits(@Nullable Uploader uploader,
-                                             @Nullable List<String> ttmlSongwriters,
-                                             @Nullable List<String> jsonSongwriters) {
-        List<String> credits = new ArrayList<>();
-        if (ttmlSongwriters != null && !ttmlSongwriters.isEmpty()) {
-            credits.addAll(ttmlSongwriters);
-        } else if (jsonSongwriters != null && !jsonSongwriters.isEmpty()) {
-            credits.addAll(jsonSongwriters);
-        }
-        if (uploader != null) {
-            credits.add("Uploaded by " + uploader.username());
-        }
-        return credits.isEmpty() ? null : credits;
-    }
-
-    @Nullable
-    private static List<LyricsLine> parseLineLyrics(JSONObject root) {
-        JSONArray array = root.optJSONArray("lineLyrics");
-        if (array == null || array.length() == 0) {
-            return null;
-        }
-        List<LyricsLine> lines = new ArrayList<>(array.length());
-        for (int i = 0; i < array.length(); i++) {
-            JSONObject entry = array.optJSONObject(i);
-            if (entry == null) {
-                continue;
-            }
-            String text = entry.optString("text", "").trim();
-            if (text.isEmpty()) {
-                continue;
-            }
-            double seconds = entry.optDouble("time", -1);
-            if (seconds < 0) {
-                continue;
-            }
-            String agent = LyricsRequests.optString(entry, "speakerLabel");
-            lines.add(new LyricsLine(Math.round(seconds * 1000), text, List.of(),
-                    agent, false, false));
-        }
-        return lines.isEmpty() ? null : lines;
-    }
-
-    @Nullable
-    private static Lyrics buildLyrics(JSONObject root, long trackId) {
-        if (!root.optBoolean("hasLyrics", false)) {
-            return null;
-        }
-
-        Uploader uploader = parseUploader(root);
-        String providerName = uploader != null ? DISPLAY_NAME_VIA : DISPLAY_NAME;
-        String sourceUrl = uploader != null ? usableUrl(uploader.url()) : null;
-
-        List<String> jsonSongwriters = parseJsonSongwriters(root);
-
-        String ttml = root.optString("ttml", "");
-        if (!ttml.isEmpty()) {
-            Lyrics parsed = TTMLParser.ttmlToLyrics(ttml, providerName, sourceUrl);
-            if (parsed != null && !parsed.isEmpty()) {
-                List<String> credits = buildCredits(uploader, parsed.songwriters(), jsonSongwriters);
-                if (credits == null) {
-                    return parsed;
-                }
-                return new Lyrics(parsed.lines(), providerName, parsed.synced(),
-                        parsed.romanization(), parsed.translations(), parsed.romanizations(),
-                        credits, parsed.rawFormat(), parsed.formatType(), sourceUrl);
-            }
-        }
-
-        List<LyricsLine> lineLevel = parseLineLyrics(root);
-        if (lineLevel != null) {
-            String raw = lrcFormat(lineLevel);
-            return new Lyrics(lineLevel, providerName, true, null, null, null,
-                    buildCredits(uploader, null, jsonSongwriters),
-                    raw, "lrc", sourceUrl);
-        }
-
-        String syncedLyrics = root.optString("syncedLyrics", "");
-        if (!syncedLyrics.isEmpty()) {
-            List<LyricsLine> lines = LRCParser.parseSynced(syncedLyrics);
-            if (!lines.isEmpty()) {
-                return new Lyrics(lines, providerName, true, null, null, null,
-                        buildCredits(uploader, null, jsonSongwriters),
-                        syncedLyrics, "lrc", sourceUrl);
-            }
-        }
-
-        String plainLyrics = root.optString("lyrics", "");
-        if (!plainLyrics.isEmpty()) {
-            List<LyricsLine> lines = LRCParser.parsePlain(plainLyrics);
-            if (!lines.isEmpty()) {
-                return new Lyrics(lines, providerName, false, null, null, null,
-                        buildCredits(uploader, null, jsonSongwriters),
-                        plainLyrics, "txt", sourceUrl);
-            }
-        }
-
-        return null;
     }
 }

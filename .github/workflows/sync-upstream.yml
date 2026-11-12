@@ -1,0 +1,49 @@
+name: Sync upstream Morphe patches
+
+on:
+  workflow_dispatch:
+    inputs:
+      upstream_ref:
+        description: "Upstream branch or tag to merge"
+        required: false
+        default: "main"
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Merge upstream
+        env:
+          UPSTREAM_REF: ${{ inputs.upstream_ref }}
+        run: |
+          set -euo pipefail
+          git remote add upstream https://github.com/MorpheApp/morphe-patches.git
+          git fetch --no-tags upstream "$UPSTREAM_REF"
+          branch="sync/upstream-${UPSTREAM_REF//\//-}-$(date -u +%Y%m%d%H%M%S)"
+          git switch -c "$branch"
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-ff --no-edit "upstream/$UPSTREAM_REF"
+          echo "SYNC_BRANCH=$branch" >> "$GITHUB_ENV"
+
+      - name: Push sync branch
+        run: git push --set-upstream origin "$SYNC_BRANCH"
+
+      - name: Open pull request
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh pr create \
+            --base main \
+            --head "$SYNC_BRANCH" \
+            --title "chore: sync Morphe upstream (${{ inputs.upstream_ref }})" \
+            --body "This PR merges the latest changes from MorpheApp/morphe-patches into MRXHalawa-Patches. Review conflicts and verify the custom Block Channel patch before merging."

@@ -17,33 +17,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
-import app.morphe.extension.music.patches.lyrics.parsers.CharactersConverter;
 import app.morphe.extension.music.patches.lyrics.requests.LyricsRequests;
+import app.morphe.extension.music.patches.lyrics.utils.CharactersConverter;
 
 /**
- * Drops the lines a lyrics lookup should not show: the credit block a provider pastes at the
- * end, and whatever {@link LyricsFilterDefaults#LYRICS_TEXT_FILTER} names.
- *
- * <p>Every method is static and holds no state beyond the variant cache, so filtering the
- * same lyrics twice costs nothing beyond re-running the rules. Metadata itself is cleaned
- * separately by {@link MetadataCleaner}.
+ * Drops provider credit blocks and lines matching {@link LyricsFilterDefaults#LYRICS_TEXT_FILTER}.
+ * All methods are static and stateless beyond a variant cache; {@link MetadataCleaner} handles metadata.
  */
 public final class LyricsFilter {
 
-    private LyricsFilter() {
-    }
-
     private static final int MAX_ARTIST_SONG_LINE_LENGTH = 80;
-
     private static final Pattern ARTIST_SONG_PATTERN =
             Pattern.compile("^[^\\-]+\\s*-\\s*[^\\-]+$");
-
     private static final int CREDIT_LINE_GAP_TOLERANCE = 3;
-
     @Nullable
     private static volatile String cachedCreditMarkers;
     @Nullable
     private static volatile List<String> cachedCreditVariants;
+
+    private LyricsFilter() {
+    }
 
     public static Lyrics filterCreditLines(Lyrics lyrics, TrackInfo track) {
         if (lyrics == null || lyrics == Lyrics.NOT_FOUND || lyrics.isEmpty()) {
@@ -126,25 +119,26 @@ public final class LyricsFilter {
         Map<String, List<LyricsLine>> translations = filterAlignedMap(lyrics.translations(), kept);
         Map<String, List<LyricsLine>> romanizations = filterAlignedMap(lyrics.romanizations(), kept);
 
-        List<String> songwriters = new ArrayList<>();
+        List<String> credits = new ArrayList<>();
         for (String cl : creditLines) {
-            if (!songwriters.contains(cl)) {
-                songwriters.add(cl);
+            if (!credits.contains(cl)) {
+                credits.add(cl);
             }
         }
-        List<String> existingSongwriters = lyrics.songwriters();
-        if (existingSongwriters != null) {
-            for (String sw : existingSongwriters) {
-                if (!songwriters.contains(sw)) {
-                    songwriters.add(sw);
+        List<String> existingCredits = lyrics.credits();
+        if (existingCredits != null) {
+            for (String c : existingCredits) {
+                if (!credits.contains(c)) {
+                    credits.add(c);
                 }
             }
         }
 
         return new Lyrics(filteredLines, lyrics.providerName(), lyrics.synced(),
                 romanization, translations, romanizations,
-                songwriters, lyrics.rawFormat(), lyrics.formatType(), lyrics.sourceUrl(),
-                lyrics.about());
+                lyrics.songwriters(), credits.isEmpty() ? null : credits,
+                lyrics.rawFormat(), lyrics.formatType(), lyrics.sourceUrl(),
+                lyrics.about(), lyrics.agentNames());
     }
 
     private static List<LyricsLine> filterAlignedList(List<LyricsLine> aligned, boolean[] kept) {
@@ -402,10 +396,9 @@ public final class LyricsFilter {
 
     /**
      * Applies {@link LyricsFilterDefaults#LYRICS_TEXT_FILTER} to the original lyrics text only.
-     * Translations and romanizations are not run through the filter, but when the filter
-     * drops a line they drop with it so a translation stays under the line it belongs to.
-     * A line the filter does not fire on keeps its provider text rather than a normalized
-     * copy, so fullwidth punctuation is not folded to ASCII.
+     * Translations and romanizations are not filtered themselves, but drop with a filtered line so
+     * a translation stays under the line it belongs to. Unfiltered lines keep their provider text,
+     * so fullwidth punctuation is not folded to ASCII.
      */
     public static Lyrics filterLyricsText(Lyrics lyrics) {
         if (lyrics == null || lyrics == Lyrics.NOT_FOUND) {
@@ -440,7 +433,7 @@ public final class LyricsFilter {
                             .trim().replaceAll("\\s+", " ");
                     if (!wt.isEmpty()) {
                         words.add(new Word(w.startMs(), w.endMs(), wt,
-                                w.romaji(), w.endsWithSpace()));
+                                w.romaji(), w.endsWithSpace(), w.ruby()));
                     }
                 }
                 // Only the section label is carried over. The shorter constructors this replaces also reset
@@ -464,7 +457,8 @@ public final class LyricsFilter {
                 filterAlignedList(lyrics.romanization(), kept),
                 filterAlignedMap(lyrics.translations(), kept),
                 filterAlignedMap(lyrics.romanizations(), kept),
-                lyrics.songwriters(), lyrics.rawFormat(), lyrics.formatType(),
-                lyrics.sourceUrl(), lyrics.about());
+                lyrics.songwriters(), lyrics.credits(), lyrics.rawFormat(),
+                lyrics.formatType(), lyrics.sourceUrl(), lyrics.about(),
+                lyrics.agentNames());
     }
 }
