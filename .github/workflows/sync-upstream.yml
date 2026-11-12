@@ -46,7 +46,8 @@ jobs:
             extensions/youtube/src/main/java/app/morphe/extension/youtube/patches/components/ChannelPageFlyoutFilter.java \
             patches/src/main/kotlin/app/morphe/patches/youtube/layout/hide/blockchannels/BlockChannelsPatch.kt \
             extensions/reddit/src/main/java/app/morphe/extension/reddit/patches/RemoveEnableNSFWButtonPatch.java \
-            patches/src/main/kotlin/app/morphe/patches/reddit/layout/nsfw/RemoveEnableNSFWButtonPatch.kt
+            patches/src/main/kotlin/app/morphe/patches/reddit/layout/nsfw/RemoveEnableNSFWButtonPatch.kt \
+            extensions/shared-youtube/library/src/main/java/app/morphe/extension/shared/patches/BaseSettingsMenuFilter.java
 
           # YouTube Music is intentionally excluded from MRX. Enforce that on every sync.
           rm -rf extensions/music patches/src/main/kotlin/app/morphe/patches/music patches/src/test/kotlin/app/morphe/patches/music
@@ -55,6 +56,34 @@ jobs:
           rm -f patches/src/main/kotlin/app/morphe/patches/youtube/layout/music/OverrideYouTubeMusicButtonsPatch.kt
           rm -f extensions/reddit/src/main/java/app/morphe/extension/reddit/patches/RedgifsAudioPatch.java
           rm -rf patches/src/main/kotlin/app/morphe/patches/reddit/misc/redgifs
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+
+          # Remove Redgifs settings and its preference block if upstream reintroduces them.
+          settings = Path('extensions/reddit/src/main/java/app/morphe/extension/reddit/settings/Settings.java')
+          text = settings.read_text()
+          text = re.sub(r'^\s*public static final BooleanSetting REDGIFS_(?:AUDIO|HD) = .*\n', '', text, flags=re.M)
+          settings.write_text(text)
+
+          category = Path('extensions/reddit/src/main/java/app/morphe/extension/reddit/settings/preference/categories/MiscellaneousPreferenceCategory.java')
+          text = category.read_text()
+          text = re.sub(r'\s*if \(RedgifsAudioPatch\.isPatchIncluded\(\)\) \{.*?\n\s*\}\n', '\n', text, flags=re.S)
+          text = text.replace('                RedgifsAudioPatch.isPatchIncluded() ||\n', '')
+          category.write_text(text)
+
+          # Remove translated Redgifs strings.
+          for path in Path('patches/src/main/resources/addresources').glob('values*/reddit/strings.xml'):
+              lines = [line for line in path.read_text().splitlines()
+                       if 'morphe_redgifs_' not in line]
+              path.write_text('\n'.join(lines) + '\n')
+
+          # The YouTube Music-only validation task must not survive removal of that module.
+          build = Path('patches/build.gradle.kts')
+          text = build.read_text()
+          text = re.sub(r'    register<JavaExec>\("validateJam"\) \{.*?\n    \}\n', '', text, flags=re.S)
+          build.write_text(text)
+          PY
 
           python3 - <<'PY'
           import json
