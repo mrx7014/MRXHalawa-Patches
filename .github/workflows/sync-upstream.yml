@@ -172,7 +172,9 @@ jobs:
       - name: Open pull request
         if: env.SYNC_NEEDED == 'true'
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # PR_TOKEN should be a fine-grained PAT with Contents and Pull requests write access.
+          # The built-in token remains a fallback for repositories that allow Actions PR creation.
+          GH_TOKEN: ${{ secrets.PR_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           gh pr create \
             --base main \
