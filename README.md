@@ -35,7 +35,7 @@ All modifications made by Morphe, along with their dates, can be found in the Gi
 ## 🩹 Patches list
 
 <!-- PATCHES_START -->
-> **[v2.2.0](https://github.com/mrx7014/MRXHalawa-Patches/releases/tag/v2.2.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`main`&nbsp;&nbsp;•&nbsp;&nbsp;151 patches total
+> **[v2.2.0](https://github.com/mrx7014/MRXHalawa-Patches/releases/tag/v2.2.0)**&nbsp;&nbsp;•&nbsp;&nbsp;`sync/upstream-main-20261112124333`&nbsp;&nbsp;•&nbsp;&nbsp;151 patches total
 <details>
 <summary>📦 YouTube&nbsp;&nbsp;•&nbsp;&nbsp;114 patches</summary>
 <br>
