@@ -28,6 +28,7 @@ jobs:
           UPSTREAM_REF: ${{ inputs.upstream_ref }}
         run: |
           set -euo pipefail
+          base_sha="$(git rev-parse HEAD)"
           git remote add upstream https://github.com/MorpheApp/morphe-patches.git
           git fetch --no-tags upstream "$UPSTREAM_REF"
           branch="sync/upstream-${UPSTREAM_REF//\//-}-$(date -u +%Y%m%d%H%M%S)"
@@ -100,12 +101,20 @@ jobs:
 
           git add patches-list.json patches/src/main/resources/addresources/values/youtube/strings.xml
           git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit --amend --no-edit
+          if git diff --quiet "$base_sha" HEAD; then
+            echo "SYNC_NEEDED=false" >> "$GITHUB_ENV"
+            echo "Upstream is already synchronized; no PR is needed."
+          else
+            echo "SYNC_NEEDED=true" >> "$GITHUB_ENV"
+          fi
           echo "SYNC_BRANCH=$branch" >> "$GITHUB_ENV"
 
       - name: Push sync branch
+        if: env.SYNC_NEEDED == 'true'
         run: git push --set-upstream origin "$SYNC_BRANCH"
 
       - name: Open pull request
+        if: env.SYNC_NEEDED == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
