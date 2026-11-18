@@ -182,6 +182,8 @@ jobs:
           set -euo pipefail
           # Release/build workflows may add a commit to main while this sync is running.
           # Rebase on the latest main and retry instead of failing with non-fast-forward.
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for attempt in 1 2 3; do
             git fetch origin main
             if ! git merge-base --is-ancestor origin/main HEAD; then
