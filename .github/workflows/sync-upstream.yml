@@ -37,8 +37,14 @@ jobs:
           git show HEAD:patches-list.json > /tmp/mrx-patches-list.json
           git show HEAD:patches/src/main/resources/addresources/values/youtube/strings.xml > /tmp/mrx-youtube-strings.xml
 
-          # Upstream wins ordinary conflicts; MRX-owned files and catalog entries are restored below.
-          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-ff -X theirs --no-edit "upstream/$UPSTREAM_REF"
+          # Upstream wins ordinary conflicts; resolve modify/delete conflicts too, then apply MRX rules below.
+          if ! git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" merge --no-ff -X theirs --no-edit "upstream/$UPSTREAM_REF"; then
+            while IFS= read -r -d '' conflicted; do
+              git checkout --theirs -- "$conflicted"
+              git add -- "$conflicted"
+            done < <(git diff --name-only -z --diff-filter=U)
+            git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit --no-edit
+          fi
 
           # Protect MRX custom patch source files from future upstream changes or deletions.
           git checkout "$base_sha" -- \
