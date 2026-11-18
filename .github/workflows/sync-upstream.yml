@@ -166,7 +166,7 @@ jobs:
 
           python3 .github/scripts/generate_patches_readme.py "$GITHUB_REPOSITORY" "$branch" patches-list.json README.md
           git add -A
-          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit --amend --no-edit
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit --amend -m "chore: sync Morphe upstream ($UPSTREAM_REF) [skip ci]"
 
           if git diff --quiet "$base_sha" HEAD; then
             echo "SYNC_NEEDED=false" >> "$GITHUB_ENV"
@@ -176,19 +176,6 @@ jobs:
           fi
           echo "SYNC_BRANCH=$branch" >> "$GITHUB_ENV"
 
-      - name: Push sync branch
+      - name: Push synchronized commit directly to main
         if: env.SYNC_NEEDED == 'true'
-        run: git push --set-upstream origin "$SYNC_BRANCH"
-
-      - name: Open pull request
-        if: env.SYNC_NEEDED == 'true'
-        env:
-          # PR_TOKEN should be a fine-grained PAT with Contents and Pull requests write access.
-          # The built-in token remains a fallback for repositories that allow Actions PR creation.
-          GH_TOKEN: ${{ secrets.PR_TOKEN || secrets.GITHUB_TOKEN }}
-        run: |
-          gh pr create \
-            --base main \
-            --head "$SYNC_BRANCH" \
-            --title "chore: sync Morphe upstream (${{ inputs.upstream_ref }})" \
-            --body "This PR merges Morphe upstream while preserving MRX custom patches and excluding YouTube Music and Redgifs. Review the generated diff and run the build before merging."
+        run: git push origin "HEAD:main"
