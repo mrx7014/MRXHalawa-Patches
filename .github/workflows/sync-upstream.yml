@@ -178,4 +178,20 @@ jobs:
 
       - name: Push synchronized commit directly to main
         if: env.SYNC_NEEDED == 'true'
-        run: git push origin "HEAD:main"
+        run: |
+          set -euo pipefail
+          # Release/build workflows may add a commit to main while this sync is running.
+          # Rebase on the latest main and retry instead of failing with non-fast-forward.
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if ! git merge-base --is-ancestor origin/main HEAD; then
+              git rebase origin/main
+            fi
+            if git push origin "HEAD:main"; then
+              exit 0
+            fi
+            echo "Push raced with another main update; retrying ($attempt/3)..."
+            sleep 3
+          done
+          echo "Unable to push after 3 attempts because main kept changing."
+          exit 1
