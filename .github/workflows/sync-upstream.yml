@@ -137,7 +137,11 @@ jobs:
                   filtered.append(patch)
           current['patches'] = [p for p in filtered if p.get('name') not in {'Override YouTube Music buttons', 'Redgifs audio'}]
 
-          patches = find_patch_list(current)
+          patches = current.get('patches') if isinstance(current, dict) else None
+          if not isinstance(patches, list):
+              patches = find_patch_list(current)
+          if not isinstance(patches, list):
+              raise RuntimeError('Unsupported patches-list.json schema: patch list not found')
           existing = {p.get('name') for p in patches}
           for custom in find_custom(ours):
               if custom.get('name') not in existing:
