@@ -187,7 +187,15 @@ jobs:
           for attempt in 1 2 3; do
             git fetch origin main
             if ! git merge-base --is-ancestor origin/main HEAD; then
-              git rebase origin/main
+              if ! git rebase origin/main; then
+                # Generated files such as README.md may also be changed by Release.
+                # Keep the sync version for conflicted files and finish the rebase.
+                while IFS= read -r -d '' conflicted; do
+                  git checkout --theirs -- "$conflicted"
+                  git add -- "$conflicted"
+                done < <(git diff --name-only -z --diff-filter=U)
+                GIT_EDITOR=true git rebase --continue
+              fi
             fi
             if git push origin "HEAD:main"; then
               exit 0
