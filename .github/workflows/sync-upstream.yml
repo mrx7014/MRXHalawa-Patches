@@ -129,9 +129,10 @@ jobs:
 
           filtered = []
           for patch in current['patches']:
-              original = patch.get('compatiblePackages', [])
+              original = patch.get('compatiblePackages') or []
               packages = [entry for entry in original
-                          if entry.get('packageName') != 'com.google.android.apps.youtube.music']
+                          if isinstance(entry, dict)
+                          and entry.get('packageName') != 'com.google.android.apps.youtube.music']
               patch['compatiblePackages'] = packages
               if packages or not original:
                   filtered.append(patch)
